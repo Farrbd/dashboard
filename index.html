@@ -85,7 +85,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۴</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۵</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -148,7 +148,7 @@ h1 em{font-style:normal;color:var(--amber)}
 </main>
 
 <script>
-window.__MBOOT__ = {"fetched_at": "2026-08-21 00:31 (تهران)", "current": {"cuLb": {"p": 6.4763, "dp": 0.01, "dt": "low", "ts": "2026-08-21 00:27:14"}, "agOz": {"p": 68.09, "dp": 0.05, "dt": "low", "ts": "2026-08-21 00:29:13"}, "ag999": {"p": 4341200.0, "dp": 0.01, "dt": "high", "ts": "2026-08-21 00:06:53"}, "agCert": {"p": 4199500.0, "dp": 0, "dt": "", "ts": "2026-08-19 00:00:00"}, "gs": {"p": 66.39, "dp": 0.06, "dt": "high", "ts": "2026-08-21 00:29:04"}, "auOz": {"p": 4519.28, "dp": 0.03, "dt": "low", "ts": "2026-08-21 00:29:13"}, "g18": {"p": 198527000.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}, "g24": {"p": 264700000.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}, "auCert": {"p": 26190000.0, "dp": 0, "dt": "", "ts": "2026-08-19 00:00:00"}, "shemsh": {"p": 346295354.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}, "emami": {"p": 1995400000.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}, "coinCert": {"p": 1947899600.0, "dp": 0, "dt": "", "ts": "2026-08-19 00:00:00"}, "usd": {"p": 1894000.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}}};
+window.__MBOOT__ = {"fetched_at": "2026-08-21 01:00 (تهران)", "current": {"cuLb": {"p": 6.4615, "dp": 0.24, "dt": "low", "ts": "2026-08-21 00:51:17"}, "agOz": {"p": 68.08, "dp": 0.07, "dt": "low", "ts": "2026-08-21 00:31:29"}, "ag999": {"p": 4370400.0, "dp": 0.68, "dt": "high", "ts": "2026-08-21 00:46:27"}, "agCert": {"p": 4199500.0, "dp": 0, "dt": "", "ts": "2026-08-19 00:00:00"}, "gs": {"p": 66.38, "dp": 0.05, "dt": "high", "ts": "2026-08-21 00:34:09"}, "auOz": {"p": 4515.78, "dp": 0.1, "dt": "low", "ts": "2026-08-21 00:51:16"}, "g18": {"p": 198527000.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}, "g24": {"p": 264700000.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}, "auCert": {"p": 26190000.0, "dp": 0, "dt": "", "ts": "2026-08-19 00:00:00"}, "shemsh": {"p": 346295354.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}, "emami": {"p": 1995400000.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}, "coinCert": {"p": 1947899600.0, "dp": 0, "dt": "", "ts": "2026-08-19 00:00:00"}, "usd": {"p": 1894000.0, "dp": 0, "dt": "", "ts": "2026-08-20 00:00:00"}}};
 
 </script>
 <script>
@@ -168,6 +168,7 @@ var DIAG = {attempts:[], keyTs:{}, lastErr:''};
 var KATOD_URL = 'https://iranzayeat.com/prices/tag/katod-mes/';
 var KATOD = {toman_kg: 2231600, date: '1405/05/29', live: false}; // آخرین قیمت ذخیره‌شده هنگام ساخت فایل
 var LAST_CUR = null;
+var IS_LIVE = false, LAST_CHECK = null, MAX_TS = '', NEXT_AT = 0;
 
 function $(id){ return document.getElementById(id); }
 function fa(n, fr){ if(n===null||n===undefined||isNaN(n)) return '—';
@@ -317,8 +318,13 @@ function render(cur, fetchedAt){
 }
 
 function setLive(on, label){
+  IS_LIVE = on;
   $('liveDot').className='live-dot'+(on?'':' off');
   if(label) $('stampText').textContent=label;
+}
+function stampLine(){
+  return 'زنده · سرکشی '+(LAST_CHECK?LAST_CHECK.toTimeString().slice(0,8):'—')+
+         ' · تازه‌ترین قیمت TGJU: '+(MAX_TS?MAX_TS.slice(5,16):'—')+' تهران';
 }
 function renderDiag(){
   var el=$('diagPanel'); if(!el) return;
@@ -333,8 +339,9 @@ function renderDiag(){
 function refresh(){
   return fetchDirect().then(function(cur){
     var maxTs = render(cur, null);
+    MAX_TS = maxTs; LAST_CHECK = new Date(); NEXT_AT = Date.now()+60000;
     DIAG.lastErr=''; renderDiag();
-    setLive(true, 'TGJU زنده · دادهٔ '+(maxTs?maxTs.slice(0,16):'')+' تهران');
+    setLive(true, stampLine());
   }).catch(function(e){
     DIAG.lastErr=String(e&&e.message||e); renderDiag();
     if (window.__MBOOT__){
@@ -349,6 +356,12 @@ refresh();
 fetchKatod();
 setInterval(refresh, 60000); // هر ۶۰ ثانیه — طبق درخواست
 setInterval(fetchKatod, 600000); // کاتد هر ۱۰ دقیقه (قیمتش روزانه عوض می‌شود)
+/* شمارش معکوس زنده — ثابت می‌کند داشبورد بیدار است */
+setInterval(function(){
+  if (!IS_LIVE || !LAST_CHECK) return;
+  var s = Math.max(0, Math.round((NEXT_AT - Date.now())/1000));
+  $('stampText').textContent = stampLine() + ' · بروزرسانی بعدی ' + s + ' ثانیه';
+}, 1000);
 $('refreshBtn').addEventListener('click', function(e){ e.stopPropagation(); refresh(); });
 $('stampBox').addEventListener('click', function(e){
   if(e.target&&e.target.id==='refreshBtn')return;
