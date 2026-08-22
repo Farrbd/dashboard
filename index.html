@@ -111,7 +111,25 @@ h1 em{font-style:normal;color:var(--amber)}
 .ring .rbg{stroke:#3d3320}
 .ring .arc{stroke:#f3c95c;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
 .ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:10px;color:#f3c95c;font-weight:700}
-@media(max-width:1000px){.metal-grid{grid-template-columns:1fr}.hero{padding-top:52px}.source-stamp{right:0;left:auto}h1{font-size:23px}.sources ol{columns:1}}
+@media(max-width:1000px){.metal-grid{grid-template-columns:1fr}h1{font-size:22px}.sources ol{columns:1}}
+@media(max-width:700px){
+  .shell{width:calc(100% - 20px)}
+  .hero{min-height:0;padding-top:4px}
+  .source-stamp{position:static;display:block;white-space:normal;line-height:2;font-size:11px;margin-bottom:12px}
+  .diag-panel{position:static;max-width:100%;margin-bottom:10px}
+  h1{font-size:20px}
+  .metal-head{flex-wrap:wrap;gap:8px}
+  .metal-head h2{flex:0 0 auto}
+  .chip{font-size:11px;padding:3px 9px}
+  .m-row{grid-template-columns:1fr auto;row-gap:3px;padding:9px 13px}
+  .m-l{grid-row:1;grid-column:1;font-size:12px}
+  .m-t{grid-row:1;grid-column:2}
+  .m-v{grid-row:2;grid-column:1/-1;white-space:normal;font-size:15px}
+  .m-v .chip{margin:3px 0 0 6px}
+  .pill{font-size:12px;padding:5px 11px}
+  .pill.big strong{font-size:15px}
+  .full-link{font-size:10px;padding:2px 9px}
+}
 </style>
 </head>
 <body>
@@ -120,7 +138,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۹</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۰</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>

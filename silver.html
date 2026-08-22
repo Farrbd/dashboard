@@ -10,6 +10,7 @@
 .back-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:#29220f;border:1px solid #6b5418;color:#f3c95c;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:700;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 .back-btn:hover{background:#3a2f12;transform:translateY(-2px)}
 .back-btn::before{content:"⌂";font-size:17px}
+@media(max-width:700px){.back-btn{width:100%;justify-content:center;font-size:14px;padding:11px 10px}}
 </style>
 <style>
 :root{
@@ -183,15 +184,24 @@ h1 span{font-size:19px;color:#aebac5;font-weight:400}
   .dimension-strip{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:700px){
-  .dashboard-shell{width:calc(100% - 22px);padding-top:10px}
-  .hero{padding-top:56px}
-  .source-stamp{right:0;left:auto;font-size:11px}
-  h1{font-size:24px}h1 span{display:block;font-size:15px}
+  .dashboard-shell{width:calc(100% - 20px);padding-top:8px}
+  .hero{padding-top:4px;min-height:0}
+  .source-stamp{position:static;display:block;white-space:normal;line-height:2;font-size:11px;margin-bottom:12px}
+  .diag-panel{position:static;max-width:100%;margin-bottom:10px}
+  h1{font-size:21px}h1 span{display:block;font-size:14px}
   .question-grid,.visual-grid,.dimension-grid,.closing-grid{grid-template-columns:1fr}
   .trend-card{grid-column:auto}
   .dimension-strip{grid-template-columns:1fr 1fr}
   .sources ol{columns:1}
-  .verdict-copy h2{font-size:18px}
+  .verdict-copy h2{font-size:17px}
+  .big-number{font-size:24px}
+  .big-number small{display:block;margin:2px 0 0}
+  .mini-row{grid-template-columns:76px 1fr auto}
+  .mini-row b{font-size:10px}
+  .pill{font-size:12px;padding:5px 11px}
+  .q-head{flex-wrap:wrap}
+  .q-head h2{font-size:16px}
+  .funds-grid > .viz-card:first-child{grid-column:auto}
 }
 </style>
 </head>
@@ -201,7 +211,7 @@ h1 span{font-size:19px;color:#aebac5;font-weight:400}
   <header class="hero">
     <div class="source-stamp" style="cursor:pointer" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۱۵</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد اختصاصی نقره · نسخهٔ ۸</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد اختصاصی نقره · نسخهٔ ۹</div>
     <h1>داشبورد نقره — <em>کارت سلامت بازار نقره</em> <span>(جهانی · ایران · گواهی سپرده · حباب)</span></h1>
     <div class="meta-row">
       <span class="pill">دلار آزاد <strong id="pillDollar">—</strong></span>
