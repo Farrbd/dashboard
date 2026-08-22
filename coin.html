@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>داشبورد کامل سکه</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{--bg:#0c1218;--panel:#141d27;--line:#273544;--text:#f0f4f7;--muted:#95a6b7;
+--cyan:#20d2ca;--amber:#f3b33c;--green:#32d38b;--red:#ff6262}
+*{box-sizing:border-box}html{background:var(--bg)}
+body{margin:0;background:radial-gradient(circle at 80% -20%,rgba(22,154,151,.11),transparent 31%),var(--bg);
+color:var(--text);font-family:"Samim","Vazirmatn",Tahoma,Arial,sans-serif;line-height:1.75}
+.shell{width:min(1600px,calc(100% - 48px));margin:0 auto;padding:16px 0 34px}
+.hero{position:relative;border-bottom:1px solid var(--line);padding:0 0 16px;min-height:112px}
+.brandline{color:var(--cyan);font-size:14px;margin-bottom:3px}
+.brandline::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);margin-left:9px}
+h1{font-size:28px;line-height:1.45;margin:0 0 10px;font-weight:800}
+h1 em{font-style:normal;color:var(--amber)}
+.source-stamp{position:absolute;left:0;top:0;background:#2a2414;border:1px solid #66501b;color:#d9c07f;border-radius:12px;padding:8px 15px;font-size:13px;white-space:nowrap}
+.source-stamp b{color:#f3c95c}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);margin-left:7px;vertical-align:middle;animation:dotPulse 2s infinite}
+.live-dot.off{background:var(--amber);box-shadow:0 0 10px var(--amber);animation:none}
+.refresh-btn{border:1px solid #5b4919;background:#29220f;color:#f0c75b;border-radius:9px;padding:4px 11px;cursor:pointer;font:inherit;font-size:12px;margin-right:9px}
+.meta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pill{background:#111a24;border:1px solid #263442;border-radius:999px;padding:6px 14px;color:#b8c4ce;font-size:13px}
+.pill strong{color:#f1f4f6}
+.pill::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);margin-left:8px}
+.pill.muted::before{display:none}
+.pill.link{text-decoration:none;color:#f0c75b;border-color:#5b4919}
+.section-heading{display:flex;align-items:center;gap:12px;margin:16px 0 10px;color:#95a6b7;font-size:13px}
+.section-heading::after{content:"";height:1px;background:var(--line);flex:1}
+.section-heading strong{color:#eef3f6;font-size:14px}
+.question-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.question-grid+.question-grid{margin-top:16px}
+.question-card,.viz-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:16px}
+.question-card{position:relative;min-height:200px;padding:17px 18px 14px;border-left:4px solid var(--amber);animation:cardIn .6s cubic-bezier(.16,1,.3,1) backwards;transition:transform .22s,border-color .22s}
+.question-card:hover,.viz-card:hover{transform:translateY(-3px);border-color:#3a4d63}
+.question-grid .question-card:nth-child(1){animation-delay:.06s}
+.question-grid .question-card:nth-child(2){animation-delay:.14s}
+.question-grid .question-card:nth-child(3){animation-delay:.22s}
+.q-number{position:absolute;left:14px;top:14px;width:29px;height:29px;display:grid;place-items:center;border-radius:8px;background:#182330;border:1px solid #293848;color:#738699;font-size:12px}
+.q-head{display:flex;align-items:center;gap:9px;padding-left:35px;margin-bottom:8px}
+.q-head h2{font-size:18px;margin:0}
+.status{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;border:1px solid}
+.status::after{content:"";width:8px;height:8px;border-radius:50%}
+.status.good{color:#80efb8;background:#0d3527;border-color:#166944}.status.good::after{background:var(--green);box-shadow:0 0 12px var(--green)}
+.status.mid{color:#f6c657;background:#34270c;border-color:#725515}.status.mid::after{background:var(--amber);box-shadow:0 0 12px var(--amber)}
+.status.bad{color:#ff9a9a;background:#3b171b;border-color:#7a2d35}.status.bad::after{background:var(--red);box-shadow:0 0 12px var(--red)}
+.big-number{font-size:28px;font-weight:900;line-height:1.2;margin:3px 0;color:#f7fafc}
+.big-number small{font-size:13px;color:#93a4b5;font-weight:400;margin-right:7px}
+.sub-number{font-size:12px;color:#8ea0b1;margin:1px 0 0}
+.card-copy{font-size:12px;color:#a4b2bf;margin:9px 0 0}
+.card-copy b{color:#eef3f6}
+.gauge{position:relative;height:19px;background:#0c141c;border:1px solid #273746;border-radius:5px;margin:24px 0 5px;direction:ltr;overflow:visible}
+.gauge-fill{height:100%;background:linear-gradient(90deg,#0e8f8b,#26d1c9);border-radius:4px 0 0 4px}
+.gauge-fill.warm{background:linear-gradient(90deg,#b7831d,#f0b43f)}
+.gauge-marker{position:absolute;top:-9px;bottom:-9px;width:2px;background:var(--amber);box-shadow:0 0 9px var(--amber)}
+.gauge-marker .marker-text{position:absolute;top:-20px;left:50%;transform:translateX(-50%);color:#e5b84f;font-size:10px;white-space:nowrap}
+.scale{display:flex;justify-content:space-between;font-size:10px;color:#75889a;direction:ltr}
+.mini-bars{margin-top:12px}
+.mini-row{display:grid;grid-template-columns:96px 1fr 92px;align-items:center;gap:8px;margin:9px 0;font-size:11px;color:#a4b0bc}
+.mini-row b{font-size:11px;color:#dce5ec;white-space:nowrap}
+.track{height:18px;background:#3b4756;border-radius:3px;overflow:hidden;direction:ltr}
+.fill{height:100%;background:linear-gradient(90deg,#0b8581,#1fc9c1);border-radius:3px}
+.fill.warm{background:linear-gradient(90deg,#b7831d,#f0b43f)}
+.visual-grid{display:grid;grid-template-columns:2.15fr 1.18fr 1.28fr;gap:16px;margin-top:16px}
+.viz-card{min-height:245px;padding:15px 18px;animation:cardIn .6s .15s cubic-bezier(.16,1,.3,1) backwards;transition:transform .22s,border-color .22s}
+.viz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.viz-head h3{margin:0;font-size:16px}
+.tiny-tag{font-size:10px;color:#e8b647;background:#2b230f;border:1px solid #5d4815;border-radius:999px;padding:3px 9px}
+.chart-wrap{height:165px;margin-top:2px}
+.chart-wrap svg{width:100%;height:100%;overflow:visible}
+.chart-label{fill:#9fb0bf;font-size:12px}
+.chart-value{fill:#e8f2f4;font-size:12px;font-weight:700}
+.chart-value2{fill:#e8b647;font-size:11px;font-weight:700}
+.note-line{border-top:1px dashed #2d3b49;margin-top:9px;padding-top:8px;font-size:11px;color:#7f91a2}
+.note-line b{color:var(--cyan)}
+.trend-legend{display:flex;gap:16px;font-size:11px;color:#8b9dae;margin-top:4px}
+.trend-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-left:6px;vertical-align:middle}
+.mix-body{display:flex;align-items:center;justify-content:center;gap:21px;height:157px}
+.donut{width:124px;height:124px;border-radius:50%;position:relative}
+.donut::before{content:"";position:absolute;inset:24px;background:#151f2a;border-radius:50%}
+.donut-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center;z-index:1;font-size:11px;color:#8394a5}
+.donut-center b{font-size:22px;color:#fff;line-height:1.1}
+.mix-legend{font-size:13px;color:#bcc6ce}
+.mix-legend div{margin:9px 0}
+.mix-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-left:7px}
+.margin-list{padding-top:5px}
+.margin-row{margin:11px 0}
+.margin-label{display:flex;justify-content:space-between;font-size:12px;color:#9fb0bf;margin-bottom:5px}
+.margin-label b{color:#e8f0f4}
+.margin-track{height:20px;background:#0b131b;border:1px solid #273746;border-radius:6px;overflow:hidden;direction:ltr}
+.margin-fill{height:100%;background:linear-gradient(90deg,#0f817d,#20c9c1)}
+.margin-fill.warning{background:linear-gradient(90deg,#b7831d,#f0b43f)}
+.sources{margin-top:16px;background:#111923;border:1px solid #273544;border-radius:14px;padding:13px 17px;animation:cardIn .6s .3s backwards}
+.sources h3{font-size:14px;margin:0 0 7px}
+.sources ol{margin:0;padding-right:20px;color:#8193a4;font-size:11px;columns:2;column-gap:40px}
+.sources a{color:#5fb9b4;text-decoration:none}
+.footer{text-align:center;color:#66798b;font-size:10px;margin-top:12px;line-height:1.9}
+.mini-edit{border:1px solid #5b4919;background:#29220f;color:#f0c75b;border-radius:6px;padding:1px 8px;cursor:pointer;font:inherit;font-size:12px;margin-right:7px;vertical-align:2px}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 6px var(--green)}50%{box-shadow:0 0 16px 3px var(--green)}}
+@keyframes valFlash{0%{background:rgba(243,179,60,.32);border-radius:6px}100%{background:transparent}}
+.flash{animation:valFlash 3s ease-out;display:inline-block;padding:0 3px}
+.ring{position:relative;display:none;width:28px;height:28px;margin-left:8px;vertical-align:middle}
+.ring svg{width:28px;height:28px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:3.4}
+.ring .rbg{stroke:#3d3320}
+.ring .arc{stroke:#f3c95c;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:9px;color:#f3c95c;font-weight:700}
+@media(max-width:1180px){.question-grid{grid-template-columns:1fr 1fr}.visual-grid{grid-template-columns:1fr 1fr}.trend-card{grid-column:1/-1}}
+@media(max-width:700px){.shell{width:calc(100% - 22px)}.hero{padding-top:52px}.source-stamp{right:0;left:auto}
+.question-grid,.visual-grid{grid-template-columns:1fr}.trend-card{grid-column:auto}h1{font-size:22px}.sources ol{columns:1}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="hero">
+    <div class="source-stamp"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد کامل · نسخهٔ ۱</div>
+    <h1>داشبورد کامل <em>سکهٔ امامی و خانوادهٔ سکه</em></h1>
+    <div class="meta-row" id="metaRow">
+      <span class="pill">دلار آزاد <strong id="pillDollar">—</strong></span>
+      <a class="pill link" href="index.html">← بازگشت به داشبورد چهارکادره</a>
+      <span class="pill muted">منبع: TGJU.org · بروزرسانی هر ۶۰ ثانیه</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-heading"><strong>شش عدد اصلی سکه</strong><span></span></div>
+    <div class="question-grid">
+      <article class="question-card"><span class="q-number">۱</span>
+<div class="q-head"><h2>سکهٔ امامی</h2><span class="status" id="c1S">—</span></div>
+<div class="big-number"><span id="c1V">—</span> <small>ریال</small></div>
+<div class="sub-number" id="c1Sub">—</div><div class="gauge"><div class="gauge-fill" id="c1F" style="width:0%"></div><span class="gauge-marker" id="c1M" style="left:0%"><span class="marker-text">الان</span></span></div><div class="scale"><span id="c1Lo">—</span><span id="c1Hi">—</span></div>
+<p class="card-copy" id="c1C">—</p></article>
+      <article class="question-card"><span class="q-number">۲</span>
+<div class="q-head"><h2>حباب سکهٔ امامی</h2><span class="status" id="c2S">—</span></div>
+<div class="big-number"><span id="c2V">—</span> <small>نسبت به طلای درون سکه</small></div>
+<div class="sub-number" id="c2Sub">—</div><div class="gauge"><div class="gauge-fill" id="c2F" style="width:0%"></div><span class="gauge-marker" id="c2M" style="left:0%"><span class="marker-text">الان</span></span></div><div class="scale"><span id="c2Lo">—</span><span id="c2Hi">—</span></div>
+<p class="card-copy" id="c2C">—</p></article>
+      <article class="question-card"><span class="q-number">۳</span>
+<div class="q-head"><h2>گواهی سپردهٔ سکه</h2><span class="status" id="c3S">—</span></div>
+<div class="big-number"><span id="c3V">—</span> <small>ریال</small></div>
+<div class="sub-number" id="c3Sub">—</div><div class="mini-bars" id="c3bars"></div>
+<p class="card-copy" id="c3C">—</p></article>
+    </div>
+    <div class="question-grid">
+      <article class="question-card"><span class="q-number">۴</span>
+<div class="q-head"><h2>سکهٔ بهار آزادی</h2><span class="status" id="c4S">—</span></div>
+<div class="big-number"><span id="c4V">—</span> <small>ریال</small></div>
+<div class="sub-number" id="c4Sub">—</div><div class="mini-bars" id="c4bars"></div>
+<p class="card-copy" id="c4C">—</p></article>
+      <article class="question-card"><span class="q-number">۵</span>
+<div class="q-head"><h2>نیم و ربع و گرمی</h2><span class="status" id="c5S">—</span></div>
+<div class="big-number"><span id="c5V">—</span> <small>ریال (نیم‌سکه)</small></div>
+<div class="sub-number" id="c5Sub">—</div><div class="mini-bars" id="c5bars"></div>
+<p class="card-copy" id="c5C">—</p></article>
+      <article class="question-card"><span class="q-number">۶</span>
+<div class="q-head"><h2>ارزش طلای درون سکه</h2><span class="status" id="c6S">—</span></div>
+<div class="big-number"><span id="c6V">—</span> <small>ریال (محاسباتی)</small></div>
+<div class="sub-number" id="c6Sub">—</div><div class="mini-bars" id="c6bars"></div>
+<p class="card-copy" id="c6C">—</p></article>
+    </div>
+  </section>
+  <section class="visual-grid">
+    <article class="viz-card trend-card"><div class="viz-head"><h3>روند هفت‌ماههٔ سکهٔ امامی</h3><span class="tiny-tag">پایان هر ماه شمسی · میلیون تومان</span></div>
+    <div class="chart-wrap"><svg id="trendSvg" viewBox="0 0 800 180"></svg></div>
+    <div class="note-line"><b>از کجا:</b> تاریخچهٔ TGJU برای sekee</div></article>
+    <article class="viz-card"><div class="viz-head"><h3>ترکیب قیمت سکه</h3><span class="tiny-tag">طلا + حباب</span></div>
+    <div class="mix-body"><div class="donut" id="bubbleDonut"><div class="donut-center"><b id="donutValue">—</b>حباب</div></div>
+    <div class="mix-legend"><div><i style="background:#0b918d"></i>ارزش طلا — <span id="legIntr">—</span></div><div><i style="background:#f3b33c"></i>حباب — <span id="legBub">—</span></div></div></div>
+    <div class="note-line"><b>از کجا:</b> ۸٫۱۳۳ گرم × ۰٫۹ ÷ ۰٫۷۵ × گرم ۱۸</div></article>
+    <article class="viz-card"><div class="viz-head"><h3>حباب انواع سکه</h3><span class="tiny-tag">درصد</span></div>
+    <div class="margin-list" id="gapBars"></div>
+    <div class="note-line"><b>از کجا:</b> هر سکه نسبت به ارزش طلای خودش</div></article>
+  </section>
+  <section class="sources"><h3>منابع</h3><ol>
+    <li><a href="https://www.tgju.org/profile/sekee">سکهٔ امامی</a></li><li><a href="https://www.tgju.org/profile/sekeb">بهار آزادی</a></li>
+    <li><a href="https://www.tgju.org/profile/retail_nim">نیم‌سکه</a></li><li><a href="https://www.tgju.org/profile/retail_rob">ربع‌سکه</a></li>
+    <li><a href="https://www.tgju.org/profile/retail_gerami">سکهٔ گرمی</a></li>
+    <li><a href="https://www.tgju.org/profile/ime_certificate_coin">گواهی سپردهٔ سکه</a></li>
+    <li><a href="https://www.tgju.org/profile/geram18">گرم ۱۸ (مبنای ارزش ذاتی)</a></li></ol></section>
+
+  <footer class="footer">این داشبورد آموزشی است، نه توصیهٔ خرید و فروش · دادهٔ زندهٔ TGJU.org</footer>
+</main>
+<script>window.__BOOT__ = {"fetched_at": "2026-08-22 19:55 (تهران)", "current": {"silver": {"p": 68.95, "dp": 0.13, "dt": "low", "ts": "2026-08-22 03:28:27"}, "silver_999": {"p": 4472400.0, "dp": 1.78, "dt": "high", "ts": "2026-08-22 19:55:31"}, "ime_certificate_silver_bars": {"p": 4550000.0, "dp": 8.35, "dt": "high", "ts": "2026-08-22 17:02:09"}, "base_global_copper2": {"p": 6.5795, "dp": 0.06, "dt": "high", "ts": "2026-08-22 04:51:29"}, "price_dollar_rl": {"p": 1927000.0, "dp": 1.74, "dt": "high", "ts": "2026-08-22 19:54:50"}, "ons": {"p": 4607.35, "dp": 0.08, "dt": "low", "ts": "2026-08-22 01:51:55"}, "geram18": {"p": 210303000.0, "dp": 5.93, "dt": "high", "ts": "2026-08-22 19:55:33"}, "geram24": {"p": 280401000.0, "dp": 5.93, "dt": "high", "ts": "2026-08-22 19:55:33"}, "mesghal": {"p": 910960000.0, "dp": 5.93, "dt": "high", "ts": "2026-08-22 19:55:36"}, "ime_certificate_gold_bars": {"p": 28000110.0, "dp": 6.91, "dt": "high", "ts": "2026-08-22 17:01:52"}, "ime_indices_shemsh_tala_kham": {"p": 346295354.0, "dp": 0, "dt": "", "ts": "2026-08-22 19:51:32"}, "sekee": {"p": 2090100000.0, "dp": 4.75, "dt": "high", "ts": "2026-08-22 19:55:32"}, "sekeb": {"p": 2060100000.0, "dp": 5.56, "dt": "high", "ts": "2026-08-22 19:55:31"}, "retail_nim": {"p": 1069000000.0, "dp": 5.42, "dt": "high", "ts": "2026-08-22 14:22:33"}, "retail_rob": {"p": 583000000.0, "dp": 4.48, "dt": "high", "ts": "2026-08-22 13:55:38"}, "retail_gerami": {"p": 307000000.0, "dp": 5.14, "dt": "high", "ts": "2026-08-22 13:55:35"}, "ime_certificate_coin": {"p": 2070000000.0, "dp": 6.27, "dt": "high", "ts": "2026-08-22 17:01:30"}, "ime_indices_sandogh_tala": {"p": 17625.0, "dp": 6.27, "dt": "high", "ts": "2026-08-22 19:51:34"}, "ime_fund_goldis": {"p": 40876.0, "dp": 6.31, "dt": "high", "ts": "2026-08-22 19:51:36"}, "ime_fund_rosgold": {"p": 19479.0, "dp": 5.9, "dt": "high", "ts": "2026-08-22 19:51:36"}, "ime_fund_golda": {"p": 18991.0, "dp": 5.61, "dt": "high", "ts": "2026-08-22 19:51:34"}, "ime_fund_jaam_tala": {"p": 18795.0, "dp": 5.39, "dt": "high", "ts": "2026-08-22 19:51:35"}, "base_global_zinc": {"p": 3823.15, "dp": 0, "dt": "", "ts": "2026-08-21 00:00:00"}, "base_global_steel": {"p": 3061.0, "dp": 0, "dt": "", "ts": "2026-08-21 00:00:00"}, "ratio_silver": {"p": 66.75, "dp": 0.1, "dt": "low", "ts": "2026-08-22 01:09:36"}}, "history": {"ons": [{"ym": "1404/11", "v": 4981.78}, {"ym": "1404/12", "v": 4656.69}, {"ym": "1405/01", "v": 4768.36}, {"ym": "1405/02", "v": 4544.17}, {"ym": "1405/03", "v": 4160.26}, {"ym": "1405/04", "v": 4008.29}, {"ym": "1405/05", "v": 4519.32}], "geram18": [{"ym": "1404/11", "v": 194249000.0}, {"ym": "1404/12", "v": 175761000.0}, {"ym": "1405/01", "v": 171452000.0}, {"ym": "1405/02", "v": 192179000.0}, {"ym": "1405/03", "v": 161023000.0}, {"ym": "1405/04", "v": 184445000.0}, {"ym": "1405/05", "v": 197576000.0}], "sekee": [{"ym": "1404/11", "v": 1979950000.0}, {"ym": "1404/12", "v": 1900000000.0}, {"ym": "1405/01", "v": 1739900000.0}, {"ym": "1405/02", "v": 1924900000.0}, {"ym": "1405/03", "v": 1645100000.0}, {"ym": "1405/04", "v": 1899800000.0}, {"ym": "1405/05", "v": 1995100000.0}], "base_global_copper2": [{"ym": "1404/11", "v": 5.7643}, {"ym": "1404/12", "v": 5.5238}, {"ym": "1405/01", "v": 6.013}, {"ym": "1405/02", "v": 6.3398}, {"ym": "1405/03", "v": 6.3833}, {"ym": "1405/04", "v": 6.2423}, {"ym": "1405/05", "v": 6.4758}], "silver": [{"ym": "1404/11", "v": 77.2075}, {"ym": "1404/12", "v": 72.652}, {"ym": "1405/01", "v": 79.237}, {"ym": "1405/02", "v": 75.881}, {"ym": "1405/03", "v": 64.925}, {"ym": "1405/04", "v": 56.777}, {"ym": "1405/05", "v": 68.071}]}, "range": {"ons": {"lo": 3248.3701, "hi": 5190.08}, "geram18": {"lo": 64423000.0, "hi": 201237000.0}, "sekee": {"lo": 732900000.0, "hi": 2089950000.0}, "base_global_copper2": {"lo": 4.4835, "hi": 6.605}, "silver": {"lo": 32.4933, "hi": 94.4252}}};</script>
+<script>
+(function(){
+"use strict";
+
+var OZ=31.1035, LB=0.45359237, FD='۰۱۲۳۴۵۶۷۸۹';
+var CALLS=['https://call2.tgju.org/ajax.json','https://call3.tgju.org/ajax.json','https://call4.tgju.org/ajax.json'];
+var HB='https://api.tgju.org/v1/market/indicator/summary-table-data/';
+var MONTHS={'01':'فروردین','02':'اردیبهشت','03':'خرداد','04':'تیر','05':'مرداد','06':'شهریور','07':'مهر','08':'آبان','09':'آذر','10':'دی','11':'بهمن','12':'اسفند'};
+function $(id){return document.getElementById(id);}
+function fa(n,fr){if(n===null||n===undefined||isNaN(n))return '—';return Number(n).toLocaleString('fa-IR',{maximumFractionDigits:fr===undefined?0:fr});}
+function pct(n,fr){return fa(n,fr===undefined?1:fr)+'٪';}
+function num(s){return parseFloat(String(s).replace(/,/g,''));}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function sgn(v){return v>=0?'+':'−';}
+function t(ts){ts=ts||'';if(ts.slice(11,19)==='00:00:00')return ts.slice(5,10);return ts.slice(11,16);}
+function setStatus(id,cls,txt){var el=$(id);if(el){el.className='status '+cls;el.textContent=txt;}}
+function dirStatus(dt){if(dt==='high')return{cls:'good',text:'صعودی'};if(dt==='low')return{cls:'bad',text:'نزولی'};return{cls:'mid',text:'بدون تغییر'};}
+function bubbleStatus(b){var a=Math.abs(b);if(a<3)return{cls:'good',text:'حباب کم'};if(a<=8)return{cls:'mid',text:'حباب متوسط'};return{cls:'bad',text:'حباب زیاد'};}
+function fetchJson(u){var b=(u.indexOf('?')>-1?'&':'?')+'rev='+Date.now()+Math.random().toString(36).slice(2);
+return fetch(u+b,{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();});}
+function fetchCurrent(keys){var ch=Promise.reject();
+CALLS.forEach(function(u){ch=ch.catch(function(){return fetchJson(u);});});
+return ch.then(function(j){var raw=j.current,out={};keys.forEach(function(k){var c=raw[k];if(c)out[k]={p:num(c.p),dp:c.dp||0,dt:c.dt||'',ts:c.ts||''};});return out;});}
+function fetchHistory(syms,cacheKey){try{var c=JSON.parse(localStorage.getItem(cacheKey));if(c&&Date.now()-c.t<3600000)return Promise.resolve(c.d);}catch(e){}
+return Promise.all(syms.map(function(s){return fetchJson(HB+s+'?lang=fa&order_dir=desc&length=400');})).then(function(res){
+var H={},R={};res.forEach(function(d,i){var rows=d.data||[],seen={},mon=[],cl=[];
+rows.forEach(function(r,j){var v=num(r[0]);if(j<365)cl.push(v);var ym=String(r[7]).slice(0,7);if(!seen[ym]){seen[ym]=1;mon.push({ym:ym,v:v});}});
+H[syms[i]]=mon.slice(0,7).reverse();cl.sort(function(a,b){return a-b;});var n=cl.length;
+R[syms[i]]={lo:cl[Math.floor(n*.02)],hi:cl[Math.max(Math.floor(n*.98)-1,0)]};});
+var d={history:H,range:R};try{localStorage.setItem(cacheKey,JSON.stringify({t:Date.now(),d:d}));}catch(e){}return d;});}
+function drawTrend(svgId,pts,pts2,fmt,fmt2){var svg=$(svgId);if(!svg)return;var n=pts.length;if(n<2){svg.innerHTML='';return;}
+var xs=[];for(var i=0;i<n;i++)xs.push(50+i*(700/(n-1)));
+function ys(v){var mn=Math.min.apply(null,v),mx=Math.max.apply(null,v);return v.map(function(x){return 150-((x-mn)/Math.max(mx-mn,1e-9))*105;});}
+var av=pts.map(function(p){return p.v;}),ay=ys(av),h='';
+h+='<defs><linearGradient id="'+svgId+'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#20d2ca" stop-opacity=".34"/><stop offset="100%" stop-color="#20d2ca" stop-opacity="0"/></linearGradient></defs>';
+function P(ya){return xs.map(function(x,i){return x+' '+ya[i].toFixed(1);}).join(' L');}
+h+='<path d="M'+P(ay)+' L'+xs[n-1]+' 168 L'+xs[0]+' 168 Z" fill="url(#'+svgId+'g)"/>';
+h+='<path d="M'+P(ay)+'" fill="none" stroke="#38d9d1" stroke-width="3"/>';
+if(pts2){var bv=pts2.map(function(p){return p.v;}),by=ys(bv);
+h+='<path d="M'+P(by)+'" fill="none" stroke="#e8b647" stroke-width="2" stroke-dasharray="6 5"/>';
+h+='<g fill="#e8b647" stroke="#0c1218" stroke-width="2">';for(var i=0;i<n;i++)h+='<circle cx="'+xs[i]+'" cy="'+by[i].toFixed(1)+'" r="3.5"/>';h+='</g>';
+h+='<g class="chart-value2" text-anchor="middle">';for(var i=0;i<n;i++)h+='<text x="'+xs[i]+'" y="'+by[i].toFixed(1)+'" dy="17">'+fmt2(bv[i])+'</text>';h+='</g>';}
+h+='<g fill="#38d9d1" stroke="#0c1218" stroke-width="3">';for(var i=0;i<n;i++)h+='<circle cx="'+xs[i]+'" cy="'+ay[i].toFixed(1)+'" r="5"/>';h+='</g>';
+h+='<g class="chart-value" text-anchor="middle">';for(var i=0;i<n;i++)h+='<text x="'+xs[i]+'" y="'+ay[i].toFixed(1)+'" dy="-12">'+fmt(av[i])+'</text>';h+='</g>';
+h+='<g class="chart-label" text-anchor="middle">';for(var i=0;i<n;i++)h+='<text x="'+xs[i]+'" y="178">'+(MONTHS[pts[i].ym.slice(5,7)]||pts[i].ym)+'</text>';h+='</g>';
+svg.innerHTML=h;}
+var IS_LIVE=false,LAST_CHECK=null,MAX_TS='',NEXT_AT=0,RING_C=2*Math.PI*15.5,FLASH_PREV={};
+function setLive(on,label){IS_LIVE=on;var d=$('liveDot');if(d)d.className='live-dot'+(on?'':' off');if(label)$('stampText').textContent=label;}
+function stampLine(){return 'زنده · سرکشی '+(LAST_CHECK?LAST_CHECK.toTimeString().slice(0,8):'—')+' · تازه‌ترین قیمت TGJU: '+(MAX_TS?MAX_TS.slice(5,16):'—')+' تهران';}
+function flashChanged(ids){ids.forEach(function(id){var el=$(id);if(!el)return;var v=el.textContent;
+if(FLASH_PREV[id]!==undefined&&FLASH_PREV[id]!==v&&el.classList){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');}FLASH_PREV[id]=v;});}
+setInterval(function(){if(!IS_LIVE||!LAST_CHECK)return;var s=Math.max(0,Math.round((NEXT_AT-Date.now())/1000));
+$('stampText').textContent=stampLine();var w=$('ringWrap');if(w&&w.style)w.style.display='inline-block';
+var a=$('ringArc');if(a&&a.style){a.style.strokeDasharray=RING_C;a.style.strokeDashoffset=RING_C*(1-s/60);}
+var nn=$('ringNum');if(nn)nn.textContent=fa(s);},1000);
+
+
+var KEYS=['sekee','sekeb','retail_nim','retail_rob','retail_gerami','ime_certificate_coin','geram18','price_dollar_rl','ons'];
+function render(cur,H,R){
+var em=cur.sekee.p,g18=cur.geram18.p,usd=cur.price_dollar_rl.p;
+var intr=9.7596*g18, bub=(em/intr-1)*100;
+var cert=cur.ime_certificate_coin?cur.ime_certificate_coin.p:null;
+var certBub=cert?(cert/intr-1)*100:null, certGap=cert?(cert/em-1)*100:null;
+var beh=cur.sekeb?cur.sekeb.p:null, behBub=beh?(beh/intr-1)*100:null;
+var nim=cur.retail_nim?cur.retail_nim.p:null, rob=cur.retail_rob?cur.retail_rob.p:null, ger=cur.retail_gerami?cur.retail_gerami.p:null;
+var nimBub=nim?(nim/(intr/2)-1)*100:null, robBub=rob?(rob/(intr/4)-1)*100:null, gerBub=ger?(ger/(1.2*g18)-1)*100:null;
+$('pillDollar').textContent=fa(usd)+' ریال';
+var s1=dirStatus(cur.sekee.dt);setStatus('c1S',s1.cls,s1.text+' '+pct(Math.abs(cur.sekee.dp)));
+$('c1V').textContent=fa(em);
+$('c1Sub').textContent=fa(em/10)+' تومان · ساعت قیمت: '+t(cur.sekee.ts);
+var r1=R.sekee,p1=clamp((em-r1.lo)/(r1.hi-r1.lo)*100,0,100);
+$('c1F').style.width=p1+'%';$('c1M').style.left=p1+'%';$('c1Lo').textContent=fa(r1.lo/1e9,2)+'B';$('c1Hi').textContent=fa(r1.hi/1e9,2)+'B';
+$('c1C').innerHTML='سکهٔ طرح جدید (امامی) مرجع بازار سکه است. نوار، جای امروز در بازهٔ یک سال اخیر است.';
+var s2=bubbleStatus(bub);setStatus('c2S',s2.cls,s2.text);
+$('c2V').textContent=sgn(bub)+pct(Math.abs(bub),2);
+$('c2Sub').textContent='ارزش طلای سکه: '+fa(intr,0)+' ریال';
+var p2=clamp(Math.abs(bub)/15*100,0,100);$('c2F').style.width=p2+'%';$('c2F').className='gauge-fill warm';$('c2M').style.left=p2+'%';
+$('c2Lo').textContent='0%';$('c2Hi').textContent='15%';
+$('c2C').innerHTML='حباب یعنی چند درصد بیشتر از ارزش طلای درون سکه می‌پردازی؛ در هیجان بازار بزرگ و در آرامش کوچک می‌شود.';
+setStatus('c3S',certGap===null?'mid':(certGap<=0?'good':'mid'),certGap===null?'—':(certGap<=0?'ارزان‌تر از بازار':'گران‌تر از بازار'));
+$('c3V').textContent=cert?fa(cert):'—';
+$('c3Sub').textContent=cert?('حباب گواهی: '+sgn(certBub)+pct(Math.abs(certBub),1)+' · '+t(cur.ime_certificate_coin.ts)):'—';
+$('c3bars').innerHTML='<div class="mini-row"><span>گواهی</span><span class="track"><span class="fill" style="width:'+(cert?clamp(cert/em*100,4,100):0)+'%"></span></span><b>'+(cert?fa(cert):'—')+'</b></div>'+
+'<div class="mini-row"><span>بازار</span><span class="track"><span class="fill warm" style="width:100%"></span></span><b>'+fa(em)+'</b></div>';
+$('c3C').innerHTML='گواهی سپردهٔ سکه یعنی سکهٔ فیزیکی در خزانهٔ بورس کالا؛ اختلاف با بازار: <b>'+(certGap===null?'—':sgn(certGap)+pct(Math.abs(certGap),1))+'</b>.';
+setStatus('c4S',behBub===null?'mid':bubbleStatus(behBub).cls,behBub===null?'—':'حباب '+sgn(behBub)+pct(Math.abs(behBub),1));
+$('c4V').textContent=beh?fa(beh):'—';
+$('c4Sub').textContent=beh?(fa(beh/10)+' تومان · '+t(cur.sekeb.ts)):'—';
+$('c4bars').innerHTML='<div class="mini-row"><span>بهار</span><span class="track"><span class="fill" style="width:'+(beh?clamp(beh/em*100,4,100):0)+'%"></span></span><b>'+(beh?fa(beh):'—')+'</b></div>'+
+'<div class="mini-row"><span>امامی</span><span class="track"><span class="fill warm" style="width:100%"></span></span><b>'+fa(em)+'</b></div>';
+$('c4C').innerHTML='بهار آزادی طرح قدیم است؛ وزن و عیارش با امامی یکی است ولی معمولاً کمی ارزان‌تر معامله می‌شود.';
+setStatus('c5S','mid','بازار خرد');
+$('c5V').textContent=nim?fa(nim):'—';
+$('c5Sub').textContent='ربع: '+(rob?fa(rob):'—')+' · گرمی: '+(ger?fa(ger):'—');
+var mx5=Math.max(nim||0,rob||0,ger||0);
+$('c5bars').innerHTML=[['نیم',nim],['ربع',rob],['گرمی',ger]].map(function(x){return x[1]?'<div class="mini-row"><span>'+x[0]+'</span><span class="track"><span class="fill" style="width:'+clamp(x[1]/mx5*100,4,100)+'%"></span></span><b>'+fa(x[1])+'</b></div>':'';}).join('');
+$('c5C').innerHTML='سکه‌های کوچک‌تر همیشه حباب بیشتری دارند چون خریدارِ خرد بیشتری دارند: نیم '+(nimBub===null?'—':sgn(nimBub)+pct(Math.abs(nimBub),0))+'، ربع '+(robBub===null?'—':sgn(robBub)+pct(Math.abs(robBub),0))+'، گرمی '+(gerBub===null?'—':sgn(gerBub)+pct(Math.abs(gerBub),0))+'.';
+setStatus('c6S','mid','محاسباتی');
+$('c6V').textContent=fa(intr,0);
+$('c6Sub').textContent='= ۸٫۱۳۳ × ۰٫۹ ÷ ۰٫۷۵ × '+fa(g18)+' ریال';
+$('c6bars').innerHTML='<div class="mini-row"><span>ارزش طلا</span><span class="track"><span class="fill" style="width:'+clamp(intr/em*100,4,100)+'%"></span></span><b>'+fa(intr,0)+'</b></div>'+
+'<div class="mini-row"><span>قیمت بازار</span><span class="track"><span class="fill warm" style="width:100%"></span></span><b>'+fa(em)+'</b></div>';
+$('c6C').innerHTML='هر سکه ۸٫۱۳۳ گرم طلای عیار ۹۰۰ دارد (۷٫۳۲ گرم طلای خالص). هرچه بازار از این عدد دورتر، حباب بزرگ‌تر.';
+drawTrend('trendSvg',H.sekee,null,function(v){return fa(v/1e7,0);});
+var share=clamp(Math.abs(bub)/(100+Math.max(bub,0))*100,0,100);
+var d=$('bubbleDonut');if(d&&d.style)d.style.background='conic-gradient(#f3b33c 0 '+share+'%, #0b918d '+share+'% 100%)';
+$('donutValue').textContent=sgn(bub)+pct(Math.abs(bub),1);
+$('legIntr').textContent=fa(intr,0)+' ریال';$('legBub').textContent=sgn(bub)+fa(Math.abs(em-intr),0)+' ریال';
+var rows=[['امامی',bub],['بهار آزادی',behBub],['نیم‌سکه',nimBub],['ربع‌سکه',robBub],['گرمی',gerBub],['گواهی سکه',certBub]];
+$('gapBars').innerHTML=rows.map(function(r){if(r[1]===null)return '';return '<div class="margin-row"><div class="margin-label"><span>'+r[0]+'</span><b>'+sgn(r[1])+pct(Math.abs(r[1]),1)+'</b></div><div class="margin-track"><div class="margin-fill warning" style="width:'+clamp(Math.abs(r[1])/40*100,2,100)+'%"></div></div></div>';}).join('');
+var mxTs='';KEYS.forEach(function(k){if(cur[k]&&cur[k].ts>mxTs)mxTs=cur[k].ts;});
+flashChanged(['c1V','c2V','c3V','c4V','c5V','c6V','pillDollar','donutValue']);
+return mxTs;}
+function refresh(){
+var hp=fetchHistory(['sekee'],'coin.hist').catch(function(){return {history:window.__BOOT__.history,range:window.__BOOT__.range};});
+return Promise.all([fetchCurrent(KEYS),hp]).then(function(res){
+var cur=res[0],h=res[1];
+var H={sekee:h.history.sekee},R={sekee:h.range.sekee};
+if(H.sekee.length)H.sekee[H.sekee.length-1].v=cur.sekee.p;
+MAX_TS=render(cur,H,R);LAST_CHECK=new Date();NEXT_AT=Date.now()+60000;setLive(true,stampLine());
+}).catch(function(){var B=window.__BOOT__;if(B){render(B.current,{sekee:B.history.sekee},{sekee:B.range.sekee});setLive(false,'⚠ اتصال برقرار نشد — دادهٔ ذخیره‌شده · '+B.fetched_at);}});}
+var B=window.__BOOT__;
+render(B.current,{sekee:B.history.sekee},{sekee:B.range.sekee});
+setLive(false,'دادهٔ ذخیره‌شده · '+B.fetched_at);
+refresh();setInterval(refresh,60000);
+$('refreshBtn').addEventListener('click',refresh);
+
+})();
+</script>
+</body>
+</html>
