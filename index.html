@@ -111,6 +111,42 @@ h1 em{font-style:normal;color:var(--amber)}
 .ring .rbg{stroke:#3d3320}
 .ring .arc{stroke:#f3c95c;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
 .ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:10px;color:#f3c95c;font-weight:700}
+/* ===== بخش‌های تحلیلی زیر کادرها ===== */
+.ideas-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;margin-top:16px}
+.idea-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:16px;padding:15px 18px;animation:cardIn .6s .45s cubic-bezier(.16,1,.3,1) backwards}
+.idea-card h3{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:9px}
+.idea-card h3::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+.rank-row{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px dashed #223140;font-size:13px}
+.rank-row:last-child{border-bottom:0}
+.rank-row .rk{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:#182330;border:1px solid #293848;color:#9fb0bf;font-size:12px;flex:0 0 auto}
+.rank-row:first-of-type .rk{background:#2b2515;border-color:#745a18;color:#f3c95c}
+.rank-row .rname{flex:1;color:#e3e8ec}
+.rank-row .rwhy{font-size:10px;color:#75889a;display:block}
+.i-note{font-size:10px;color:#7f91a2;border-top:1px dashed #2d3b49;margin:10px 0 0;padding-top:8px}
+.calc-row{display:flex;gap:8px;margin-bottom:10px}
+.calc-row input{flex:1;background:#0c141c;border:1px solid #273746;border-radius:9px;color:#f0f4f7;font:inherit;font-size:14px;padding:9px 13px;direction:ltr;text-align:left}
+.calc-row input:focus{outline:1px solid #66501b}
+.calc-out-row{display:flex;justify-content:space-between;align-items:center;padding:7px 4px;border-bottom:1px dashed #223140;font-size:13px;color:#a4b0bc}
+.calc-out-row:last-child{border-bottom:0}
+.calc-out-row b{color:#f4f8fa;font-size:15px;direction:ltr}
+.invest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+.invest-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:14px;padding:13px 16px;animation:cardIn .6s .55s cubic-bezier(.16,1,.3,1) backwards}
+.invest-card h4{margin:0 0 8px;font-size:14px;display:flex;align-items:center;gap:8px}
+.invest-card h4 i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+.invest-card ul{margin:0;padding-right:16px;font-size:11px;color:#9eafbd;line-height:2}
+.invest-card ul b{color:#dce5ec}
+.invest-card .best{color:#80efb8}
+.perf-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:16px;padding:15px 18px;margin-top:16px;animation:cardIn .6s .65s cubic-bezier(.16,1,.3,1) backwards}
+.perf-card h3{margin:0 0 4px;font-size:16px}
+.perf-card .p-sub{font-size:11px;color:#7f91a2;margin:0 0 10px}
+.perf-row{margin:10px 0}
+.perf-label{display:flex;justify-content:space-between;font-size:12px;color:#9fb0bf;margin-bottom:5px}
+.perf-label b{color:#e8f0f4}
+.perf-track{height:20px;background:#0b131b;border:1px solid #273746;border-radius:6px;overflow:hidden;direction:ltr}
+.perf-fill{height:100%;background:linear-gradient(90deg,#0f817d,#20c9c1);transition:width .8s cubic-bezier(.16,1,.3,1)}
+.perf-fill.gold{background:linear-gradient(90deg,#b7831d,#f0b43f)}
+.perf-fill.neg{background:linear-gradient(90deg,#8a2f35,#ff6262)}
+@media(max-width:1000px){.ideas-grid{grid-template-columns:1fr}.invest-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:1000px){.metal-grid{grid-template-columns:1fr}h1{font-size:22px}.sources ol{columns:1}}
 @media(max-width:700px){
   .shell{width:calc(100% - 20px)}
@@ -129,6 +165,7 @@ h1 em{font-style:normal;color:var(--amber)}
   .pill{font-size:12px;padding:5px 11px}
   .pill.big strong{font-size:15px}
   .full-link{font-size:10px;padding:2px 9px}
+  .invest-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -138,7 +175,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۰</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۱</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -172,6 +209,29 @@ h1 em{font-style:normal;color:var(--amber)}
       <div class="m-note" id="note_coin"></div>
     </section>
   </div>
+
+  <section class="ideas-grid">
+    <article class="idea-card">
+      <h3>الان کدام به ارزش واقعی‌اش نزدیک‌تر است؟</h3>
+      <div id="rankList"></div>
+      <p class="i-note">این فقط مقایسهٔ «فاصله از ارزش ذاتی» است — حباب کمتر یعنی ورود منصفانه‌تر، نه اینکه حتماً رشد می‌کند. تصمیم نهایی همیشه با خودتان است.</p>
+    </article>
+    <article class="idea-card">
+      <h3>با پول شما چقدر می‌شود خرید؟</h3>
+      <div class="calc-row"><input id="calcIn" type="text" inputmode="numeric" placeholder="مبلغ به تومان — مثلاً 100000000"><button id="calcBtn" class="refresh-btn">حساب کن</button></div>
+      <div id="calcOut"><div class="calc-out-row"><span>مبلغی وارد کنید تا با قیمت‌های لحظه‌ای حساب شود…</span></div></div>
+      <p class="i-note">محاسبه با قیمت لحظه‌ای بازار و بدون کارمزد، اجرت و مالیات است.</p>
+    </article>
+  </section>
+
+  <div class="section-heading" style="margin-top:18px"><strong>روی هر کدام چطور می‌شود سرمایه‌گذاری کرد؟</strong><span>ابزارها از کم‌هزینه به پرهزینه — گزینهٔ سبز یعنی الان به‌صرفه‌تر</span></div>
+  <section class="invest-grid" id="investGrid"></section>
+
+  <section class="perf-card">
+    <h3>مسابقهٔ ۷ ماه اخیر — کدام بیشتر رشد کرده؟</h3>
+    <p class="p-sub">درصد تغییر از ابتدای بازهٔ هفت‌ماهه تا همین لحظه · دارایی‌های داخلی به ریال، مس به دلار جهانی</p>
+    <div id="perfBars"><div class="calc-out-row"><span>در حال محاسبه از تاریخچهٔ TGJU…</span></div></div>
+  </section>
 
   <section class="sources">
     <h3>منابع و لینک هر قیمت (TGJU)</h3>
@@ -243,6 +303,7 @@ function fa(n, fr){ if(n===null||n===undefined||isNaN(n)) return '—';
   return Number(n).toLocaleString('fa-IR',{maximumFractionDigits:fr===undefined?0:fr}); }
 function pct(n, fr){ return fa(n, fr===undefined?1:fr)+'٪'; }
 function num(s){ return parseFloat(String(s).replace(/,/g,'')); }
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
 function t(ts){
   ts = ts || '';
   // اگر معامله روزانه است (ساعت ۰۰:۰۰) تاریخش را نشان بده نه ساعت را
@@ -405,7 +466,102 @@ function render(cur, fetchedAt){
   /* مهر داده + عیب‌یابی */
   var maxTs=''; for (var k in cur){ if(cur[k].ts>maxTs) maxTs=cur[k].ts; }
   DIAG.keyTs = {'مس جهانی':cur.cuLb.ts,'انس نقره':cur.agOz.ts,'نقره ۹۹۹':cur.ag999.ts,'انس طلا':cur.auOz.ts,'گرم ۱۸':cur.g18.ts,'سکه امامی':cur.emami.ts,'دلار':cur.usd.ts};
+  renderIdeas(cur,{ag:agBub,au:auBub,coin:coinBub,cu:cuBub,agCert:agCertBub,auCert:auCertBub,coinCert:coinCertBub,certGap:coinCertGap,gs:cur.gs?cur.gs.p:null,imeRial:imeRial,cuKgRial:cuKgRial});
   return maxTs;
+}
+
+/* ===== بخش‌های تحلیلی زیر کادرها ===== */
+var CALC = null; // آخرین قیمت‌ها برای ماشین‌حساب
+function renderIdeas(cur,B){
+  CALC = {ag999:cur.ag999.p, g18:cur.g18.p, emami:cur.emami.p,
+          agCert:cur.agCert?cur.agCert.p:null, auCert:cur.auCert?cur.auCert.p:null,
+          katod:B.imeRial, usd:cur.usd.p};
+  /* رتبه‌بندی حباب */
+  var items=[
+    {name:'مس (کاتد بورس کالا)', b:B.cu, why:'نسبت به معادل جهانی×دلار', href:'copper.html'},
+    {name:'نقره (گرم ۹۹۹)', b:B.ag, why:'نسبت به انس جهانی×دلار', href:'silver.html'},
+    {name:'طلا (گرم ۱۸)', b:B.au, why:'نسبت به انس جهانی×دلار', href:'gold.html'},
+    {name:'سکهٔ امامی', b:B.coin, why:'نسبت به ارزش طلای درون سکه', href:'coin.html'}
+  ].filter(function(x){return x.b!==null&&isFinite(x.b);});
+  items.sort(function(a,b){return a.b-b.b;});
+  $('rankList').innerHTML=items.map(function(x,i){
+    var a=Math.abs(x.b);
+    var cls = x.b<=0?'good':(a<3?'good':(a<=8?'mid':'bad'));
+    var lbl = x.b<=0?sgn(x.b)+pct(a,1)+' زیر ذاتی':sgn(x.b)+pct(a,1);
+    return '<a class="rank-row" href="'+x.href+'" style="text-decoration:none;cursor:pointer"><span class="rk">'+fa(i+1)+'</span><span class="rname">'+x.name+'<span class="rwhy">'+x.why+'</span></span><span class="chip '+cls+'">'+lbl+'</span></a>';
+  }).join('');
+  /* ابزارهای سرمایه‌گذاری */
+  function best(cond,txt){return cond?'<b class="best">'+txt+' ✓</b>':txt;}
+  var gsNote = B.gs!==null ? (B.gs>80?'نسبت طلا/نقره '+fa(B.gs,0)+' — تاریخی یعنی نقره نسبت به طلا ارزان مانده.':'نسبت طلا/نقره: '+fa(B.gs,0)) : '';
+  $('investGrid').innerHTML=
+   '<article class="invest-card"><h4><i style="background:#c9d6e2;box-shadow:0 0 10px #c9d6e2"></i>نقره</h4><ul>'+
+   '<li>'+best(B.agCert!==null&&B.agCert<B.ag,'گواهی سپردهٔ نقره — حباب '+(B.agCert===null?'—':sgn(B.agCert)+pct(Math.abs(B.agCert),1)))+' (کد بورسی، بدون اجرت)</li>'+
+   '<li>صندوق کالایی نقره (خرید مثل سهام)</li>'+
+   '<li>نقرهٔ فیزیکی ۹۹۹ — حباب '+sgn(B.ag)+pct(Math.abs(B.ag),1)+'</li>'+
+   '<li>آپشن شمش نقره (اهرم‌دار — فقط حرفه‌ای‌ها)</li>'+
+   '<li style="color:#75889a">'+gsNote+'</li></ul></article>'+
+   '<article class="invest-card"><h4><i style="background:#f3b33c;box-shadow:0 0 10px #f3b33c"></i>طلا</h4><ul>'+
+   '<li>'+best(B.auCert!==null&&B.auCert<0,'گواهی سپردهٔ شمش — حباب '+(B.auCert===null?'—':sgn(B.auCert)+pct(Math.abs(B.auCert),1)))+'</li>'+
+   '<li>صندوق‌های طلا (گلدیس، رزگلد، …)</li>'+
+   '<li>طلای آب‌شده — بدون اجرت ساخت</li>'+
+   '<li>زیورآلات ۱۸ — اجرت‌دار؛ برای سرمایه‌گذاری مناسب نیست</li></ul></article>'+
+   '<article class="invest-card"><h4><i style="background:#ffd76a;box-shadow:0 0 10px #ffd76a"></i>سکه</h4><ul>'+
+   '<li>'+best(B.certGap!==null&&B.certGap<0,'گواهی سپردهٔ سکه — '+(B.certGap===null?'—':pct(Math.abs(B.certGap),1)+(B.certGap<0?' ارزان‌تر از بازار':' گران‌تر از بازار')))+'</li>'+
+   '<li>سکهٔ فیزیکی امامی — حباب '+sgn(B.coin)+pct(Math.abs(B.coin),1)+'</li>'+
+   '<li>نیم و ربع — نقدشونده ولی حباب بیشتر</li></ul></article>'+
+   '<article class="invest-card"><h4><i style="background:#e8834a;box-shadow:0 0 10px #e8834a"></i>مس</h4><ul>'+
+   '<li>خرید خردِ مستقیم برای عموم ممکن نیست</li>'+
+   '<li>غیرمستقیم: سهام شرکت‌های مس (فملی، فباهنر، …)</li>'+
+   '<li>کاتد رینگ بورس کالا — عمده'+(B.cu!==null?' — الان '+pct(Math.abs(B.cu),1)+(B.cu<0?' زیر':' بالای')+' معادل جهانی':'')+'</li></ul></article>';
+  if ($('calcIn') && $('calcIn').value) runCalc();
+}
+
+function runCalc(){
+  if (!CALC) return;
+  var raw = String($('calcIn').value||'');
+  var en = raw.replace(/[۰-۹]/g,function(ch){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(ch);}).replace(/[^\d]/g,'');
+  if (!en){ $('calcOut').innerHTML='<div class="calc-out-row"><span>مبلغ معتبر نیست</span></div>'; return; }
+  var rial = parseFloat(en)*10; // تومان → ریال
+  function crow(l,v){return '<div class="calc-out-row"><span>'+l+'</span><b>'+v+'</b></div>';}
+  $('calcOut').innerHTML =
+    crow('نقرهٔ ۹۹۹', fa(rial/CALC.ag999,1)+' گرم')
+    + (CALC.agCert?crow('گواهی سپردهٔ نقره', fa(rial/CALC.agCert,1)+' گرم'):'')
+    + crow('طلای ۱۸ عیار', fa(rial/CALC.g18,2)+' گرم')
+    + (CALC.auCert?crow('گواهی شمش طلا', fa(rial/CALC.auCert/10,2)+' گرم شمش'):'')
+    + crow('سکهٔ امامی', fa(Math.floor(rial/CALC.emami))+' عدد + '+fa((rial%CALC.emami)/10)+' تومان باقی')
+    + (CALC.katod?crow('مس کاتد', fa(rial/CALC.katod,1)+' کیلوگرم'):'')
+    + crow('دلار (برای مقایسه)', fa(rial/CALC.usd,0)+' دلار');
+}
+
+/* عملکرد ۷ ماه اخیر */
+function loadPerf(){
+  var syms=['silver_999','geram18','sekee','base_global_copper2'];
+  var names={'silver_999':'نقرهٔ ۹۹۹ (ریالی)','geram18':'طلای ۱۸ (ریالی)','sekee':'سکهٔ امامی (ریالی)','base_global_copper2':'مس جهانی (دلاری)'};
+  var cch=null;
+  try{cch=JSON.parse(localStorage.getItem('hub.perf'));}catch(e){}
+  var p = (cch && Date.now()-cch.t<3600000) ? Promise.resolve(cch.d)
+    : Promise.all(syms.map(function(s){return fetchJson('https://api.tgju.org/v1/market/indicator/summary-table-data/'+s+'?lang=fa&order_dir=desc&length=400');}))
+      .then(function(res){
+        var d={};
+        res.forEach(function(r,i){
+          var rows=r.data||[],seen={},mon=[];
+          rows.forEach(function(x){var ym=String(x[7]).slice(0,7);if(!seen[ym]){seen[ym]=1;mon.push(num(x[0]));}});
+          mon=mon.slice(0,7).reverse();
+          d[syms[i]]={first:mon[0],last:mon[mon.length-1]};
+        });
+        try{localStorage.setItem('hub.perf',JSON.stringify({t:Date.now(),d:d}));}catch(e){}
+        return d;
+      });
+  p.then(function(d){
+    var perf=syms.map(function(s){return {s:s,chg:(d[s].last/d[s].first-1)*100};});
+    perf.sort(function(a,b){return b.chg-a.chg;});
+    var mx=Math.max.apply(null,perf.map(function(x){return Math.abs(x.chg);}));
+    $('perfBars').innerHTML=perf.map(function(x,i){
+      var neg=x.chg<0;
+      return '<div class="perf-row"><div class="perf-label"><span>'+(i===0?'🏆 ':'')+names[x.s]+'</span><b>'+sgn(x.chg)+pct(Math.abs(x.chg),1)+'</b></div>'+
+      '<div class="perf-track"><div class="perf-fill'+(neg?' neg':(i===0?' gold':''))+'" style="width:'+clamp(Math.abs(x.chg)/mx*100,3,100)+'%"></div></div></div>';
+    }).join('');
+  }).catch(function(){ $('perfBars').innerHTML='<div class="calc-out-row"><span>تاریخچه در دسترس نبود — بعداً دوباره محاسبه می‌شود.</span></div>'; });
 }
 
 function setLive(on, label){
@@ -446,8 +602,11 @@ function refresh(){
 if (window.__MBOOT__){ render(window.__MBOOT__.current); setLive(false,'دادهٔ ذخیره‌شده · '+window.__MBOOT__.fetched_at); }
 refresh();
 fetchKatod();
+loadPerf();
 setInterval(refresh, 60000); // هر ۶۰ ثانیه — طبق درخواست
 setInterval(fetchKatod, 600000); // کاتد هر ۱۰ دقیقه (قیمتش روزانه عوض می‌شود)
+var ci=$('calcBtn');if(ci&&ci.addEventListener)ci.addEventListener('click',runCalc);
+var cf=$('calcIn');if(cf&&cf.addEventListener)cf.addEventListener('keydown',function(e){if(e.key==='Enter')runCalc();});
 /* شمارش معکوس زنده — حلقهٔ گرافیکی + متن */
 var RING_C = 2*Math.PI*15.5;
 setInterval(function(){
