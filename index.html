@@ -194,7 +194,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۴</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۵</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -248,7 +248,7 @@ h1 em{font-style:normal;color:var(--amber)}
     <div class="alert-form">
       <select id="alMetric"></select>
       <select id="alOp"><option value="gt">بالاتر از</option><option value="lt">پایین‌تر از</option></select>
-      <input id="alVal" type="text" inputmode="decimal" placeholder="مقدار — مثلاً 5 یا 2100000">
+      <input id="alVal" type="text" inputmode="decimal" placeholder="مقدار — مثلاً 5.5 یا 2,100,000">
       <button id="alAdd" class="refresh-btn">➕ افزودن هشدار</button>
       <button id="alNotif" class="refresh-btn" style="border-color:#33455a;background:#16202b;color:#93a5b6">🔔 اعلان مرورگر</button>
     </div>
@@ -544,6 +544,17 @@ function initAlertUI(){
   });
   var nb=$('alNotif');
   if(nb&&nb.addEventListener) nb.addEventListener('click', askNotifPermission);
+  /* جداکنندهٔ سه‌رقمی هنگام تایپ + پشتیبانی اعشار و رقم فارسی */
+  var av=$('alVal');
+  if(av&&av.addEventListener){
+    av.addEventListener('input',function(){
+      var en=String(this.value||'').replace(/[۰-۹]/g,function(ch){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(ch);}).replace(/٫/g,'.').replace(/[^\d.]/g,'');
+      var parts=en.split('.');
+      var intPart=parts.shift();
+      var decPart=parts.length?('.'+parts.join('')):'';
+      this.value=(intPart?Number(intPart).toLocaleString('en-US'):'')+decPart;
+    });
+  }
   updateNotifBtn(); renderAlertList();
 }
 function askNotifPermission(){
