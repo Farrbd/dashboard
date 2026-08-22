@@ -134,6 +134,29 @@ h1 span{font-size:19px;color:#aebac5;font-weight:400}
 .mini-btn{border:1px solid #33455a;background:#16202b;color:#93a5b6;border-radius:6px;padding:3px 9px;cursor:pointer;font:inherit;font-size:10px}
 .diag-panel{display:none;position:absolute;left:0;top:52px;z-index:50;background:#0e161f;border:1px solid #66501b;border-radius:12px;padding:12px 15px;font-size:11px;line-height:2;color:#b8c4ce;max-width:440px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 .diag-panel b{color:#f3c95c}
+/* ===== انیمیشن‌ها ===== */
+@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.hero{animation:cardIn .5s cubic-bezier(.16,1,.3,1) backwards}
+.question-card,.viz-card{animation:cardIn .6s cubic-bezier(.16,1,.3,1) backwards;transition:transform .22s ease,border-color .22s ease}
+.question-grid .question-card:nth-child(1){animation-delay:.06s}
+.question-grid .question-card:nth-child(2){animation-delay:.14s}
+.question-grid .question-card:nth-child(3){animation-delay:.22s}
+.visual-grid .viz-card:nth-child(1){animation-delay:.1s}
+.visual-grid .viz-card:nth-child(2){animation-delay:.2s}
+.visual-grid .viz-card:nth-child(3){animation-delay:.3s}
+.dimension-card{animation:cardIn .55s .15s cubic-bezier(.16,1,.3,1) backwards}
+.question-card:hover,.viz-card:hover{transform:translateY(-3px);border-color:#3a4d63}
+@keyframes valFlash{0%{background:rgba(243,179,60,.32);border-radius:6px}100%{background:transparent}}
+.flash{animation:valFlash 3s ease-out;display:inline-block;padding:0 3px}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 6px var(--green)}50%{box-shadow:0 0 16px 3px var(--green)}}
+.live-dot{animation:dotPulse 2s infinite}
+.live-dot.off{animation:none}
+.ring{position:relative;display:none;width:28px;height:28px;margin-left:8px;vertical-align:middle}
+.ring svg{width:28px;height:28px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:3.4}
+.ring .rbg{stroke:#3d3320}
+.ring .arc{stroke:#f3c95c;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:9px;color:#f3c95c;font-weight:700}
 .funds-grid{grid-template-columns:1.5fr 1fr 1fr;margin-top:4px}
 .copper-grid{grid-template-columns:2.15fr 1.28fr;margin-top:16px}
 .opt-list{padding-top:4px}
@@ -173,9 +196,9 @@ h1 span{font-size:19px;color:#aebac5;font-weight:400}
 <main class="dashboard-shell" data-template-id="SOLI-SILVER-DASHBOARD-V1">
 
   <header class="hero">
-    <div class="source-stamp" style="cursor:pointer" title="برای عیب‌یابی کلیک کنید"><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
+    <div class="source-stamp" style="cursor:pointer" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۱۵</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد اختصاصی نقره · نسخهٔ ۷</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد اختصاصی نقره · نسخهٔ ۸</div>
     <h1>داشبورد نقره — <em>کارت سلامت بازار نقره</em> <span>(جهانی · ایران · گواهی سپرده · حباب)</span></h1>
     <div class="meta-row">
       <span class="pill">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -672,6 +695,21 @@ function render(D){
 
   /* ---- مهر داده ---- */
   $('stampText').textContent = 'TGJU · ' + (D.fetched_at || '');
+  flashChanged();
+}
+
+/* فلش مقادیر تغییرکرده — چند ثانیه هایلایت طلایی */
+var FLASH_PREV = {};
+function flashChanged(){
+  ['q1Value','q2Value','q3Value','q9Value','q5Value','q6Value','q4Value','cuValue','cuIrValue',
+   'pillDollar','pillGold','pillGS','pillFund','pillCopper','f1V','f2V','donutValue'].forEach(function(id){
+    var el = $(id); if (!el) return;
+    var v = el.textContent;
+    if (FLASH_PREV[id] !== undefined && FLASH_PREV[id] !== v && el.classList){
+      el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+    }
+    FLASH_PREV[id] = v;
+  });
 }
 
 /* نسبت ماهانهٔ مس(تن)/نقره(انس) از تاریخچه؛ برای وضعیت و میله‌ها */
@@ -1060,11 +1098,16 @@ function renderDiag(){
 if (window.__BOOT__) { render(window.__BOOT__); setLive(false, 'دادهٔ ذخیره‌شده · ' + window.__BOOT__.fetched_at); }
 refresh();
 setInterval(refresh, 15000); // هر ۱۵ ثانیه — هم‌ریتم با بروزرسانی خود سایت TGJU
-/* شمارش معکوس زنده — ثابت می‌کند داشبورد بیدار است */
+/* شمارش معکوس زنده — حلقهٔ گرافیکی */
+var RING_C = 2*Math.PI*15.5;
 setInterval(function(){
   if (!IS_LIVE || !LAST_CHECK) return;
   var s = Math.max(0, Math.round((NEXT_AT - Date.now())/1000));
-  $('stampText').textContent = stampLine() + ' · بعدی ' + s + ' ثانیه';
+  $('stampText').textContent = stampLine();
+  var w = $('ringWrap'); if (w && w.style) w.style.display = 'inline-block';
+  var arc = $('ringArc');
+  if (arc && arc.style){ arc.style.strokeDasharray = RING_C; arc.style.strokeDashoffset = RING_C*(1 - s/15); }
+  var n = $('ringNum'); if (n) n.textContent = fa(s);
 }, 1000);
 $('refreshBtn').addEventListener('click', refresh);
 var stampWrap = $('stampText') && $('stampText').parentNode;

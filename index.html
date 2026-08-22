@@ -77,6 +77,41 @@ h1 em{font-style:normal;color:var(--amber)}
 .footer{text-align:center;color:#66798b;font-size:10px;margin-top:12px;line-height:1.9}
 .diag-panel{display:none;position:absolute;left:0;top:46px;z-index:50;background:#0e161f;border:1px solid #66501b;border-radius:12px;padding:12px 15px;font-size:11px;line-height:2;color:#b8c4ce;max-width:440px;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:default;white-space:normal}
 .diag-panel b{color:#f3c95c}
+
+/* ===== انیمیشن‌ها ===== */
+@keyframes cardIn{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
+.hero{animation:cardIn .55s cubic-bezier(.16,1,.3,1) backwards}
+.metal-card{animation:cardIn .65s cubic-bezier(.16,1,.3,1) backwards;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.metal-grid .metal-card:nth-child(1){animation-delay:.08s}
+.metal-grid .metal-card:nth-child(2){animation-delay:.18s}
+.metal-grid .metal-card:nth-child(3){animation-delay:.28s}
+.metal-grid .metal-card:nth-child(4){animation-delay:.38s}
+.sources{animation:cardIn .6s .5s cubic-bezier(.16,1,.3,1) backwards}
+.metal-card:hover{transform:translateY(-4px);border-color:#3a4d63;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+/* پالس هنگام هر بروزرسانی موفق */
+@keyframes glowPulse{0%{box-shadow:0 0 0 0 rgba(32,210,202,0)}35%{box-shadow:0 0 24px 2px rgba(32,210,202,.28)}100%{box-shadow:0 0 0 0 rgba(32,210,202,0)}}
+.metal-card.updated{animation:glowPulse 1.3s ease}
+/* فلش قیمتِ تغییرکرده — چند ثانیه سبز یا قرمز */
+@keyframes flashUp{0%{background:rgba(50,211,139,.26)}55%{background:rgba(50,211,139,.12)}100%{background:transparent}}
+@keyframes flashDown{0%{background:rgba(255,98,98,.26)}55%{background:rgba(255,98,98,.12)}100%{background:transparent}}
+.m-row.up{animation:flashUp 3.5s ease-out}
+.m-row.down{animation:flashDown 3.5s ease-out}
+.tick-arrow{font-size:11px;margin-left:5px;vertical-align:1px}
+.tick-arrow.u{color:var(--green)}
+.tick-arrow.d{color:var(--red)}
+@keyframes valFlash{0%{background:rgba(243,179,60,.3);border-radius:6px}100%{background:transparent}}
+.pill strong.flash{animation:valFlash 3s ease-out;display:inline-block;padding:0 4px}
+/* نقطهٔ زندهٔ تپنده */
+@keyframes dotPulse{0%,100%{box-shadow:0 0 6px var(--green)}50%{box-shadow:0 0 16px 3px var(--green)}}
+.live-dot{animation:dotPulse 2s infinite}
+.live-dot.off{animation:none}
+/* حلقهٔ شمارش معکوس */
+.ring{position:relative;display:none;width:30px;height:30px;margin-left:9px;vertical-align:middle}
+.ring svg{width:30px;height:30px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:3.4}
+.ring .rbg{stroke:#3d3320}
+.ring .arc{stroke:#f3c95c;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:10px;color:#f3c95c;font-weight:700}
 @media(max-width:1000px){.metal-grid{grid-template-columns:1fr}.hero{padding-top:52px}.source-stamp{right:0;left:auto}h1{font-size:23px}.sources ol{columns:1}}
 </style>
 </head>
@@ -84,9 +119,9 @@ h1 em{font-style:normal;color:var(--amber)}
 <main class="shell" data-template-id="SOLI-METALS-DASHBOARD-V1">
 
   <header class="hero">
-    <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
+    <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۶</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۷</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -150,7 +185,7 @@ h1 em{font-style:normal;color:var(--amber)}
 </main>
 
 <script>
-window.__MBOOT__ = {"fetched_at": "2026-08-22 19:00 (تهران)", "current": {"cuLb": {"p": 6.5795, "dp": 0.06, "dt": "high", "ts": "2026-08-22 04:51:29"}, "agOz": {"p": 68.95, "dp": 0.13, "dt": "low", "ts": "2026-08-22 03:28:27"}, "ag999": {"p": 4434700.0, "dp": 0.93, "dt": "high", "ts": "2026-08-22 18:56:42"}, "agCert": {"p": 4550000.0, "dp": 8.35, "dt": "high", "ts": "2026-08-22 17:02:09"}, "gs": {"p": 66.75, "dp": 0.1, "dt": "low", "ts": "2026-08-22 01:09:36"}, "auOz": {"p": 4607.35, "dp": 0.08, "dt": "low", "ts": "2026-08-22 01:51:55"}, "g18": {"p": 209271000.0, "dp": 5.41, "dt": "high", "ts": "2026-08-22 18:59:30"}, "g24": {"p": 279025000.0, "dp": 5.41, "dt": "high", "ts": "2026-08-22 18:59:30"}, "auCert": {"p": 28000110.0, "dp": 6.91, "dt": "high", "ts": "2026-08-22 17:01:52"}, "shemsh": {"p": 346295354.0, "dp": 0, "dt": "", "ts": "2026-08-22 18:56:39"}, "emami": {"p": 2090200000.0, "dp": 4.75, "dt": "high", "ts": "2026-08-22 18:59:25"}, "coinCert": {"p": 2070000000.0, "dp": 6.27, "dt": "high", "ts": "2026-08-22 17:01:30"}, "usd": {"p": 1924000.0, "dp": 1.58, "dt": "high", "ts": "2026-08-22 18:59:18"}}};
+window.__MBOOT__ = {"fetched_at": "2026-08-22 19:23 (تهران)", "current": {"cuLb": {"p": 6.5795, "dp": 0.06, "dt": "high", "ts": "2026-08-22 04:51:29"}, "agOz": {"p": 68.95, "dp": 0.13, "dt": "low", "ts": "2026-08-22 03:28:27"}, "ag999": {"p": 4495200.0, "dp": 2.3, "dt": "high", "ts": "2026-08-22 19:01:44"}, "agCert": {"p": 4550000.0, "dp": 8.35, "dt": "high", "ts": "2026-08-22 17:02:09"}, "gs": {"p": 66.75, "dp": 0.1, "dt": "low", "ts": "2026-08-22 01:09:36"}, "auOz": {"p": 4607.35, "dp": 0.08, "dt": "low", "ts": "2026-08-22 01:51:55"}, "g18": {"p": 210317000.0, "dp": 5.94, "dt": "high", "ts": "2026-08-22 19:22:58"}, "g24": {"p": 280419000.0, "dp": 5.94, "dt": "high", "ts": "2026-08-22 19:22:58"}, "auCert": {"p": 28000110.0, "dp": 6.91, "dt": "high", "ts": "2026-08-22 17:01:52"}, "shemsh": {"p": 346295354.0, "dp": 0, "dt": "", "ts": "2026-08-22 19:21:36"}, "emami": {"p": 2090200000.0, "dp": 4.75, "dt": "high", "ts": "2026-08-22 19:23:01"}, "coinCert": {"p": 2070000000.0, "dp": 6.27, "dt": "high", "ts": "2026-08-22 17:01:30"}, "usd": {"p": 1926000.0, "dp": 1.69, "dt": "high", "ts": "2026-08-22 19:22:24"}}};
 
 </script>
 <script>
@@ -258,8 +293,29 @@ function fetchKatod(){
     if (LAST_CUR) render(LAST_CUR);
   }).catch(function(){ /* قیمت ذخیره‌شده با تاریخش می‌ماند */ });
 }
-function row(label, valHtml, ts){
-  return '<div class="m-row"><span class="m-l">'+label+'</span><span class="m-v">'+valHtml+'</span><span class="m-t">'+(ts?t(ts):'')+'</span></div>';
+function row(label, valHtml, ts, key, numval){
+  var cls = '', arrow = '';
+  if (key !== undefined && numval !== undefined && PREV[key] !== undefined && numval !== PREV[key]){
+    if (numval > PREV[key]){ cls = ' up';   arrow = '<span class="tick-arrow u">▲</span>'; }
+    else                   { cls = ' down'; arrow = '<span class="tick-arrow d">▼</span>'; }
+  }
+  if (key !== undefined) PREV[key] = numval;
+  return '<div class="m-row'+cls+'"><span class="m-l">'+label+'</span><span class="m-v">'+valHtml+arrow+'</span><span class="m-t">'+(ts?t(ts):'')+'</span></div>';
+}
+var PREV = {};
+function pulseCards(){ // پالس ملایم روی هر چهار کادر بعد از بروزرسانی موفق
+  ['cu','ag','au','coin'].forEach(function(k){
+    var cards = document.getElementsByClassName ? document.getElementsByClassName('metal-card '+k) : [];
+    var el = cards && cards[0];
+    if (el && el.classList){ el.classList.remove('updated'); void el.offsetWidth; el.classList.add('updated'); }
+  });
+}
+function flashPill(id, txt){ // فلش پیل دلار وقتی عوض می‌شود
+  var el = $(id); if(!el) return;
+  var changed = PREV['pill_'+id] !== undefined && PREV['pill_'+id] !== txt;
+  PREV['pill_'+id] = txt;
+  el.textContent = txt;
+  if (changed && el.classList){ el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
 }
 function v(val, unit){ return val+' <small>'+unit+'</small>'; }
 
@@ -284,7 +340,7 @@ function render(cur, fetchedAt){
   var coinCertGap = cur.coinCert ? (cur.coinCert.p/cur.emami.p-1)*100 : null; // اختلاف گواهی با بازار سکه
 
   /* دلار بالا */
-  $('pillDollar').textContent = fa(usd)+' ریال ('+fa(usd/10)+' تومان)';
+  flashPill('pillDollar', fa(usd)+' ریال ('+fa(usd/10)+' تومان)');
   $('pillDollarTs').textContent = t(cur.usd.ts);
 
   /* ---- کادر مس ---- */
@@ -293,10 +349,10 @@ function render(cur, fetchedAt){
   var cuBub = (imeRial/cuKgRial-1)*100;                               // حباب بر مبنای کاتد بورس کالا
   $('cuChip').outerHTML = gapChip(cuBub).replace('class="chip', 'id="cuChip" class="chip');
   $('rows_cu').innerHTML =
-    row('قیمت جهانی مس <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#5fb9b4;text-decoration:none;font-size:10px">(LME)</a>', v(fa(cuTon,0),'دلار / تن'), cur.cuLb.ts) +
-    row('کاتد بورس کالا (IME)', v(fa(imeRial,0),'ریال / کیلو')+'<button id="katodEdit" class="mini-edit" title="ثبت قیمت جدید حراج">✎</button>', '') +
-    row('کاتد بازار آزاد (خرده‌بار)', katodRialKg ? v(fa(katodRialKg,0),'ریال / کیلو') : '—', '') +
-    row('نسبت مس به نقره', v(fa(cuAg,1),'تن مس ÷ انس نقره'), '') +
+    row('قیمت جهانی مس <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#5fb9b4;text-decoration:none;font-size:10px">(LME)</a>', v(fa(cuTon,0),'دلار / تن'), cur.cuLb.ts, 'cu_w', Math.round(cuTon)) +
+    row('کاتد بورس کالا (IME)', v(fa(imeRial,0),'ریال / کیلو')+'<button id="katodEdit" class="mini-edit" title="ثبت قیمت جدید حراج">✎</button>', '', 'cu_ime', imeRial) +
+    row('کاتد بازار آزاد (خرده‌بار)', katodRialKg ? v(fa(katodRialKg,0),'ریال / کیلو') : '—', '', 'cu_kb', katodRialKg) +
+    row('نسبت مس به نقره', v(fa(cuAg,1),'تن مس ÷ انس نقره'), '', 'cu_r', Math.round(cuAg*10)) +
     row('حباب مس (کاتد IME به معادل جهانی)', gapChip(cuBub), '');
   var kb = $('katodEdit'); if (kb && kb.addEventListener) kb.addEventListener('click', editKatod);
   $('note_cu').innerHTML = '<b>کاتد بورس کالا:</b> '+fa(imeRial,0)+' ریال/کیلو · '+(IME_KATOD.manual?'ثبت دستی شما در '+IME_KATOD.date:'ثبت‌شده هنگام ساخت ('+IME_KATOD.date+')')+' — حراج فملی هفتگی است؛ با دکمهٔ ✎ قیمت جدید <a href="https://www.ime.co.ir" style="color:#5fb9b4;text-decoration:none">ime.co.ir</a> را ثبت کنید · <b>خرده‌بار:</b> <a href="'+KATOD_URL+'" style="color:#5fb9b4;text-decoration:none">iranzayeat.com</a> ('+KATOD.date+(KATOD.live?' زنده':' ذخیره‌شده')+') · معادل جهانی محاسباتی: '+fa(cuKgRial,0)+' ریال/کیلو · نسبت = '+fa(cuTon,0)+' دلار/تن ÷ '+fa(cur.agOz.p,2)+' دلار/انس.';
@@ -304,31 +360,31 @@ function render(cur, fetchedAt){
   /* ---- کادر نقره ---- */
   $('agChip').outerHTML = bubbleChip(agBub).replace('class="chip','id="agChip" class="chip');
   $('rows_ag').innerHTML =
-    row('قیمت جهانی نقره', v(fa(cur.agOz.p,2),'دلار / انس'), cur.agOz.ts) +
-    row('قیمت نقره در ایران (۹۹۹)', v(fa(cur.ag999.p),'ریال / گرم'), cur.ag999.ts) +
-    row('گواهی سپردهٔ نقره', v(fa(cur.agCert.p),'ریال / گرم')+bubbleChip(agCertBub,'حباب گواهی'), cur.agCert.ts) +
-    row('نسبت طلا به نقره', v(fa(cur.gs.p,1),'انس طلا ÷ انس نقره'), cur.gs.ts) +
+    row('قیمت جهانی نقره', v(fa(cur.agOz.p,2),'دلار / انس'), cur.agOz.ts, 'ag_w', cur.agOz.p) +
+    row('قیمت نقره در ایران (۹۹۹)', v(fa(cur.ag999.p),'ریال / گرم'), cur.ag999.ts, 'ag_ir', cur.ag999.p) +
+    row('گواهی سپردهٔ نقره', v(fa(cur.agCert.p),'ریال / گرم')+bubbleChip(agCertBub,'حباب گواهی'), cur.agCert.ts, 'ag_c', cur.agCert.p) +
+    row('نسبت طلا به نقره', v(fa(cur.gs.p,1),'انس طلا ÷ انس نقره'), cur.gs.ts, 'ag_gs', cur.gs.p) +
     row('حباب نقره', bubbleChip(agBub), '');
   $('note_ag').innerHTML = '<b>فرمول حباب:</b> قیمت بازار ÷ (انس ÷ ۳۱٫۱۰۳۵ × دلار) − ۱ · ارزش ذاتی الان: '+fa(agIntr,0)+' ریال/گرم · حباب گواهی هم با همین فرمول و قیمت گواهی محاسبه شده.';
 
   /* ---- کادر طلا ---- */
   $('auChip').outerHTML = bubbleChip(auBub).replace('class="chip','id="auChip" class="chip');
   $('rows_au').innerHTML =
-    row('قیمت جهانی طلا', v(fa(cur.auOz.p,2),'دلار / انس'), cur.auOz.ts) +
-    row('طلای ۱۸ عیار', v(fa(cur.g18.p),'ریال / گرم'), cur.g18.ts) +
-    row('طلای ۲۴ عیار', v(fa(cur.g24.p),'ریال / گرم'), cur.g24.ts) +
-    row('گواهی سپردهٔ طلا', v(fa(cur.auCert.p),'ریال / ۰٫۱ گرم شمش')+bubbleChip(auCertBub,'حباب گواهی'), cur.auCert.ts) +
-    row('شمش طلای خام (بورس کالا)', v(fa(cur.shemsh.p),'ریال'), cur.shemsh.ts) +
+    row('قیمت جهانی طلا', v(fa(cur.auOz.p,2),'دلار / انس'), cur.auOz.ts, 'au_w', cur.auOz.p) +
+    row('طلای ۱۸ عیار', v(fa(cur.g18.p),'ریال / گرم'), cur.g18.ts, 'au_18', cur.g18.p) +
+    row('طلای ۲۴ عیار', v(fa(cur.g24.p),'ریال / گرم'), cur.g24.ts, 'au_24', cur.g24.p) +
+    row('گواهی سپردهٔ طلا', v(fa(cur.auCert.p),'ریال / ۰٫۱ گرم شمش')+bubbleChip(auCertBub,'حباب گواهی'), cur.auCert.ts, 'au_c', cur.auCert.p) +
+    row('شمش طلای خام (بورس کالا)', v(fa(cur.shemsh.p),'ریال'), cur.shemsh.ts, 'au_sh', cur.shemsh.p) +
     row('حباب طلا (گرم ۱۸)', bubbleChip(auBub), '');
   $('note_au').innerHTML = '<b>فرمول حباب:</b> گرم ۱۸ ÷ (انس ÷ ۳۱٫۱۰۳۵ × ۰٫۷۵ × دلار) − ۱ · ارزش ذاتی الان: '+fa(auIntr18,0)+' ریال/گرم' + (auBub<0?' · حباب منفی یعنی طلای داخل از معادل جهانی ارزان‌تر است.':'') + ' · حباب گواهی طلا بر مبنای شمش ۹۹۵ (هر واحد = ۰٫۱ گرم) حساب شده.';
 
   /* ---- کادر سکه ---- */
   $('coinChip').outerHTML = bubbleChip(coinBub).replace('class="chip','id="coinChip" class="chip');
   $('rows_coin').innerHTML =
-    row('قیمت سکهٔ امامی', v(fa(cur.emami.p),'ریال'), cur.emami.ts) +
+    row('قیمت سکهٔ امامی', v(fa(cur.emami.p),'ریال'), cur.emami.ts, 'co_p', cur.emami.p) +
     row('معادل تومانی', v(fa(cur.emami.p/10),'تومان'), '') +
-    (cur.coinCert ? row('گواهی سپردهٔ سکه', v(fa(cur.coinCert.p),'ریال')+bubbleChip(coinCertBub,'حباب گواهی'), cur.coinCert.ts) : '') +
-    row('ارزش طلای درون سکه (محاسباتی)', v(fa(coinIntr,0),'ریال'), '') +
+    (cur.coinCert ? row('گواهی سپردهٔ سکه', v(fa(cur.coinCert.p),'ریال')+bubbleChip(coinCertBub,'حباب گواهی'), cur.coinCert.ts, 'co_c', cur.coinCert.p) : '') +
+    row('ارزش طلای درون سکه (محاسباتی)', v(fa(coinIntr,0),'ریال'), '', 'co_i', Math.round(coinIntr)) +
     row('حباب سکه', bubbleChip(coinBub), '');
   $('note_coin').innerHTML = '<b>فرمول حباب:</b> قیمت ÷ (۸٫۱۳۳ گرم × عیار ۰٫۹۰۰ ÷ ۰٫۷۵ × گرم ۱۸) − ۱ · حباب گواهی سکه هم با همین مبنا حساب شده' +
     (coinCertGap!==null ? ' · گواهی الان '+(coinCertGap<=0?pct(Math.abs(coinCertGap),1)+' ارزان‌تر':pct(coinCertGap,1)+' گران‌تر')+' از سکهٔ بازار است.' : '.');
@@ -364,6 +420,7 @@ function refresh(){
     MAX_TS = maxTs; LAST_CHECK = new Date(); NEXT_AT = Date.now()+60000;
     DIAG.lastErr=''; renderDiag();
     setLive(true, stampLine());
+    pulseCards();
   }).catch(function(e){
     DIAG.lastErr=String(e&&e.message||e); renderDiag();
     if (window.__MBOOT__){
@@ -378,11 +435,16 @@ refresh();
 fetchKatod();
 setInterval(refresh, 60000); // هر ۶۰ ثانیه — طبق درخواست
 setInterval(fetchKatod, 600000); // کاتد هر ۱۰ دقیقه (قیمتش روزانه عوض می‌شود)
-/* شمارش معکوس زنده — ثابت می‌کند داشبورد بیدار است */
+/* شمارش معکوس زنده — حلقهٔ گرافیکی + متن */
+var RING_C = 2*Math.PI*15.5;
 setInterval(function(){
   if (!IS_LIVE || !LAST_CHECK) return;
   var s = Math.max(0, Math.round((NEXT_AT - Date.now())/1000));
-  $('stampText').textContent = stampLine() + ' · بروزرسانی بعدی ' + s + ' ثانیه';
+  $('stampText').textContent = stampLine();
+  var w = $('ringWrap'); if (w && w.style) w.style.display = 'inline-block';
+  var arc = $('ringArc');
+  if (arc && arc.style){ arc.style.strokeDasharray = RING_C; arc.style.strokeDashoffset = RING_C*(1 - s/60); }
+  var n = $('ringNum'); if (n) n.textContent = fa(s);
 }, 1000);
 $('refreshBtn').addEventListener('click', function(e){ e.stopPropagation(); refresh(); });
 $('stampBox').addEventListener('click', function(e){
