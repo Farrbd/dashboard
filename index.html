@@ -147,6 +147,24 @@ h1 em{font-style:normal;color:var(--amber)}
 .perf-fill.gold{background:linear-gradient(90deg,#b7831d,#f0b43f)}
 .perf-fill.neg{background:linear-gradient(90deg,#8a2f35,#ff6262)}
 @media(max-width:1000px){.ideas-grid{grid-template-columns:1fr}.invest-grid{grid-template-columns:1fr 1fr}}
+/* ===== هشدارها ===== */
+.alert-card{margin-top:16px}
+.alert-form{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.alert-form select,.alert-form input{background:#0c141c;border:1px solid #273746;border-radius:9px;color:#f0f4f7;font:inherit;font-size:13px;padding:8px 12px}
+.alert-form select:focus,.alert-form input:focus{outline:1px solid #66501b}
+.alert-form input{width:150px;direction:ltr;text-align:left}
+.al-row{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px dashed #223140;font-size:13px;color:#c3ced8;flex-wrap:wrap}
+.al-row:last-child{border-bottom:0}
+.al-row .al-cur{font-size:11px;color:#75889a}
+.al-row .al-del{border:1px solid #7a2d35;background:#2b1215;color:#ff9a9a;border-radius:7px;padding:2px 10px;cursor:pointer;font:inherit;font-size:11px;margin-right:auto}
+.al-row.fired{background:rgba(255,98,98,.08);border-radius:9px}
+.al-row.fired .al-state{color:#ff9a9a;font-weight:700}
+.al-row .al-state{font-size:11px;color:#75889a}
+.alert-banner{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:99;background:linear-gradient(90deg,#5a1a20,#3b1216);border:1px solid #a03a44;color:#ffc9c9;border-radius:14px;padding:12px 22px;font-size:14px;font-weight:700;box-shadow:0 12px 40px rgba(0,0,0,.6);max-width:min(640px,calc(100% - 30px));text-align:center;animation:bannerPulse 1.6s infinite}
+.alert-banner small{display:block;font-weight:400;font-size:11px;color:#e8a0a0;margin-top:3px}
+@keyframes bannerPulse{0%,100%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 0 0 rgba(255,98,98,.35)}50%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 24px 4px rgba(255,98,98,.4)}}
+@keyframes redPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,98,98,0)}50%{box-shadow:0 0 22px 3px rgba(255,98,98,.35)}}
+.metal-card.alerted{border-color:#7a2d35;animation:redPulse 1.6s infinite}
 @media(max-width:1000px){.metal-grid{grid-template-columns:1fr}h1{font-size:22px}.sources ol{columns:1}}
 @media(max-width:700px){
   .shell{width:calc(100% - 20px)}
@@ -170,12 +188,13 @@ h1 em{font-style:normal;color:var(--amber)}
 </style>
 </head>
 <body>
+<div id="alertBanner" class="alert-banner" style="display:none"></div>
 <main class="shell" data-template-id="SOLI-METALS-DASHBOARD-V1">
 
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۱</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۲</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -222,6 +241,19 @@ h1 em{font-style:normal;color:var(--amber)}
       <div id="calcOut"><div class="calc-out-row"><span>مبلغی وارد کنید تا با قیمت‌های لحظه‌ای حساب شود…</span></div></div>
       <p class="i-note">محاسبه با قیمت لحظه‌ای بازار و بدون کارمزد، اجرت و مالیات است.</p>
     </article>
+  </section>
+
+  <section class="idea-card alert-card">
+    <h3>هشدار قیمت و حباب</h3>
+    <div class="alert-form">
+      <select id="alMetric"></select>
+      <select id="alOp"><option value="gt">بالاتر از</option><option value="lt">پایین‌تر از</option></select>
+      <input id="alVal" type="text" inputmode="decimal" placeholder="مقدار — مثلاً 5 یا 2100000">
+      <button id="alAdd" class="refresh-btn">➕ افزودن هشدار</button>
+      <button id="alNotif" class="refresh-btn" style="border-color:#33455a;background:#16202b;color:#93a5b6">🔔 اعلان مرورگر</button>
+    </div>
+    <div id="alList"><div class="al-row"><span style="color:#75889a">هنوز هشداری تعریف نکرده‌اید — مثلاً: «حباب سکه (٪) بالاتر از 5»</span></div></div>
+    <p class="i-note">هشدارها فقط روی همین دستگاه ذخیره می‌شوند و تا وقتی این صفحه باز باشد (حتی در تب پس‌زمینه) هر ۶۰ ثانیه بررسی می‌شوند. با فعال‌کردن اعلان مرورگر، پیام هشدار حتی وقتی در تب دیگری هستید نمایش داده می‌شود. درصدها را بدون علامت ٪ وارد کنید؛ قیمت‌های ریالی را به ریال.</p>
   </section>
 
   <div class="section-heading" style="margin-top:18px"><strong>روی هر کدام چطور می‌شود سرمایه‌گذاری کرد؟</strong><span>ابزارها از کم‌هزینه به پرهزینه — گزینهٔ سبز یعنی الان به‌صرفه‌تر</span></div>
@@ -467,7 +499,119 @@ function render(cur, fetchedAt){
   var maxTs=''; for (var k in cur){ if(cur[k].ts>maxTs) maxTs=cur[k].ts; }
   DIAG.keyTs = {'مس جهانی':cur.cuLb.ts,'انس نقره':cur.agOz.ts,'نقره ۹۹۹':cur.ag999.ts,'انس طلا':cur.auOz.ts,'گرم ۱۸':cur.g18.ts,'سکه امامی':cur.emami.ts,'دلار':cur.usd.ts};
   renderIdeas(cur,{ag:agBub,au:auBub,coin:coinBub,cu:cuBub,agCert:agCertBub,auCert:auCertBub,coinCert:coinCertBub,certGap:coinCertGap,gs:cur.gs?cur.gs.p:null,imeRial:imeRial,cuKgRial:cuKgRial});
+  /* مقادیر برای موتور هشدار */
+  ALERT_VALS = {usd:usd, agOz:cur.agOz.p, ag999:cur.ag999.p, auOz:cur.auOz.p, g18:cur.g18.p,
+                emami:cur.emami.p, cuTon:cuTon, agBub:agBub, auBub:auBub, coinBub:coinBub, cuBub:cuBub};
+  checkAlerts();
   return maxTs;
+}
+
+/* ===== موتور هشدار ===== */
+var ALERT_VALS = null;
+var METRICS = {
+  usd:   {label:'دلار آزاد (ریال)',        card:null,  dec:0},
+  agOz:  {label:'انس نقره (دلار)',          card:'ag',  dec:2},
+  ag999: {label:'نقرهٔ ۹۹۹ (ریال/گرم)',     card:'ag',  dec:0},
+  auOz:  {label:'انس طلا (دلار)',           card:'au',  dec:2},
+  g18:   {label:'طلای ۱۸ (ریال/گرم)',       card:'au',  dec:0},
+  emami: {label:'سکهٔ امامی (ریال)',        card:'coin',dec:0},
+  cuTon: {label:'مس جهانی (دلار/تن)',       card:'cu',  dec:0},
+  agBub: {label:'حباب نقره (٪)',            card:'ag',  dec:2},
+  auBub: {label:'حباب طلا (٪)',             card:'au',  dec:2},
+  coinBub:{label:'حباب سکه (٪)',            card:'coin',dec:2},
+  cuBub: {label:'اختلاف کاتد با جهانی (٪)', card:'cu',  dec:2}
+};
+function loadAlerts(){ try{ var a=JSON.parse(localStorage.getItem('hub.alerts')); if(Array.isArray(a)) return a; }catch(e){} return []; }
+var ALERTS = loadAlerts();
+function saveAlerts(){ try{ localStorage.setItem('hub.alerts', JSON.stringify(ALERTS)); }catch(e){} }
+function parseNum(raw){
+  var en = String(raw||'').replace(/[۰-۹]/g,function(ch){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(ch);}).replace(/٫/g,'.').replace(/[^\d.\-]/g,'');
+  var v = parseFloat(en); return isFinite(v)?v:null;
+}
+function initAlertUI(){
+  var sel=$('alMetric'); if(!sel) return;
+  var h=''; for(var k in METRICS) h+='<option value="'+k+'">'+METRICS[k].label+'</option>';
+  sel.innerHTML=h;
+  var add=$('alAdd');
+  if(add&&add.addEventListener) add.addEventListener('click',function(){
+    var v=parseNum($('alVal').value);
+    if(v===null){ $('alVal').value=''; $('alVal').placeholder='عدد معتبر وارد کنید!'; return; }
+    ALERTS.push({id:Date.now(), metric:sel.value, op:$('alOp').value, val:v, fired:false});
+    saveAlerts(); $('alVal').value=''; renderAlertList();
+    askNotifPermission();
+  });
+  var nb=$('alNotif');
+  if(nb&&nb.addEventListener) nb.addEventListener('click', askNotifPermission);
+  updateNotifBtn(); renderAlertList();
+}
+function askNotifPermission(){
+  if (typeof Notification==='undefined') { updateNotifBtn(); return; }
+  if (Notification.permission==='default') Notification.requestPermission().then(updateNotifBtn);
+  else updateNotifBtn();
+}
+function updateNotifBtn(){
+  var b=$('alNotif'); if(!b) return;
+  if (typeof Notification==='undefined'){ b.textContent='🔕 اعلان پشتیبانی نمی‌شود'; return; }
+  b.textContent = Notification.permission==='granted' ? '🔔 اعلان فعال است' :
+                  Notification.permission==='denied' ? '🔕 اعلان رد شده (از تنظیمات مرورگر باز کنید)' : '🔔 فعال‌سازی اعلان مرورگر';
+}
+function notify(text){
+  if (typeof Notification!=='undefined' && Notification.permission==='granted'){
+    try{ new Notification('هشدار داشبورد فلزات', {body:text, tag:'metals-alert-'+Date.now()}); }catch(e){}
+  }
+}
+function renderAlertList(){
+  var box=$('alList'); if(!box) return;
+  if(!ALERTS.length){ box.innerHTML='<div class="al-row"><span style="color:#75889a">هنوز هشداری تعریف نکرده‌اید — مثلاً: «حباب سکه (٪) بالاتر از 5»</span></div>'; return; }
+  box.innerHTML=ALERTS.map(function(r){
+    var m=METRICS[r.metric]||{label:r.metric,dec:0};
+    var cv = ALERT_VALS && ALERT_VALS[r.metric]!==undefined ? fa(ALERT_VALS[r.metric], m.dec) : '—';
+    return '<div class="al-row'+(r.fired?' fired':'')+'" data-id="'+r.id+'">'+
+      '<span>'+m.label+' '+(r.op==='gt'?'بالاتر از':'پایین‌تر از')+' <b style="color:#f3c95c">'+fa(r.val,m.dec)+'</b></span>'+
+      '<span class="al-cur">الان: '+cv+'</span>'+
+      '<span class="al-state">'+(r.fired?'🔴 فعال شده!':'در انتظار')+'</span>'+
+      '<button class="al-del" data-del="'+r.id+'">حذف</button></div>';
+  }).join('');
+  // دکمه‌های حذف
+  ALERTS.forEach(function(r){
+    var els=box.querySelectorAll?box.querySelectorAll('[data-del="'+r.id+'"]'):[];
+    for(var i=0;i<els.length;i++)(function(btn){btn.addEventListener('click',function(){
+      ALERTS=ALERTS.filter(function(x){return x.id!==r.id;});saveAlerts();renderAlertList();checkAlerts();});})(els[i]);
+  });
+}
+function checkAlerts(){
+  if(!ALERT_VALS) return;
+  var firedNow=[], anyFired=false, firedCards={};
+  ALERTS.forEach(function(r){
+    var v=ALERT_VALS[r.metric]; if(v===undefined||v===null||!isFinite(v)) return;
+    var cond = r.op==='gt' ? v>r.val : v<r.val;
+    if(cond && !r.fired){ r.fired=true; firedNow.push(r); }
+    if(!cond && r.fired){ r.fired=false; }
+    if(r.fired){ anyFired=true; var m=METRICS[r.metric]; if(m&&m.card) firedCards[m.card]=true; }
+  });
+  saveAlerts();
+  /* بنر */
+  var bn=$('alertBanner');
+  if(bn){
+    var act=ALERTS.filter(function(r){return r.fired;});
+    if(act.length){
+      bn.style.display='block';
+      bn.innerHTML='🔔 '+act.map(function(r){var m=METRICS[r.metric];return m.label+' '+(r.op==='gt'?'از':'زیر')+' '+fa(r.val,m.dec)+' '+(r.op==='gt'?'گذشت':'رفت')+' (الان: '+fa(ALERT_VALS[r.metric],m.dec)+')';}).join(' · ')+
+        '<small>برای مدیریت هشدارها به بخش «هشدار قیمت و حباب» بروید</small>';
+    } else bn.style.display='none';
+  }
+  /* درخشش قرمز کادر مربوطه */
+  ['cu','ag','au','coin'].forEach(function(k){
+    var cards=document.getElementsByClassName?document.getElementsByClassName('metal-card '+k):[];
+    var el=cards&&cards[0]; if(!el||!el.classList) return;
+    if(firedCards[k]) el.classList.add('alerted'); else el.classList.remove('alerted');
+  });
+  /* اعلان مرورگر فقط برای تازه‌فعال‌شده‌ها */
+  firedNow.forEach(function(r){
+    var m=METRICS[r.metric];
+    notify(m.label+' '+(r.op==='gt'?'از':'زیر')+' '+fa(r.val,m.dec)+' '+(r.op==='gt'?'عبور کرد':'رفت')+' — الان: '+fa(ALERT_VALS[r.metric],m.dec));
+  });
+  renderAlertList();
 }
 
 /* ===== بخش‌های تحلیلی زیر کادرها ===== */
@@ -607,6 +751,7 @@ setInterval(refresh, 60000); // هر ۶۰ ثانیه — طبق درخواست
 setInterval(fetchKatod, 600000); // کاتد هر ۱۰ دقیقه (قیمتش روزانه عوض می‌شود)
 var ci=$('calcBtn');if(ci&&ci.addEventListener)ci.addEventListener('click',runCalc);
 var cf=$('calcIn');if(cf&&cf.addEventListener)cf.addEventListener('keydown',function(e){if(e.key==='Enter')runCalc();});
+initAlertUI();
 /* شمارش معکوس زنده — حلقهٔ گرافیکی + متن */
 var RING_C = 2*Math.PI*15.5;
 setInterval(function(){
