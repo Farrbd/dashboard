@@ -136,6 +136,15 @@ h1 span{font-size:19px;color:#aebac5;font-weight:400}
 .settings-line{border-top:1px dashed #2d3b49;margin-top:10px;padding-top:8px;font-size:11px;color:#7f91a2;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .settings-line input{width:52px;background:#0c141c;border:1px solid #273746;border-radius:6px;color:#f0c75b;font:inherit;font-size:11px;padding:3px 6px;text-align:center}
 .mini-btn{border:1px solid #33455a;background:#16202b;color:#93a5b6;border-radius:6px;padding:3px 9px;cursor:pointer;font:inherit;font-size:10px}
+.gauges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.gauge-card{text-align:center}
+.g-box{display:grid;place-items:center;padding-top:6px}
+.g-box svg{width:100%;max-width:250px;overflow:visible}
+.g-val{fill:#f7fafc;font-size:18px;font-weight:900}
+.g-min,.g-max{fill:#75889a;font-size:10px}
+.g-needle{transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.g-note{font-size:11px;color:#8ea0b1;margin:8px 0 0;line-height:1.9}
+.g-note b{color:#eef3f6}
 .diag-panel{display:none;position:absolute;left:0;top:52px;z-index:50;background:#0e161f;border:1px solid #66501b;border-radius:12px;padding:12px 15px;font-size:11px;line-height:2;color:#b8c4ce;max-width:440px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 .diag-panel b{color:#f3c95c}
 /* ===== انیمیشن‌ها ===== */
@@ -202,6 +211,7 @@ h1 span{font-size:19px;color:#aebac5;font-weight:400}
   .q-head{flex-wrap:wrap}
   .q-head h2{font-size:16px}
   .funds-grid > .viz-card:first-child{grid-column:auto}
+  .gauges-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -211,7 +221,7 @@ h1 span{font-size:19px;color:#aebac5;font-weight:400}
   <header class="hero">
     <div class="source-stamp" style="cursor:pointer" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۱۵</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد اختصاصی نقره · نسخهٔ ۹</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد اختصاصی نقره · نسخهٔ ۱۰</div>
     <h1>داشبورد نقره — <em>کارت سلامت بازار نقره</em> <span>(جهانی · ایران · گواهی سپرده · حباب)</span></h1>
     <div class="meta-row">
       <span class="pill">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -346,6 +356,12 @@ h1 span{font-size:19px;color:#aebac5;font-weight:400}
       </div>
       <div class="note-line"><b>از کجا:</b> گواهی سپردهٔ شمش نقرهٔ بورس کالا و نقرهٔ ۹۹۹ بازار، هر دو از TGJU</div>
     </article>
+  </section>
+
+  <section class="gauges-grid">
+    <article class="viz-card gauge-card"><div class="viz-head"><h3>انس نقره در بازهٔ یک سال</h3><span class="tiny-tag">گیج</span></div><div class="g-box" id="sgA"></div><p class="g-note" id="sgAn">—</p></article>
+    <article class="viz-card gauge-card"><div class="viz-head"><h3>حباب نقره</h3><span class="tiny-tag">گیج</span></div><div class="g-box" id="sgB"></div><p class="g-note" id="sgBn">—</p></article>
+    <article class="viz-card gauge-card"><div class="viz-head"><h3>نسبت طلا به نقره</h3><span class="tiny-tag">گیج</span></div><div class="g-box" id="sgC"></div><p class="g-note" id="sgCn">—</p></article>
   </section>
 
   <section class="funds-section">
@@ -702,6 +718,16 @@ function render(D){
   /* ---- بخش مس ---- */
   renderCopper(D, cuTon, oz, rStat, ratioTonOz);
 
+  /* ---- گیج‌ها ---- */
+  var ZP=[{f:.33,c:'#2e7d5b'},{f:.66,c:'#7a6420'},{f:1,c:'#8a3a40'}];
+  drawGauge('sgA',{min:0,max:100,minL:'کف سال',maxL:'سقف سال',zones:ZP,fmt:function(x){return pct(x,0);}},p1);
+  var n1=$('sgAn'); if(n1) n1.innerHTML='انس نقره در <b>'+pct(p1,0)+'</b> فاصلهٔ کف تا سقف یک سال اخیر — هرچه بالاتر، گران‌تر نسبت به سال خودش';
+  var gz=[{f:(TH.green+10)/25,c:'#2e7d5b'},{f:(TH.yellow+10)/25,c:'#7a6420'},{f:1,c:'#8a3a40'}];
+  drawGauge('sgB',{min:-10,max:15,minL:'-۱۰٪',maxL:'+۱۵٪',zones:gz,fmt:function(x){return (x>=0?'+':'−')+pct(Math.abs(x),1);}},bubbleMkt);
+  var n2=$('sgBn'); if(n2) n2.innerHTML='نقرهٔ ۹۹۹ نسبت به معادل «انس×دلار» — آستانه‌های سبز/زرد همان تنظیمات کارت حباب است';
+  drawGauge('sgC',{min:40,max:120,minL:'۴۰',maxL:'۱۲۰',zones:[{f:.1875,c:'#8a3a40'},{f:.5,c:'#7a6420'},{f:1,c:'#2e7d5b'}],fmt:function(x){return fa(x,1);}},gs);
+  var n3=$('sgCn'); if(n3) n3.innerHTML='بالای ~۸۰ از نظر تاریخی یعنی نقره نسبت به طلا ارزان مانده — سبز به نفع نقره است';
+
   /* ---- صندوق‌ها و آپشن ---- */
   renderFunds(c, gram);
   renderOptions(D.options, gram);
@@ -931,6 +957,34 @@ function drawTrend(hist){
   }
   html += '</g>';
   svg.innerHTML = html;
+}
+
+/* ===== گیج عقربه‌ای ===== */
+function gaugePolar(r,ang){var a=(ang-180)*Math.PI/180;return [100+r*Math.cos(a),100+r*Math.sin(a)];}
+function gaugeArc(r,a0,a1){var p0=gaugePolar(r,a0),p1=gaugePolar(r,a1);
+return 'M'+p0[0].toFixed(1)+' '+p0[1].toFixed(1)+' A'+r+' '+r+' 0 0 1 '+p1[0].toFixed(1)+' '+p1[1].toFixed(1);}
+function drawGauge(id,cfg,val){
+  var el=$(id); if(el===null||el===undefined) return;
+  var sig=JSON.stringify(cfg.zones)+cfg.min+cfg.max;
+  if(el._gsig!==sig){
+    var h='<svg viewBox="0 0 200 124">';
+    var prev=0;
+    (cfg.zones||[{f:1,c:'#20d2ca'}]).forEach(function(z){
+      h+='<path d="'+gaugeArc(78,prev*180,z.f*180)+'" fill="none" stroke="'+z.c+'" stroke-width="13" opacity=".9"/>';
+      prev=z.f;
+    });
+    for(var i=0;i<=4;i++){var p0=gaugePolar(66,i*45),p1=gaugePolar(72,i*45);
+      h+='<line x1="'+p0[0].toFixed(1)+'" y1="'+p0[1].toFixed(1)+'" x2="'+p1[0].toFixed(1)+'" y2="'+p1[1].toFixed(1)+'" stroke="#3a4d63" stroke-width="2"/>';}
+    h+='<text x="12" y="119" class="g-min">'+(cfg.minL||'')+'</text><text x="188" y="119" class="g-max" text-anchor="end">'+(cfg.maxL||'')+'</text>';
+    h+='<g id="'+id+'N" class="g-needle"><polygon points="96.5,101 103.5,101 100,36" fill="#f3c95c"/><circle cx="100" cy="100" r="7.5" fill="#f3c95c"/><circle cx="100" cy="100" r="3" fill="#0c1218"/></g>';
+    h+='<text id="'+id+'V" x="100" y="121" text-anchor="middle" class="g-val">—</text>';
+    h+='</svg>';
+    el.innerHTML=h; el._gsig=sig;
+  }
+  var fr=clamp((val-cfg.min)/(cfg.max-cfg.min),0,1);
+  var nd=$(id+'N');
+  if(nd&&nd.style){nd.style.transformOrigin='100px 100px';nd.style.transform='rotate('+((fr*180)-90)+'deg)';}
+  var tv=$(id+'V'); if(tv) tv.textContent=cfg.fmt?cfg.fmt(val):fa(val);
 }
 
 /* ---- بارگذاری: اول دادهٔ ذخیره‌شده، بعد تلاش برای دادهٔ زنده ---- */

@@ -122,6 +122,15 @@ color:#f3c95c;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:70
 .ring .rbg{stroke:#3d3320}
 .ring .arc{stroke:#f3c95c;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
 .ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:9px;color:#f3c95c;font-weight:700}
+.gauges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.gauge-card{text-align:center}
+.g-box{display:grid;place-items:center;padding-top:6px}
+.g-box svg{width:100%;max-width:250px;overflow:visible}
+.g-val{fill:#f7fafc;font-size:18px;font-weight:900}
+.g-min,.g-max{fill:#75889a;font-size:10px}
+.g-needle{transition:transform .9s cubic-bezier(.16,1,.3,1)}
+.g-note{font-size:11px;color:#8ea0b1;margin:8px 0 0;line-height:1.9}
+.g-note b{color:#eef3f6}
 @media(max-width:1180px){.question-grid{grid-template-columns:1fr 1fr}.visual-grid{grid-template-columns:1fr 1fr}.trend-card{grid-column:1/-1}}
 @media(max-width:700px){
 .shell{width:calc(100% - 20px)}
@@ -141,6 +150,7 @@ h1{font-size:20px}
 .q-head h2{font-size:16px}
 .status{font-size:11px}
 .types-grid{grid-template-columns:1fr}
+.gauges-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -206,6 +216,11 @@ h1{font-size:20px}
     <div class="margin-list" id="gapBars"></div>
     <div class="note-line"><b>از کجا:</b> بستهٔ ماهانهٔ مس و انس نقره</div></article>
   </section>
+  <section class="gauges-grid">
+    <article class="viz-card gauge-card"><div class="viz-head"><h3>مس جهانی در بازهٔ یک سال</h3><span class="tiny-tag">گیج</span></div><div class="g-box" id="mggA"></div><p class="g-note" id="mggAn">—</p></article>
+    <article class="viz-card gauge-card"><div class="viz-head"><h3>اختلاف کاتد با معادل جهانی</h3><span class="tiny-tag">گیج</span></div><div class="g-box" id="mggB"></div><p class="g-note" id="mggBn">—</p></article>
+    <article class="viz-card gauge-card"><div class="viz-head"><h3>نسبت مس به نقره</h3><span class="tiny-tag">گیج</span></div><div class="g-box" id="mggC"></div><p class="g-note" id="mggCn">—</p></article>
+  </section>
   <section class="sources"><h3>منابع</h3><ol>
     <li><a href="https://www.tgju.org/profile/base_global_copper2">مس جهانی</a> · <a href="https://www.lme.com/metals/non-ferrous/lme-copper">LME رسمی</a></li>
     <li><a href="https://www.ime.co.ir">کاتد بورس کالا (ثبت با ✎)</a></li>
@@ -215,7 +230,7 @@ h1{font-size:20px}
 
   <footer class="footer">این داشبورد آموزشی است، نه توصیهٔ خرید و فروش · دادهٔ زندهٔ TGJU.org</footer>
 </main>
-<script>window.__BOOT__ = {"fetched_at": "2026-08-22 20:24 (تهران)", "current": {"silver": {"p": 68.95, "dp": 0.13, "dt": "low", "ts": "2026-08-22 03:28:27"}, "silver_999": {"p": 4495000.0, "dp": 2.3, "dt": "high", "ts": "2026-08-22 20:11:32"}, "ime_certificate_silver_bars": {"p": 4550000.0, "dp": 8.35, "dt": "high", "ts": "2026-08-22 17:02:09"}, "base_global_copper2": {"p": 6.5795, "dp": 0.06, "dt": "high", "ts": "2026-08-22 04:51:29"}, "price_dollar_rl": {"p": 1927000.0, "dp": 1.74, "dt": "high", "ts": "2026-08-22 19:59:59"}, "ons": {"p": 4607.35, "dp": 0.08, "dt": "low", "ts": "2026-08-22 01:51:55"}, "geram18": {"p": 210360000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "geram24": {"p": 280478000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "mesghal": {"p": 911220000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:58"}, "ime_certificate_gold_bars": {"p": 28000110.0, "dp": 6.91, "dt": "high", "ts": "2026-08-22 17:01:52"}, "ime_indices_shemsh_tala_kham": {"p": 346295354.0, "dp": 0, "dt": "", "ts": "2026-08-22 20:01:33"}, "sekee": {"p": 2090200000.0, "dp": 4.75, "dt": "high", "ts": "2026-08-22 19:59:59"}, "sekeb": {"p": 2060100000.0, "dp": 5.56, "dt": "high", "ts": "2026-08-22 19:59:58"}, "retail_nim": {"p": 1069000000.0, "dp": 5.42, "dt": "high", "ts": "2026-08-22 14:22:33"}, "retail_rob": {"p": 583000000.0, "dp": 4.48, "dt": "high", "ts": "2026-08-22 13:55:38"}, "retail_gerami": {"p": 307000000.0, "dp": 5.14, "dt": "high", "ts": "2026-08-22 13:55:35"}, "ime_certificate_coin": {"p": 2070000000.0, "dp": 6.27, "dt": "high", "ts": "2026-08-22 17:01:30"}, "ime_indices_sandogh_tala": {"p": 17625.0, "dp": 6.27, "dt": "high", "ts": "2026-08-22 20:01:33"}, "ime_fund_goldis": {"p": 40876.0, "dp": 6.31, "dt": "high", "ts": "2026-08-22 19:51:36"}, "ime_fund_rosgold": {"p": 19479.0, "dp": 5.9, "dt": "high", "ts": "2026-08-22 19:51:36"}, "ime_fund_golda": {"p": 18991.0, "dp": 5.61, "dt": "high", "ts": "2026-08-22 19:51:34"}, "ime_fund_jaam_tala": {"p": 18795.0, "dp": 5.39, "dt": "high", "ts": "2026-08-22 19:51:35"}, "base_global_zinc": {"p": 3823.15, "dp": 0, "dt": "", "ts": "2026-08-21 00:00:00"}, "base_global_steel": {"p": 3061.0, "dp": 0, "dt": "", "ts": "2026-08-21 00:00:00"}, "ratio_silver": {"p": 66.75, "dp": 0.1, "dt": "low", "ts": "2026-08-22 01:09:36"}, "gold_740k": {"p": 207556000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "gold_mini_size": {"p": 207555690.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "gold_futures": {"p": 911490000.0, "dp": 6.02, "dt": "high", "ts": "2026-08-22 19:59:57"}, "gold_melted_transfer": {"p": 911190000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:59"}, "gold_melted_wholesale": {"p": 911740000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "tgju_gold_irg18": {"p": 197701000.0, "dp": 0.04, "dt": "high", "ts": "2026-08-22 20:23:53"}, "tgju_gold_irg18_buy": {"p": 195875000.0, "dp": 0.02, "dt": "low", "ts": "2026-08-22 20:23:57"}, "tether_gold_xaut": {"p": 4582.01, "dp": 0.24, "dt": "low", "ts": "2026-08-22 20:23:19"}, "gold_17": {"p": 927298000.0, "dp": 4.78, "dt": "high", "ts": "2026-08-22 19:59:57"}}, "history": {"ons": [{"ym": "1404/11", "v": 4981.78}, {"ym": "1404/12", "v": 4656.69}, {"ym": "1405/01", "v": 4768.36}, {"ym": "1405/02", "v": 4544.17}, {"ym": "1405/03", "v": 4160.26}, {"ym": "1405/04", "v": 4008.29}, {"ym": "1405/05", "v": 4519.32}], "geram18": [{"ym": "1404/11", "v": 194249000.0}, {"ym": "1404/12", "v": 175761000.0}, {"ym": "1405/01", "v": 171452000.0}, {"ym": "1405/02", "v": 192179000.0}, {"ym": "1405/03", "v": 161023000.0}, {"ym": "1405/04", "v": 184445000.0}, {"ym": "1405/05", "v": 197576000.0}], "sekee": [{"ym": "1404/11", "v": 1979950000.0}, {"ym": "1404/12", "v": 1900000000.0}, {"ym": "1405/01", "v": 1739900000.0}, {"ym": "1405/02", "v": 1924900000.0}, {"ym": "1405/03", "v": 1645100000.0}, {"ym": "1405/04", "v": 1899800000.0}, {"ym": "1405/05", "v": 1995100000.0}], "base_global_copper2": [{"ym": "1404/11", "v": 5.7643}, {"ym": "1404/12", "v": 5.5238}, {"ym": "1405/01", "v": 6.013}, {"ym": "1405/02", "v": 6.3398}, {"ym": "1405/03", "v": 6.3833}, {"ym": "1405/04", "v": 6.2423}, {"ym": "1405/05", "v": 6.4758}], "silver": [{"ym": "1404/11", "v": 77.2075}, {"ym": "1404/12", "v": 72.652}, {"ym": "1405/01", "v": 79.237}, {"ym": "1405/02", "v": 75.881}, {"ym": "1405/03", "v": 64.925}, {"ym": "1405/04", "v": 56.777}, {"ym": "1405/05", "v": 68.071}]}, "range": {"ons": {"lo": 3248.3701, "hi": 5190.08}, "geram18": {"lo": 64423000.0, "hi": 201237000.0}, "sekee": {"lo": 732900000.0, "hi": 2089950000.0}, "base_global_copper2": {"lo": 4.4835, "hi": 6.605}, "silver": {"lo": 32.4933, "hi": 94.4252}}};</script>
+<script>window.__BOOT__ = {"fetched_at": "2026-08-22 23:31 (تهران)", "current": {"silver": {"p": 68.95, "dp": 0.13, "dt": "low", "ts": "2026-08-22 03:28:27"}, "silver_999": {"p": 4508100.0, "dp": 2.6, "dt": "high", "ts": "2026-08-22 23:19:29"}, "ime_certificate_silver_bars": {"p": 4550000.0, "dp": 8.35, "dt": "high", "ts": "2026-08-22 17:02:09"}, "base_global_copper2": {"p": 6.5795, "dp": 0.06, "dt": "high", "ts": "2026-08-22 04:51:29"}, "price_dollar_rl": {"p": 1927000.0, "dp": 1.74, "dt": "high", "ts": "2026-08-22 19:59:59"}, "ons": {"p": 4607.35, "dp": 0.08, "dt": "low", "ts": "2026-08-22 01:51:55"}, "geram18": {"p": 210360000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "geram24": {"p": 280478000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "mesghal": {"p": 911220000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:58"}, "ime_certificate_gold_bars": {"p": 28000110.0, "dp": 6.91, "dt": "high", "ts": "2026-08-22 17:01:52"}, "ime_indices_shemsh_tala_kham": {"p": 346295354.0, "dp": 0, "dt": "", "ts": "2026-08-22 23:01:26"}, "sekee": {"p": 2090200000.0, "dp": 4.75, "dt": "high", "ts": "2026-08-22 19:59:59"}, "sekeb": {"p": 2060100000.0, "dp": 5.56, "dt": "high", "ts": "2026-08-22 19:59:58"}, "retail_nim": {"p": 1069000000.0, "dp": 5.42, "dt": "high", "ts": "2026-08-22 14:22:33"}, "retail_rob": {"p": 583000000.0, "dp": 4.48, "dt": "high", "ts": "2026-08-22 13:55:38"}, "retail_gerami": {"p": 307000000.0, "dp": 5.14, "dt": "high", "ts": "2026-08-22 13:55:35"}, "ime_certificate_coin": {"p": 2070000000.0, "dp": 6.27, "dt": "high", "ts": "2026-08-22 17:01:30"}, "ime_indices_sandogh_tala": {"p": 17625.0, "dp": 6.27, "dt": "high", "ts": "2026-08-22 23:01:26"}, "ime_fund_goldis": {"p": 40876.0, "dp": 6.31, "dt": "high", "ts": "2026-08-22 23:01:29"}, "ime_fund_rosgold": {"p": 19479.0, "dp": 5.9, "dt": "high", "ts": "2026-08-22 23:01:27"}, "ime_fund_golda": {"p": 18991.0, "dp": 5.61, "dt": "high", "ts": "2026-08-22 23:01:27"}, "ime_fund_jaam_tala": {"p": 18795.0, "dp": 5.39, "dt": "high", "ts": "2026-08-22 23:01:29"}, "base_global_zinc": {"p": 3823.15, "dp": 0, "dt": "", "ts": "2026-08-21 00:00:00"}, "base_global_steel": {"p": 3061.0, "dp": 0, "dt": "", "ts": "2026-08-21 00:00:00"}, "ratio_silver": {"p": 66.75, "dp": 0.1, "dt": "low", "ts": "2026-08-22 01:09:36"}, "gold_740k": {"p": 207556000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "gold_mini_size": {"p": 207555690.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "gold_futures": {"p": 911490000.0, "dp": 6.02, "dt": "high", "ts": "2026-08-22 19:59:57"}, "gold_melted_transfer": {"p": 911190000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:59"}, "gold_melted_wholesale": {"p": 911740000.0, "dp": 5.96, "dt": "high", "ts": "2026-08-22 19:59:57"}, "tgju_gold_irg18": {"p": 197621000.0, "dp": 0.01, "dt": "low", "ts": "2026-08-22 23:30:35"}, "tgju_gold_irg18_buy": {"p": 195885000.0, "dp": 0.01, "dt": "low", "ts": "2026-08-22 23:30:35"}, "tether_gold_xaut": {"p": 4581.86, "dp": 0.24, "dt": "low", "ts": "2026-08-22 23:26:27"}, "gold_17": {"p": 927298000.0, "dp": 4.78, "dt": "high", "ts": "2026-08-22 19:59:57"}}, "history": {"ons": [{"ym": "1404/11", "v": 4981.78}, {"ym": "1404/12", "v": 4656.69}, {"ym": "1405/01", "v": 4768.36}, {"ym": "1405/02", "v": 4544.17}, {"ym": "1405/03", "v": 4160.26}, {"ym": "1405/04", "v": 4008.29}, {"ym": "1405/05", "v": 4519.32}], "geram18": [{"ym": "1404/11", "v": 194249000.0}, {"ym": "1404/12", "v": 175761000.0}, {"ym": "1405/01", "v": 171452000.0}, {"ym": "1405/02", "v": 192179000.0}, {"ym": "1405/03", "v": 161023000.0}, {"ym": "1405/04", "v": 184445000.0}, {"ym": "1405/05", "v": 197576000.0}], "sekee": [{"ym": "1404/11", "v": 1979950000.0}, {"ym": "1404/12", "v": 1900000000.0}, {"ym": "1405/01", "v": 1739900000.0}, {"ym": "1405/02", "v": 1924900000.0}, {"ym": "1405/03", "v": 1645100000.0}, {"ym": "1405/04", "v": 1899800000.0}, {"ym": "1405/05", "v": 1995100000.0}], "base_global_copper2": [{"ym": "1404/11", "v": 5.7643}, {"ym": "1404/12", "v": 5.5238}, {"ym": "1405/01", "v": 6.013}, {"ym": "1405/02", "v": 6.3398}, {"ym": "1405/03", "v": 6.3833}, {"ym": "1405/04", "v": 6.2423}, {"ym": "1405/05", "v": 6.4758}], "silver": [{"ym": "1404/11", "v": 77.2075}, {"ym": "1404/12", "v": 72.652}, {"ym": "1405/01", "v": 79.237}, {"ym": "1405/02", "v": 75.881}, {"ym": "1405/03", "v": 64.925}, {"ym": "1405/04", "v": 56.777}, {"ym": "1405/05", "v": 68.071}]}, "range": {"ons": {"lo": 3248.3701, "hi": 5190.08}, "geram18": {"lo": 64423000.0, "hi": 201237000.0}, "sekee": {"lo": 732900000.0, "hi": 2089950000.0}, "base_global_copper2": {"lo": 4.4835, "hi": 6.605}, "silver": {"lo": 32.4933, "hi": 94.4252}}};</script>
 <script>
 (function(){
 "use strict";
@@ -271,6 +286,33 @@ setInterval(function(){if(!IS_LIVE||!LAST_CHECK)return;var s=Math.max(0,Math.rou
 $('stampText').textContent=stampLine();var w=$('ringWrap');if(w&&w.style)w.style.display='inline-block';
 var a=$('ringArc');if(a&&a.style){a.style.strokeDasharray=RING_C;a.style.strokeDashoffset=RING_C*(1-s/60);}
 var nn=$('ringNum');if(nn)nn.textContent=fa(s);},1000);
+/* ===== گیج عقربه‌ای ===== */
+function gaugePolar(r,ang){var a=(ang-180)*Math.PI/180;return [100+r*Math.cos(a),100+r*Math.sin(a)];}
+function gaugeArc(r,a0,a1){var p0=gaugePolar(r,a0),p1=gaugePolar(r,a1);
+return 'M'+p0[0].toFixed(1)+' '+p0[1].toFixed(1)+' A'+r+' '+r+' 0 0 1 '+p1[0].toFixed(1)+' '+p1[1].toFixed(1);}
+function drawGauge(id,cfg,val){
+  var el=$(id); if(el===null||el===undefined) return;
+  var sig=JSON.stringify(cfg.zones)+cfg.min+cfg.max;
+  if(el._gsig!==sig){
+    var h='<svg viewBox="0 0 200 124">';
+    var prev=0;
+    (cfg.zones||[{f:1,c:'#20d2ca'}]).forEach(function(z){
+      h+='<path d="'+gaugeArc(78,prev*180,z.f*180)+'" fill="none" stroke="'+z.c+'" stroke-width="13" opacity=".9"/>';
+      prev=z.f;
+    });
+    for(var i=0;i<=4;i++){var p0=gaugePolar(66,i*45),p1=gaugePolar(72,i*45);
+      h+='<line x1="'+p0[0].toFixed(1)+'" y1="'+p0[1].toFixed(1)+'" x2="'+p1[0].toFixed(1)+'" y2="'+p1[1].toFixed(1)+'" stroke="#3a4d63" stroke-width="2"/>';}
+    h+='<text x="12" y="119" class="g-min">'+(cfg.minL||'')+'</text><text x="188" y="119" class="g-max" text-anchor="end">'+(cfg.maxL||'')+'</text>';
+    h+='<g id="'+id+'N" class="g-needle"><polygon points="96.5,101 103.5,101 100,36" fill="#f3c95c"/><circle cx="100" cy="100" r="7.5" fill="#f3c95c"/><circle cx="100" cy="100" r="3" fill="#0c1218"/></g>';
+    h+='<text id="'+id+'V" x="100" y="121" text-anchor="middle" class="g-val">—</text>';
+    h+='</svg>';
+    el.innerHTML=h; el._gsig=sig;
+  }
+  var fr=clamp((val-cfg.min)/(cfg.max-cfg.min),0,1);
+  var nd=$(id+'N');
+  if(nd&&nd.style){nd.style.transformOrigin='100px 100px';nd.style.transform='rotate('+((fr*180)-90)+'deg)';}
+  var tv=$(id+'V'); if(tv) tv.textContent=cfg.fmt?cfg.fmt(val):fa(val);
+}
 
 
 var KEYS=['base_global_copper2','silver','price_dollar_rl','base_global_zinc','base_global_steel'];
@@ -338,6 +380,14 @@ var mx6=Math.max(cuTon,zinc||0,steel||0);
 $('m6bars').innerHTML=[['مس',cuTon],['روی',zinc],['فولاد',steel]].map(function(x){return x[1]?'<div class="mini-row"><span>'+x[0]+'</span><span class="track"><span class="fill" style="width:'+clamp(x[1]/mx6*100,3,100)+'%"></span></span><b>'+fa(x[1],0)+'</b></div>':'';}).join('');
 $('m6C').innerHTML='هم‌جهتیِ مس با روی و فولاد یعنی حرکت واقعی صنعت جهانی؛ واگرایی یعنی داستان مس جداست.';
 drawTrend('trendSvg',H.copper.map(function(p){return{ym:p.ym,v:p.v/LB*1000};}),null,function(v){return fa(v,0);});
+/* ---- گیج‌ها ---- */
+var ZP=[{f:.33,c:'#2e7d5b'},{f:.66,c:'#7a6420'},{f:1,c:'#8a3a40'}];
+drawGauge('mgA',{min:0,max:100,minL:'کف سال',maxL:'سقف سال',zones:ZP,fmt:function(v){return pct(v,0);}},p1);
+$('mgAn').innerHTML='مس جهانی در <b>'+pct(p1,0)+'</b> فاصلهٔ کف تا سقف یک سال اخیر';
+drawGauge('mgB',{min:-30,max:10,minL:'-۳۰٪',maxL:'+۱۰٪',zones:[{f:.75,c:'#2e7d5b'},{f:.95,c:'#7a6420'},{f:1,c:'#8a3a40'}],fmt:function(v){return sgn(v)+pct(Math.abs(v),1);}},bub);
+$('mgBn').innerHTML='کاتد IME نسبت به «جهانی×دلار» — منفی یعنی تخفیف رینگ داخلی';
+drawGauge('mgC',{min:100,max:300,minL:'۱۰۰',maxL:'۳۰۰',zones:[{f:1,c:'#1e5a56'}],fmt:function(v){return fa(v,0);}},ratio);
+$('mgCn').innerHTML='تن مس ÷ انس نقره = <b>'+fa(ratio,1)+'</b> — بالاتر یعنی نقره از مس جا مانده';
 var share=clamp(Math.abs(bub)/(100+Math.max(bub,0))*100,0,100);
 var d=$('bubbleDonut');if(d&&d.style)d.style.background='conic-gradient(#f3b33c 0 '+share+'%, #0b918d '+share+'% 100%)';
 $('donutValue').textContent=sgn(bub)+pct(Math.abs(bub),1);
