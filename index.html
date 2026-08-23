@@ -194,7 +194,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۵</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۶</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -269,7 +269,7 @@ h1 em{font-style:normal;color:var(--amber)}
     <h3>منابع و لینک هر قیمت (TGJU)</h3>
     <ol>
       <li>مس جهانی (دلار/پوند → تن) — <a href="https://www.tgju.org/profile/base_global_copper2">tgju.org/profile/base_global_copper2</a> · مرجع رسمی: <a href="https://www.lme.com/metals/non-ferrous/lme-copper">lme.com</a></li>
-      <li>کاتد مس رینگ بورس کالا — <a href="https://www.ime.co.ir">ime.co.ir</a> (حراج هفتگی؛ با دکمهٔ ✎ ثبت می‌شود)</li>
+      <li>کاتد مس رینگ بورس کالا — <a href="https://cdn.ime.co.ir">cdn.ime.co.ir</a> (دریافت خودکار از داخل ایران از طریق BrsApi؛ در نبود دسترسی، ثبت دستی با ✎)</li>
       <li>کاتد بازار آزاد (خرده‌بار) — <a href="https://iranzayeat.com/prices/tag/katod-mes/">iranzayeat.com/prices/tag/katod-mes</a></li>
       <li>انس جهانی نقره — <a href="https://www.tgju.org/profile/silver">tgju.org/profile/silver</a></li>
       <li>نقرهٔ ۹۹۹ ایران — <a href="https://www.tgju.org/profile/silver_999">tgju.org/profile/silver_999</a></li>
@@ -312,6 +312,46 @@ var KATOD = {toman_kg: 2231600, date: '1405/05/29', live: false}; // خرده‌
 var IME_DEFAULT = {rial_kg: 24149910, date: '1405/05/30', manual: false}; // کاتد رینگ بورس کالا (حراج هفتگی فملی)
 var IME_KATOD = IME_DEFAULT;
 try { var _mk = JSON.parse(localStorage.getItem('metals.imeKatod')); if (_mk && _mk.rial_kg) IME_KATOD = {rial_kg:+_mk.rial_kg, date:_mk.date, manual:true}; } catch(e){}
+/* دریافت خودکار کاتد از بورس کالا (BrsApi — تغذیه‌شده از cdn.ime.co.ir؛ فقط از داخل ایران باز می‌شود) */
+var IME_AUTO = null;
+try { var _ia = JSON.parse(localStorage.getItem('metals.imeAuto')); if (_ia && _ia.rial_kg && Date.now()-_ia.t < 7*86400000) IME_AUTO = _ia; } catch(e){}
+function brsKey(){ try{ return localStorage.getItem('metals.brsKey') || 'FreeSV0E1LSgB9RDjuf0QorSLViX8pPG'; }catch(e){ return 'FreeSV0E1LSgB9RDjuf0QorSLViX8pPG'; } }
+function jDate(offsetDays){
+  try {
+    var d = new Date(Date.now() + offsetDays*86400000);
+    var s = new Intl.DateTimeFormat('fa-IR-u-nu-latn',{year:'numeric',month:'2-digit',day:'2-digit'}).format(d);
+    return s.replace(/\//g,'-');
+  } catch(e){ return ''; }
+}
+function fetchImeKatod(){
+  var ds = jDate(-13), de = jDate(0);
+  if (!ds || !de) return Promise.resolve();
+  var url = 'https://api.brsapi.ir/IME/Physical.php?key='+brsKey()+'&date_start='+ds+'&date_end='+de;
+  return fetch(url, {cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(d){
+      var rows = Array.isArray(d) ? d : (d.data || []);
+      var mes = rows.filter(function(r){ return String(r.l30||'').indexOf('مس کات') > -1 && parseFloat(r.pc) > 0 && parseFloat(r.volume_contract||0) > 0; });
+      if (!mes.length) throw 0;
+      mes.sort(function(a,b){ return String(a.date_trade||'').localeCompare(String(b.date_trade||'')); });
+      var last = mes[mes.length-1];
+      IME_AUTO = {rial_kg:+last.pc, date:String(last.date_trade||''), name:String(last.l30||'مس کاتد'), t:Date.now()};
+      try{ localStorage.setItem('metals.imeAuto', JSON.stringify(IME_AUTO)); }catch(e){}
+      if (LAST_CUR) render(LAST_CUR);
+    })
+    .catch(function(){ /* دسترسی نبود — دستی/پیش‌فرض می‌ماند */ });
+}
+function imeSource(){ // اولویت: خودکار از بورس کالا ← ثبت دستی ← پیش‌فرض
+  if (IME_AUTO && IME_AUTO.rial_kg) return {rial_kg:IME_AUTO.rial_kg, date:IME_AUTO.date, mode:'auto', name:IME_AUTO.name};
+  if (IME_KATOD.manual) return {rial_kg:IME_KATOD.rial_kg, date:IME_KATOD.date, mode:'manual'};
+  return {rial_kg:IME_DEFAULT.rial_kg, date:IME_DEFAULT.date, mode:'default'};
+}
+function editBrsKey(){
+  var s = prompt('کلید BrsApi (برای دریافت خودکار کاتد از بورس کالا).\nکلید رایگان: brsapi.ir → دریافت Api Key\nخالی = کلید تست عمومی', brsKey());
+  if (s === null) return;
+  try { s.trim() ? localStorage.setItem('metals.brsKey', s.trim()) : localStorage.removeItem('metals.brsKey'); } catch(e){}
+  fetchImeKatod();
+}
 function editKatod(){
   var s = prompt('قیمت کاتد مس بورس کالا را به «ریال بر کیلوگرم» وارد کنید (مثلاً 24149910).\nمنبع: ime.co.ir → آمار معاملات فیزیکی → مس کاتد\nبرای برگشت به مقدار پیش‌فرض، خالی بگذارید و OK بزنید.', IME_KATOD.rial_kg);
   if (s === null) return;
@@ -453,17 +493,22 @@ function render(cur, fetchedAt){
 
   /* ---- کادر مس ---- */
   var katodRialKg = KATOD ? KATOD.toman_kg*10 : null;                 // خرده‌بار (ریال/کیلو)
-  var imeRial = IME_KATOD.rial_kg;                                    // کاتد رینگ بورس کالا
+  var imeSrc = imeSource();
+  var imeRial = imeSrc.rial_kg;                                       // کاتد رینگ بورس کالا
+  var imeTag = imeSrc.mode==='auto' ? '🟢 خودکار از بورس کالا · معاملهٔ '+imeSrc.date
+             : imeSrc.mode==='manual' ? 'ثبت دستی شما در '+imeSrc.date
+             : 'پیش‌فرض ('+imeSrc.date+')';
   var cuBub = (imeRial/cuKgRial-1)*100;                               // حباب بر مبنای کاتد بورس کالا
   $('cuChip').outerHTML = gapChip(cuBub).replace('class="chip', 'id="cuChip" class="chip');
   $('rows_cu').innerHTML =
     row('قیمت جهانی مس <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#5fb9b4;text-decoration:none;font-size:10px">(LME)</a>', v(fa(cuTon,0),'دلار / تن'), cur.cuLb.ts, 'cu_w', cuTon, 0) +
-    row('کاتد بورس کالا (IME)', v(fa(imeRial,0),'ریال / کیلو')+'<button id="katodEdit" class="mini-edit" title="ثبت قیمت جدید حراج">✎</button>', '', 'cu_ime', imeRial, 0) +
+    row('کاتد بورس کالا (IME)', v(fa(imeRial,0),'ریال / کیلو')+'<button id="katodEdit" class="mini-edit" title="ثبت دستی قیمت حراج">✎</button><button id="brsKeyBtn" class="mini-edit" title="کلید دریافت خودکار از بورس کالا" style="color:#7fd6d0;border-color:#1f5c58;background:#0d2321">⚙</button>', '', 'cu_ime', imeRial, 0) +
     row('کاتد بازار آزاد (خرده‌بار)', katodRialKg ? v(fa(katodRialKg,0),'ریال / کیلو') : '—', '', 'cu_kb', katodRialKg, 0) +
     row('نسبت مس به نقره', v(fa(cuAg,1),'تن مس ÷ انس نقره'), '', 'cu_r', cuAg, 1) +
     row('حباب مس (کاتد IME به معادل جهانی)', gapChip(cuBub), '');
   var kb = $('katodEdit'); if (kb && kb.addEventListener) kb.addEventListener('click', editKatod);
-  $('note_cu').innerHTML = '<b>کاتد بورس کالا:</b> '+fa(imeRial,0)+' ریال/کیلو · '+(IME_KATOD.manual?'ثبت دستی شما در '+IME_KATOD.date:'ثبت‌شده هنگام ساخت ('+IME_KATOD.date+')')+' — حراج فملی هفتگی است؛ با دکمهٔ ✎ قیمت جدید <a href="https://www.ime.co.ir" style="color:#5fb9b4;text-decoration:none">ime.co.ir</a> را ثبت کنید · <b>خرده‌بار:</b> <a href="'+KATOD_URL+'" style="color:#5fb9b4;text-decoration:none">iranzayeat.com</a> ('+KATOD.date+(KATOD.live?' زنده':' ذخیره‌شده')+') · معادل جهانی محاسباتی: '+fa(cuKgRial,0)+' ریال/کیلو · نسبت = '+fa(cuTon,0)+' دلار/تن ÷ '+fa(cur.agOz.p,2)+' دلار/انس.';
+  var kk = $('brsKeyBtn'); if (kk && kk.addEventListener) kk.addEventListener('click', editBrsKey);
+  $('note_cu').innerHTML = '<b>کاتد بورس کالا:</b> '+fa(imeRial,0)+' ریال/کیلو · '+imeTag+' — منبع خودکار: <a href="https://cdn.ime.co.ir" style="color:#5fb9b4;text-decoration:none">cdn.ime.co.ir</a> از طریق BrsApi (فقط از داخل ایران وصل می‌شود؛ اگر 🟢 ندیدید با ✎ دستی ثبت کنید) · <b>خرده‌بار:</b> <a href="'+KATOD_URL+'" style="color:#5fb9b4;text-decoration:none">iranzayeat.com</a> ('+KATOD.date+(KATOD.live?' زنده':' ذخیره‌شده')+') · معادل جهانی محاسباتی: '+fa(cuKgRial,0)+' ریال/کیلو · نسبت = '+fa(cuTon,0)+' دلار/تن ÷ '+fa(cur.agOz.p,2)+' دلار/انس.';
 
   /* ---- کادر نقره ---- */
   $('agChip').outerHTML = bubbleChip(agBub).replace('class="chip','id="agChip" class="chip');
@@ -759,9 +804,11 @@ function refresh(){
 if (window.__MBOOT__){ render(window.__MBOOT__.current); setLive(false,'دادهٔ ذخیره‌شده · '+window.__MBOOT__.fetched_at); }
 refresh();
 fetchKatod();
+fetchImeKatod();
 loadPerf();
 setInterval(refresh, 60000); // هر ۶۰ ثانیه — طبق درخواست
-setInterval(fetchKatod, 600000); // کاتد هر ۱۰ دقیقه (قیمتش روزانه عوض می‌شود)
+setInterval(fetchKatod, 600000); // خرده‌بار هر ۱۰ دقیقه
+setInterval(fetchImeKatod, 600000); // کاتد بورس کالا هر ۱۰ دقیقه (حراج روزانه/هفتگی)
 var ci=$('calcBtn');if(ci&&ci.addEventListener)ci.addEventListener('click',runCalc);
 var cf=$('calcIn');
 if(cf&&cf.addEventListener){
