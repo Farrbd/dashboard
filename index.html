@@ -380,6 +380,37 @@ function editKatod(){
   }
   if (LAST_CUR) render(LAST_CUR);
 }
+/* ---- سهم فملی (ثبت دستی — منبع خودکار مطمئنی در TGJU نیست) ---- */
+var FEMELI = null;
+try{ var _fe = JSON.parse(localStorage.getItem('metals.femeli')); if (_fe && _fe.price) FEMELI = _fe; }catch(e){}
+function editFemeli(){
+  var s = prompt('قیمت سهم «فملی» (گروه ملی صنایع مس ایران) را به ریال وارد کنید (مثلاً 10500).\nمنبع: TSETMC یا اپ کارگزاری\nخالی + OK = پاک کردن', FEMELI ? FEMELI.price : '');
+  if (s === null) return;
+  s = String(s).replace(/[^\d]/g,'');
+  if (!s){ FEMELI = null; try{ localStorage.removeItem('metals.femeli'); }catch(e){} }
+  else {
+    var d; try { d = new Intl.DateTimeFormat('fa-IR-u-nu-latn',{dateStyle:'short'}).format(new Date()); } catch(e){ d=''; }
+    FEMELI = {price:+s, date:d};
+    try{ localStorage.setItem('metals.femeli', JSON.stringify(FEMELI)); }catch(e){}
+  }
+  if (LAST_CUR) render(LAST_CUR);
+}
+/* ---- کف/سقف/تعادل نسبت مس به طلا از تاریخچهٔ یک‌سال (کش ۶ ساعته) ---- */
+var CUAU = null;
+try{ var _ca = JSON.parse(localStorage.getItem('hub.cuau')); if (_ca && _ca.lo && Date.now()-_ca.t < 21600000) CUAU = _ca.lo ? _ca : null; }catch(e){}
+function loadCuAu(){
+  Promise.all(['base_global_copper2','ons'].map(function(s){return fetchJson('https://api.tgju.org/v1/market/indicator/summary-table-data/'+s+'?lang=fa&order_dir=desc&length=400');}))
+  .then(function(res){
+    var g = {}; (res[1].data||[]).forEach(function(r){ g[String(r[7])] = num(r[0]); });
+    var series = []; (res[0].data||[]).forEach(function(r){ var gv = g[String(r[7])]; if (gv>0) series.push(num(r[0])/LB*1000/gv); });
+    if (series.length < 30) return;
+    var mn = Math.min.apply(null,series), mx = Math.max.apply(null,series), sum = 0;
+    series.forEach(function(x){ sum += x; });
+    CUAU = {lo:mn, hi:mx, mean:sum/series.length, n:series.length};
+    try{ localStorage.setItem('hub.cuau', JSON.stringify({t:Date.now(), d:CUAU})); }catch(e){}
+    if (LAST_CUR) render(LAST_CUR);
+  }).catch(function(){});
+}
 var LAST_CUR = null;
 var IS_LIVE = false, LAST_CHECK = null, MAX_TS = '', NEXT_AT = 0;
 
@@ -512,16 +543,31 @@ function render(cur, fetchedAt){
              : imeSrc.mode==='manual' ? 'ثبت دستی شما در '+imeSrc.date
              : 'پیش‌فرض ('+imeSrc.date+')';
   var cuBub = (imeRial/cuKgRial-1)*100;                               // حباب بر مبنای کاتد بورس کالا
+  /* نسبت مس به طلا (تن ÷ انس) + کف/سقف/تعادل از تاریخچهٔ یک‌سال */
+  var auOzNow = cur.auOz ? cur.auOz.p : null;
+  var cuAu = auOzNow ? cuTon/auOzNow : null;
+  var cuAuLine = CUAU ? 'کف '+fa(CUAU.lo,2)+' · سقف '+fa(CUAU.hi,2)+' · تعادل '+fa(CUAU.mean,2) : '';
+  /* نسبت کاتد به سهم فملی */
+  var femRatio = null, femeliVal;
+  if (FEMELI && FEMELI.price) {
+    femRatio = imeRial / FEMELI.price;
+    femeliVal = v(fa(femRatio,0),'کیلو کاتد / سهم')+'<button id="femeliEdit" class="mini-edit" title="تغییر قیمت فملی">✎</button>';
+  } else {
+    femeliVal = '—<button id="femeliEdit" class="mini-edit" title="قیمت سهم فملی (ریال) را ثبت کنید">✎ ثبت</button>';
+  }
   $('cuChip').outerHTML = gapChip(cuBub).replace('class="chip', 'id="cuChip" class="chip');
   $('rows_cu').innerHTML =
     row('قیمت جهانی مس <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#5fb9b4;text-decoration:none;font-size:10px">(LME)</a>', v(fa(cuTon,0),'دلار / تن'), cur.cuLb.ts, 'cu_w', cuTon, 0) +
     row('کاتد بورس کالا (IME)', v(fa(imeRial,0),'ریال / کیلو')+'<button id="katodEdit" class="mini-edit" title="ثبت دستی قیمت حراج">✎</button><button id="brsKeyBtn" class="mini-edit" title="کلید دریافت خودکار از بورس کالا" style="color:#7fd6d0;border-color:#1f5c58;background:#0d2321">⚙</button>', '', 'cu_ime', imeRial, 0) +
     row('کاتد بازار آزاد (خرده‌بار)', katodRialKg ? v(fa(katodRialKg,0),'ریال / کیلو') : '—', '', 'cu_kb', katodRialKg, 0) +
     row('نسبت مس به نقره', v(fa(cuAg,1),'تن مس ÷ انس نقره'), '', 'cu_r', cuAg, 1) +
+    row('نسبت مس به طلا', v(fa(cuAu,2),'تن مس ÷ انس طلا')+(cuAuLine?'<small style="display:block;color:#8fa1b5;font-size:10px;white-space:normal;line-height:1.9">'+cuAuLine+'</small>':''), '', 'cu_au', cuAu, 2) +
+    row('کاتد ÷ سهم فملی', femeliVal, '', 'cu_fe', femRatio, 1) +
     row('حباب مس (کاتد IME به معادل جهانی)', gapChip(cuBub), '');
   var kb = $('katodEdit'); if (kb && kb.addEventListener) kb.addEventListener('click', editKatod);
   var kk = $('brsKeyBtn'); if (kk && kk.addEventListener) kk.addEventListener('click', editBrsKey);
-  $('note_cu').innerHTML = '<b>کاتد بورس کالا:</b> '+fa(imeRial,0)+' ریال/کیلو · '+imeTag+' — منبع خودکار: <a href="https://cdn.ime.co.ir" style="color:#5fb9b4;text-decoration:none">cdn.ime.co.ir</a> از طریق BrsApi (فقط از داخل ایران وصل می‌شود؛ اگر 🟢 ندیدید با ✎ دستی ثبت کنید) · <b>خرده‌بار:</b> <a href="'+KATOD_URL+'" style="color:#5fb9b4;text-decoration:none">iranzayeat.com</a> ('+KATOD.date+(KATOD.live?' زنده':' ذخیره‌شده')+') · معادل جهانی محاسباتی: '+fa(cuKgRial,0)+' ریال/کیلو · نسبت = '+fa(cuTon,0)+' دلار/تن ÷ '+fa(cur.agOz.p,2)+' دلار/انس.';
+  var feB = $('femeliEdit'); if (feB && feB.addEventListener) feB.addEventListener('click', editFemeli);
+  $('note_cu').innerHTML = '<b>کاتد بورس کالا:</b> '+fa(imeRial,0)+' ریال/کیلو · '+imeTag+' — منبع خودکار: <a href="https://cdn.ime.co.ir" style="color:#5fb9b4;text-decoration:none">cdn.ime.co.ir</a> از طریق BrsApi (فقط از داخل ایران وصل می‌شود؛ اگر 🟢 ندیدید با ✎ دستی ثبت کنید) · <b>خرده‌بار:</b> <a href="'+KATOD_URL+'" style="color:#5fb9b4;text-decoration:none">iranzayeat.com</a> ('+KATOD.date+(KATOD.live?' زنده':' ذخیره‌شده')+') · معادل جهانی محاسباتی: '+fa(cuKgRial,0)+' ریال/کیلو · نسبت = '+fa(cuTon,0)+' دلار/تن ÷ '+fa(cur.agOz.p,2)+' دلار/انس · <b>مس/طلا:</b> دلار/تن ÷ دلار/انس طلا (کف/سقف/تعادل = کمینه/بیشینه/میانگین تاریخچهٔ یک‌سالهٔ TGJU) · <b>فملی:</b> کاتد ÷ قیمت سهم فملی (ریال) — ثبت دستی با ✎ از TSETMC یا کارگزاری.';
 
   /* ---- کادر نقره ---- */
   $('agChip').outerHTML = bubbleChip(agBub).replace('class="chip','id="agChip" class="chip');
@@ -561,7 +607,7 @@ function render(cur, fetchedAt){
   renderIdeas(cur,{ag:agBub,au:auBub,coin:coinBub,cu:cuBub,agCert:agCertBub,auCert:auCertBub,coinCert:coinCertBub,certGap:coinCertGap,gs:cur.gs?cur.gs.p:null,imeRial:imeRial,cuKgRial:cuKgRial});
   /* مقادیر برای موتور هشدار */
   ALERT_VALS = {usd:usd, agOz:cur.agOz.p, ag999:cur.ag999.p, auOz:cur.auOz.p, g18:cur.g18.p,
-                emami:cur.emami.p, cuTon:cuTon, agBub:agBub, auBub:auBub, coinBub:coinBub, cuBub:cuBub};
+                emami:cur.emami.p, cuTon:cuTon, agBub:agBub, auBub:auBub, coinBub:coinBub, cuBub:cuBub, cuAu:cuAu};
   checkAlerts();
   return maxTs;
 }
@@ -579,7 +625,8 @@ var METRICS = {
   agBub: {label:'حباب نقره (٪)',            card:'ag',  dec:2},
   auBub: {label:'حباب طلا (٪)',             card:'au',  dec:2},
   coinBub:{label:'حباب سکه (٪)',            card:'coin',dec:2},
-  cuBub: {label:'اختلاف کاتد با جهانی (٪)', card:'cu',  dec:2}
+  cuBub: {label:'اختلاف کاتد با جهانی (٪)', card:'cu',  dec:2},
+  cuAu:  {label:'نسبت مس به طلا',           card:'cu',  dec:2}
 };
 function loadAlerts(){ try{ var a=JSON.parse(localStorage.getItem('hub.alerts')); if(Array.isArray(a)) return a; }catch(e){} return []; }
 var ALERTS = loadAlerts();
@@ -818,6 +865,7 @@ if (window.__MBOOT__){ render(window.__MBOOT__.current); setLive(false,'داده
 refresh();
 fetchKatod();
 fetchImeKatod();
+loadCuAu();
 loadPerf();
 setInterval(refresh, 60000); // هر ۶۰ ثانیه — طبق درخواست
 setInterval(fetchKatod, 600000); // خرده‌بار هر ۱۰ دقیقه
