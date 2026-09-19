@@ -181,8 +181,8 @@ h1 em{font-style:normal;color:var(--amber)}
 .ret-chip b.u{color:#32d38b}.ret-chip b.d{color:#ff6262}.ret-chip b.n{color:#c9c9c9}
 .cs-chart{width:100%;display:none;margin-top:14px}
 .cs-chart iframe{width:100%;height:480px;border:0;border-radius:12px;background:#0d0d0d}
-.cs-chartbtn{border:1px solid #3a3a3a;background:#141414;color:#e75c81;border-radius:9px;padding:6px 14px;cursor:pointer;font:inherit;font-size:12px;font-weight:700;transition:background .2s,transform .15s;flex:none}
-.cs-chartbtn:hover{background:#1f1f1f;transform:translateY(-1px)}
+.cs-spark{width:150px;height:40px;flex:none;opacity:.95}
+@media(max-width:700px){.cs-spark{display:none}}
 @media(max-width:1000px){.metal-grid{grid-template-columns:1fr}h1{font-size:22px}.sources ol{columns:1}.cs-chart iframe{height:380px}}
 @media(max-width:700px){
   .shell{width:calc(100% - 20px)}
@@ -225,7 +225,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۸ — 2026-09-19 20:42</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۸ — 2026-09-19 22:48</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -267,8 +267,7 @@ h1 em{font-style:normal;color:var(--amber)}
     </div>
     <div class="cs-price" id="ccPrice">…</div>
     <div class="ret-chips" id="ccRets" style="flex:2"></div>
-    <button class="cs-chartbtn" id="chartbtn_cc">📊 نمودار</button>
-    <div class="cs-chart" id="chart_cc"></div>
+    <svg class="cs-spark" id="ccSpark" viewBox="0 0 150 40"></svg>
   </div>
 
   <div class="cert-strip" id="t9Strip">
@@ -278,8 +277,7 @@ h1 em{font-style:normal;color:var(--amber)}
     </div>
     <div class="cs-price" id="t9Price">…</div>
     <div class="ret-chips" id="t9Rets" style="flex:2"></div>
-    <button class="cs-chartbtn" id="chartbtn_t9">📊 نمودار</button>
-    <div class="cs-chart" id="chart_t9"></div>
+    <svg class="cs-spark" id="t9Spark" viewBox="0 0 150 40"></svg>
   </div>
   </div>
 
@@ -465,6 +463,7 @@ function fetchCertOne(sym, storeKey, apply){
       k.t = Date.now();
       apply(k);
       try{ localStorage.setItem(storeKey, JSON.stringify(k)); }catch(e){}
+      certHistPush(storeKey + '.hist', k.price);
     }).catch(function(){ if(!done){ done = true; clearTimeout(timer); tryNext(); } });
   }
   tryNext();
@@ -610,6 +609,34 @@ function retChipsHtml(ret){
   });
   return h?'<div class="ret-chips">'+h+'</div>':'';
 }
+function certHistPush(key, price){
+  try{
+    var h = JSON.parse(localStorage.getItem(key)) || [];
+    var now = Date.now();
+    if(h.length && now - h[h.length-1].t < 300000){ h[h.length-1] = {t:h[h.length-1].t, p:price}; }
+    else h.push({t:now, p:price});
+    if(h.length > 400) h = h.slice(-400);
+    localStorage.setItem(key, JSON.stringify(h));
+  }catch(e){}
+}
+function certHistGet(key){
+  try{ var h = JSON.parse(localStorage.getItem(key)); if(Array.isArray(h) && h.length) return h; }catch(e){}
+  return null;
+}
+function sparkSvg(h){
+  if(!h) return '';
+  if(h.length === 1){
+    return '<svg class="cs-spark" viewBox="0 0 150 40"><circle cx="145" cy="20" r="3" fill="#cb2957"/><text x="6" y="25" fill="#8a8a8a" font-size="9">جمع‌آوری داده…</text></svg>';
+  }
+  var t0=h[0].t, t1=h[h.length-1].t, span=Math.max(t1-t0,1);
+  var ps=h.map(function(x){ return {x: 4 + (x.t-t0)/span*142, p:x.p}; });
+  var mn=Math.min.apply(null,ps.map(function(q){return q.p;})), mx=Math.max.apply(null,ps.map(function(q){return q.p;}));
+  if(mx-mn<1e-9){ mn-=1; mx+=1; }
+  ps.forEach(function(q){ q.y = 34 - (q.p-mn)/(mx-mn)*28; });
+  var line = ps.map(function(q){ return q.x.toFixed(1)+','+q.y.toFixed(1); }).join(' ');
+  var last = ps[ps.length-1];
+  return '<svg class="cs-spark" viewBox="0 0 150 40"><polyline points="'+line+'" fill="none" stroke="#cb2957" stroke-width="2" stroke-linejoin="round"/><circle cx="'+last.x.toFixed(1)+'" cy="'+last.y.toFixed(1)+'" r="3" fill="#eeeeee"/></svg>';
+}
 function fillStrip(prefix, cert, tried){
   var pr=$(prefix+'Price'), rt=$(prefix+'Rets');
   if(!pr) return;
@@ -621,24 +648,10 @@ function fillStrip(prefix, cert, tried){
     pr.innerHTML = '<span style="font-size:13px;color:#c9c9c9">⚠ اتصال برقرار نشد — تلاش مجدد خودکار…</span>';
     rt.innerHTML = '';
   } else { pr.textContent='در حال دریافت…'; rt.innerHTML=''; }
+  var sp = $(prefix+'Spark');
+  if(sp) sp.innerHTML = sparkSvg(certHistGet('metals.'+(prefix==='t9'?'certT9':'certCu')+'.hist'));
 }
 function renderCertStrip(){ fillStrip('t9',CERT_T9,CERT_TRIED.t9); fillStrip('cc',CERT_CU,CERT_TRIED.cu); }
-function toggleCertChart(id){
-  var box=$('chart_'+id);
-  if(!box) return;
-  if(!box.dataset.loaded){
-    var sym = id==='t9' ? 'KMCT9' : 'COPPERCTHD';
-    box.innerHTML = '<iframe loading="lazy" referrerpolicy="no-referrer" src="https://max.chartix.ir/dashboard?chart='+sym+'&type=watch-list"></iframe>';
-    box.dataset.loaded = '1';
-  }
-  box.style.display = box.style.display==='block' ? 'none' : 'block';
-  var btn=$('chartbtn_'+id);
-  if(btn) btn.textContent = box.style.display==='block' ? '▲ بستن نمودار' : '📊 نمودار';
-}
-['t9','cc'].forEach(function(id){
-  var b=$('chartbtn_'+id);
-  if(b&&b.addEventListener) b.addEventListener('click',function(){toggleCertChart(id);});
-});
 var PREV = {};
 function pulseCards(){ // پالس ملایم روی هر چهار کادر بعد از بروزرسانی موفق
   ['cu','ag','au','coin'].forEach(function(k){
