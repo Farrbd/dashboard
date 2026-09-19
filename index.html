@@ -165,6 +165,11 @@ h1 em{font-style:normal;color:var(--amber)}
 @keyframes bannerPulse{0%,100%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 0 0 rgba(203,41,87,.35)}50%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 24px 4px rgba(203,41,87,.4)}}
 @keyframes redPulse{0%,100%{box-shadow:0 0 0 0 rgba(203,41,87,0)}50%{box-shadow:0 0 22px 3px rgba(203,41,87,.35)}}
 .metal-card.alerted{border-color:#8f1f41;animation:redPulse 1.6s infinite}
+.cur-divider{display:flex;align-items:center;gap:14px;margin:26px 0 16px}
+.cur-divider .dl{flex:1;height:1px;background:linear-gradient(90deg,transparent,#3a3a3a)}
+.cur-divider .dr{flex:1;height:1px;background:linear-gradient(90deg,#3a3a3a,transparent)}
+.cur-divider .dd{width:8px;height:8px;background:#cb2957;transform:rotate(45deg);box-shadow:0 0 10px rgba(203,41,87,.55);flex:none}
+.cur-divider .dt{font-size:14px;font-weight:800;color:#f5f5f5;white-space:nowrap}
 .cur-section{margin-top:20px}
 .cur-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:12px}
 .cur-card{position:relative;background:linear-gradient(150deg,#151515,#0f0f0f);border:1px solid #282828;border-radius:16px;padding:16px 18px 13px;transition:transform .2s,border-color .22s;animation:cardIn .6s backwards}
@@ -246,7 +251,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۸ — 2026-09-19 23:29</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۸ — 2026-09-19 23:48</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -282,7 +287,7 @@ h1 em{font-style:normal;color:var(--amber)}
   </div>
 
   <div class="cur-section" id="curSection">
-    <div class="section-heading" style="margin-top:0"><strong>دلار، یورو و رمزارزها</strong><span>قیمت لحظه‌ای TGJU — جدا از فلزات</span></div>
+    <div class="cur-divider"><span class="dl"></span><span class="dd"></span><span class="dt">دلار، یورو و رمزارزها</span><span class="dd"></span><span class="dr"></span></div>
     <div class="cur-grid">
       <div class="cur-card">
         <div class="cur-head"><span class="cur-ico ico-usd">$</span><div><div class="cur-name">دلار آمریکا</div><div class="cur-sub">بازار آزاد · TGJU</div></div></div>
@@ -412,7 +417,8 @@ var K = {
   'ons':'auOz','geram18':'g18','geram24':'g24',
   'ime_certificate_gold_bars':'auCert','ime_indices_shemsh_tala_kham':'shemsh',
   'sekee':'emami','ime_certificate_coin':'coinCert','price_dollar_rl':'usd',
-  'price_eur':'eur','crypto-bitcoin-irr':'btc','crypto-ethereum-irr':'eth'
+  'price_eur':'eur','crypto-bitcoin-irr':'btc','crypto-ethereum-irr':'eth',
+  'crypto-bitcoin':'btcUsd','crypto-ethereum':'ethUsd'
 };
 var CALLS = ['https://call2.tgju.org/ajax.json','https://call3.tgju.org/ajax.json','https://call4.tgju.org/ajax.json'];
 var DIAG = {attempts:[], keyTs:{}, lastErr:''};
@@ -734,16 +740,23 @@ function curDirChip(c){
   return '<span style="color:#9a9a9a">بدون تغییر</span>';
 }
 function renderCurrencies(cur){
-  [['usd','دلار'],['eur','یورو'],['btc','بیت‌کوین'],['eth','اتریوم']].forEach(function(x){
+  [['usd'],['eur'],['btc'],['eth']].forEach(function(x){
     var code=x[0], c=cur[code];
     var pEl=$('curP_'+code), tEl=$('curT_'+code), cEl=$('curC_'+code), tsEl=$('curTs_'+code);
     if(!pEl) return;
     if(!c || !c.p){ pEl.textContent='—'; return; }
     var prev = PREV['cur_'+code];
-    pEl.innerHTML = fa(c.p,0)+' <small>ریال</small>';
-    tEl.textContent = fa(c.p/10,0)+' تومان';
+    var isCrypto = (code==='btc' || code==='eth');
+    var uKey = code+'Usd';
+    if(isCrypto && cur[uKey] && cur[uKey].p){
+      // قیمت اصلی: دلار — تومان کوچیک کنارش
+      pEl.innerHTML = '$'+Number(cur[uKey].p).toLocaleString('en-US',{maximumFractionDigits:0})+
+        ' <small>≈ '+fa(c.p,0)+' تومان</small>';
+    } else {
+      pEl.innerHTML = fa(c.p,0)+' <small>ریال</small>';
+    }
+    tEl.textContent = (isCrypto ? 'هر '+code.toUpperCase() : '')+' · '+t(c.ts);
     cEl.innerHTML = curDirChip(c);
-    tsEl.textContent = 'ساعت قیمت: '+t(c.ts);
     if(prev !== undefined && prev !== c.p && pEl.classList){
       pEl.classList.remove('flashUp','flashDown'); void pEl.offsetWidth;
       pEl.classList.add(c.p>prev ? 'flashUp' : 'flashDown');
