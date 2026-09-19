@@ -380,23 +380,37 @@ function editKatod(){
   }
   if (LAST_CUR) render(LAST_CUR);
 }
-/* ---- گواهی سپردهٔ مس کاتد — زنده از chartix.ir (با واسطهٔ r.jina.ai برای CORS) ---- */
-var CERT_CU = null;
+/* ---- گواهی‌های سپردهٔ بورس کالا — زنده از chartix.ir (با واسطهٔ r.jina.ai برای CORS) ---- */
+var CERT_CU = null, CERT_T9 = null;
 try{ var _cc = JSON.parse(localStorage.getItem('metals.certCu')); if (_cc && _cc.price && Date.now()-_cc.t < 86400000) CERT_CU = _cc; }catch(e){}
-function fetchChartix(){
-  var url = 'https://r.jina.ai/https://chartix.ir/market/bourse_kala/COPPERCTHD?r=' + Date.now();
+try{ var _ct = JSON.parse(localStorage.getItem('metals.certT9')); if (_ct && _ct.price && Date.now()-_ct.t < 86400000) CERT_T9 = _ct; }catch(e){}
+function parseChartix(tx){
+  var pm = tx.match(/قیمت فعلی این نماد برابر با\s*\*{0,2}([\d,]{6,12})/);
+  if(!pm) pm = tx.match(/([\d]{2,3},\d{3},\d{3})/);
+  var dm = tx.match(/Title:[\s\S]*?\(([^)]+)\)/);
+  if(!pm) return null;
+  var price = parseInt(String(pm[1]).replace(/,/g,''), 10);
+  if(!(price > 1000000)) return null;
+  return {price:price, date:dm?dm[1]:''};
+}
+function fetchChartixOne(sym, storeKey, apply){
+  var url = 'https://r.jina.ai/https://chartix.ir/market/bourse_kala/' + sym + '?r=' + Date.now();
   return fetch(url, {cache:'no-store'})
   .then(function(r){ if(!r.ok) throw 0; return r.text(); })
   .then(function(tx){
-    var pm = tx.match(/قیمت فعلی این نماد برابر با\s*\*{0,2}([\d,]{6,12})/) || tx.match(/([\d]{2,3},\d{3},\d{3})/);
-    var dm = tx.match(/Title:[\s\S]*?\(([^)]+)\)/);
-    if(!pm) return;
-    var price = parseInt(String(pm[1]).replace(/,/g,''), 10);
-    if(!(price > 10000000)) return;
-    CERT_CU = {price:price, date:dm?dm[1]:'', t:Date.now()};
-    try{ localStorage.setItem('metals.certCu', JSON.stringify(CERT_CU)); }catch(e){}
+    var k = parseChartix(tx);
+    if(!k) return;
+    k.t = Date.now();
+    apply(k);
+    try{ localStorage.setItem(storeKey, JSON.stringify(k)); }catch(e){}
     if (LAST_CUR) render(LAST_CUR);
   }).catch(function(){ /* دفعهٔ بعد */ });
+}
+function fetchChartix(){
+  return Promise.all([
+    fetchChartixOne('COPPERCTHD', 'metals.certCu', function(k){ CERT_CU = k; }),
+    fetchChartixOne('KMCT9',      'metals.certT9', function(k){ CERT_T9 = k; })
+  ]);
 }
 /* ---- سهم فملی (ثبت دستی — منبع خودکار مطمئنی در TGJU نیست) ---- */
 var FEMELI = null;
@@ -578,6 +592,7 @@ function render(cur, fetchedAt){
     row('قیمت جهانی مس <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#e75c81;text-decoration:none;font-size:10px">(LME)</a>', v(fa(cuTon,0),'دلار / تن'), cur.cuLb.ts, 'cu_w', cuTon, 0) +
     row('کاتد بورس کالا (IME)', v(fa(imeRial,0),'ریال / کیلو')+'<button id="katodEdit" class="mini-edit" title="ثبت دستی قیمت حراج">✎</button><button id="brsKeyBtn" class="mini-edit" title="کلید دریافت خودکار از بورس کالا" style="color:#e75c81;border-color:#5c152c;background:#1a0a10">⚙</button>', '', 'cu_ime', imeRial, 0) +
     row('گواهی سپردهٔ مس کاتد <a href="https://chartix.ir/market/bourse_kala/COPPERCTHD" style="color:#e75c81;text-decoration:none;font-size:10px">(chartix · زنده)</a>', CERT_CU ? v(fa(CERT_CU.price,0),'ریال')+'<small style="display:block;color:#8a8a8a;font-size:10px;white-space:normal;line-height:1.9">بازار معاملاتی گواهی'+(CERT_CU.date?' · '+CERT_CU.date:'')+'</small>' : 'در حال دریافت…', '', 'cu_cert', CERT_CU?CERT_CU.price:null, 0) +
+    row('گواهی سپردهٔ وانت T9 <a href="https://chartix.ir/market/bourse_kala/KMCT9" style="color:#e75c81;text-decoration:none;font-size:10px">(chartix · زنده)</a>', CERT_T9 ? v(fa(CERT_T9.price,0),'ریال')+'<small style="display:block;color:#8a8a8a;font-size:10px;white-space:normal;line-height:1.9">هر دستگاه = ۱۰٬۰۰۰ گواهی · بازار معاملاتی'+(CERT_T9.date?' · '+CERT_T9.date:'')+'</small>' : 'در حال دریافت…', '', 'cu_t9', CERT_T9?CERT_T9.price:null, 0) +
     row('کاتد بازار آزاد (خرده‌بار)', katodRialKg ? v(fa(katodRialKg,0),'ریال / کیلو') : '—', '', 'cu_kb', katodRialKg, 0) +
     row('نسبت مس به نقره', v(fa(cuAg,1),'تن مس ÷ انس نقره'), '', 'cu_r', cuAg, 1) +
     row('نسبت مس به طلا', v(fa(cuAu,2),'تن مس ÷ انس طلا')+(cuAuLine?'<small style="display:block;color:#8fa1b5;font-size:10px;white-space:normal;line-height:1.9">'+cuAuLine+'</small>':''), '', 'cu_au', cuAu, 2) +
@@ -586,7 +601,7 @@ function render(cur, fetchedAt){
   var kb = $('katodEdit'); if (kb && kb.addEventListener) kb.addEventListener('click', editKatod);
   var kk = $('brsKeyBtn'); if (kk && kk.addEventListener) kk.addEventListener('click', editBrsKey);
   var feB = $('femeliEdit'); if (feB && feB.addEventListener) feB.addEventListener('click', editFemeli);
-  $('note_cu').innerHTML = '<b>کاتد بورس کالا:</b> '+fa(imeRial,0)+' ریال/کیلو · '+imeTag+' — منبع خودکار: <a href="https://cdn.ime.co.ir" style="color:#e75c81;text-decoration:none">cdn.ime.co.ir</a> از طریق BrsApi (فقط از داخل ایران وصل می‌شود؛ اگر 🟢 ندیدید با ✎ دستی ثبت کنید) · <b>خرده‌بار:</b> <a href="'+KATOD_URL+'" style="color:#e75c81;text-decoration:none">iranzayeat.com</a> ('+KATOD.date+(KATOD.live?' زنده':' ذخیره‌شده')+') · معادل جهانی محاسباتی: '+fa(cuKgRial,0)+' ریال/کیلو · نسبت = '+fa(cuTon,0)+' دلار/تن ÷ '+fa(cur.agOz.p,2)+' دلار/انس · <b>مس/طلا:</b> دلار/تن ÷ دلار/انس طلا (کف/سقف/تعادل = کمینه/بیشینه/میانگین تاریخچهٔ یک‌سالهٔ TGJU) · <b>فملی:</b> کاتد ÷ قیمت سهم فملی (ریال) — ثبت دستی با ✎ از TSETMC یا کارگزاری · <b>گواهی سپرده:</b> قیمت معاملاتیِ زندهٔ گواهی مس کاتد از <a href="https://chartix.ir/market/bourse_kala/COPPERCTHD" style="color:#e75c81;text-decoration:none">chartix.ir</a> (معمولاً بالاتر از رینگ حراج فیزیکی معامله می‌شود).';
+  $('note_cu').innerHTML = '<b>کاتد بورس کالا:</b> '+fa(imeRial,0)+' ریال/کیلو · '+imeTag+' — منبع خودکار: <a href="https://cdn.ime.co.ir" style="color:#e75c81;text-decoration:none">cdn.ime.co.ir</a> از طریق BrsApi (فقط از داخل ایران وصل می‌شود؛ اگر 🟢 ندیدید با ✎ دستی ثبت کنید) · <b>خرده‌بار:</b> <a href="'+KATOD_URL+'" style="color:#e75c81;text-decoration:none">iranzayeat.com</a> ('+KATOD.date+(KATOD.live?' زنده':' ذخیره‌شده')+') · معادل جهانی محاسباتی: '+fa(cuKgRial,0)+' ریال/کیلو · نسبت = '+fa(cuTon,0)+' دلار/تن ÷ '+fa(cur.agOz.p,2)+' دلار/انس · <b>مس/طلا:</b> دلار/تن ÷ دلار/انس طلا (کف/سقف/تعادل = کمینه/بیشینه/میانگین تاریخچهٔ یک‌سالهٔ TGJU) · <b>فملی:</b> کاتد ÷ قیمت سهم فملی (ریال) — ثبت دستی با ✎ از TSETMC یا کارگزاری · <b>گواهی‌های سپرده:</b> قیمت معاملاتیِ زنده از <a href="https://chartix.ir/market/bourse_kala/COPPERCTHD" style="color:#e75c81;text-decoration:none">chartix.ir</a> — گواهی مس کاتد (معمولاً بالاتر از رینگ حراج فیزیکی) و گواهی وانت T9 کرمان‌موتور (هر دستگاه = ۱۰٬۰۰۰ گواهی).';
 
   /* ---- کادر نقره ---- */
   $('agChip').outerHTML = bubbleChip(agBub).replace('class="chip','id="agChip" class="chip');
