@@ -225,7 +225,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۸ — 2026-09-19 17:44</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۸ — 2026-09-19 20:42</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -422,43 +422,70 @@ function editKatod(){
   if (LAST_CUR) render(LAST_CUR);
 }
 /* ---- گواهی‌های سپردهٔ بورس کالا — زنده از chartix.ir (با واسطهٔ r.jina.ai برای CORS) ---- */
-var CERT_CU = null, CERT_T9 = null;
-try{ var _cc = JSON.parse(localStorage.getItem('metals.certCu')); if (_cc && _cc.price && Date.now()-_cc.t < 86400000) CERT_CU = _cc; }catch(e){}
-try{ var _ct = JSON.parse(localStorage.getItem('metals.certT9')); if (_ct && _ct.price && Date.now()-_ct.t < 86400000) CERT_T9 = _ct; }catch(e){}
-function parseChartix(tx){
+var CERT_CU = null, CERT_T9 = null, CERT_TRIED = {}, CERT_FAIL = {}, CERT_TIMERS = {};
+function certRead(key){
+  try{
+    var v = JSON.parse(localStorage.getItem(key));
+    if (v && v.price) return v;
+  }catch(e){}
+  return null;
+}
+CERT_CU = certRead('metals.certCu'); CERT_T9 = certRead('metals.certT9');
+function parseChartixAny(tx){
+  if(!tx) return null;
   var pm = tx.match(/قیمت فعلی این نماد برابر با\s*\*{0,2}([\d,]{6,12})/);
-  if(!pm) pm = tx.match(/([\d]{2,3},\d{3},\d{3})/);
   var dm = tx.match(/Title:[\s\S]*?\(([^)]+)\)/);
+  if(!pm) pm = tx.match(/([\d]{2,3},\d{3},\d{3})(?:<[^>]*>|\s){0,12}(?:IRR|ریال)/) || tx.match(/"price"\s*:\s*"?([\d]{7,10})/);
   if(!pm) return null;
   var price = parseInt(String(pm[1]).replace(/,/g,''), 10);
   if(!(price > 1000000)) return null;
   var ret = {};
-  [['d1','یک روزه'],['w1','یک هفته'],['m1','یک ماهه'],['m3','سه ماهه'],['m6','شش ماهه']].forEach(function(p){
-    var m = tx.match(new RegExp(p[1] + '(\\s-?[\\d.]+)%'));
-    if(m) ret[p[0]] = parseFloat(m[1]);
-  });
   var md = tx.match(/با تغییرات (-?[\d.]+)%/); if(md) ret.d1 = parseFloat(md[1]);
   var mw = tx.match(/با بازدهی (-?[\d.]+)%/); if(mw) ret.w1 = parseFloat(mw[1]);
   return {price:price, date:dm?dm[1]:'', ret:ret};
 }
-function fetchChartixOne(sym, storeKey, apply){
-  var url = 'https://r.jina.ai/https://chartix.ir/market/bourse_kala/' + sym + '?r=' + Date.now();
-  return fetch(url, {cache:'no-store'})
-  .then(function(r){ if(!r.ok) throw 0; return r.text(); })
-  .then(function(tx){
-    var k = parseChartix(tx);
-    if(!k) return;
-    k.t = Date.now();
-    apply(k);
-    try{ localStorage.setItem(storeKey, JSON.stringify(k)); }catch(e){}
-    if (LAST_CUR) render(LAST_CUR);
-  }).catch(function(){ /* دفعهٔ بعد */ });
+function fetchCertOne(sym, storeKey, apply){
+  var urls = [
+    'https://chartix.ir/market/bourse_kala/' + sym,
+    'https://r.jina.ai/https://chartix.ir/market/bourse_kala/' + sym,
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://chartix.ir/market/bourse_kala/' + sym),
+    'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://chartix.ir/market/bourse_kala/' + sym)
+  ], i = 0;
+  function tryNext(){
+    if(i >= urls.length){ apply(null); return; }
+    var done = false;
+    var timer = setTimeout(function(){ if(!done){ done = true; tryNext(); } }, 12000);
+    fetch(urls[i++], {cache:'no-store'}).then(function(r){
+      if(!r.ok) throw new Error('http');
+      return r.text();
+    }).then(function(tx){
+      if(done) return; done = true; clearTimeout(timer);
+      var k = parseChartixAny(tx);
+      if(!k) throw new Error('parse');
+      k.t = Date.now();
+      apply(k);
+      try{ localStorage.setItem(storeKey, JSON.stringify(k)); }catch(e){}
+    }).catch(function(){ if(!done){ done = true; clearTimeout(timer); tryNext(); } });
+  }
+  tryNext();
+}
+function certRetry(kind, fn){
+  CERT_FAIL[kind] = Math.min((CERT_FAIL[kind]||0) + 1, 4);
+  var delay = Math.min(30000 * Math.pow(2, CERT_FAIL[kind]-1), 600000);
+  clearTimeout(CERT_TIMERS[kind]);
+  CERT_TIMERS[kind] = setTimeout(fn, delay);
+}
+function t9done(k){
+  if(k){ CERT_T9 = k; CERT_FAIL.t9 = 0; } else { CERT_TRIED.t9 = true; certRetry('t9', function(){ fetchCertOne('KMCT9','metals.certT9', t9done); }); }
+  if (LAST_CUR) render(LAST_CUR);
+}
+function cuDone(k){
+  if(k){ CERT_CU = k; CERT_FAIL.cu = 0; } else { CERT_TRIED.cu = true; certRetry('cu', function(){ fetchCertOne('COPPERCTHD','metals.certCu', cuDone); }); }
+  if (LAST_CUR) render(LAST_CUR);
+  setTimeout(function(){ if(!(CERT_T9 && CERT_T9.t && Date.now()-CERT_T9.t < 600000)) fetchCertOne('KMCT9','metals.certT9', t9done); }, 2500);
 }
 function fetchChartix(){
-  return Promise.all([
-    fetchChartixOne('COPPERCTHD', 'metals.certCu', function(k){ CERT_CU = k; }),
-    fetchChartixOne('KMCT9',      'metals.certT9', function(k){ CERT_T9 = k; })
-  ]);
+  fetchCertOne('COPPERCTHD', 'metals.certCu', cuDone);
 }
 /* ---- سهم فملی (ثبت دستی — منبع خودکار مطمئنی در TGJU نیست) ---- */
 var FEMELI = null;
@@ -583,15 +610,19 @@ function retChipsHtml(ret){
   });
   return h?'<div class="ret-chips">'+h+'</div>':'';
 }
-function fillStrip(prefix, cert){
+function fillStrip(prefix, cert, tried){
   var pr=$(prefix+'Price'), rt=$(prefix+'Rets');
   if(!pr) return;
   if (cert && cert.price){
-    pr.innerHTML = fa(cert.price,0)+' <small>ریال</small><span class="cs-date">'+(cert.date||'')+'</span>';
+    var stale = cert.t && (Date.now()-cert.t > 86400000);
+    pr.innerHTML = fa(cert.price,0)+' <small>ریال</small><span class="cs-date">'+(cert.date||'')+(stale?' · (قدیمی)':'')+'</span>';
     rt.innerHTML = retChipsHtml(cert.ret);
+  } else if (tried) {
+    pr.innerHTML = '<span style="font-size:13px;color:#c9c9c9">⚠ اتصال برقرار نشد — تلاش مجدد خودکار…</span>';
+    rt.innerHTML = '';
   } else { pr.textContent='در حال دریافت…'; rt.innerHTML=''; }
 }
-function renderCertStrip(){ fillStrip('t9',CERT_T9); fillStrip('cc',CERT_CU); }
+function renderCertStrip(){ fillStrip('t9',CERT_T9,CERT_TRIED.t9); fillStrip('cc',CERT_CU,CERT_TRIED.cu); }
 function toggleCertChart(id){
   var box=$('chart_'+id);
   if(!box) return;
