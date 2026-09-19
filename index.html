@@ -165,6 +165,27 @@ h1 em{font-style:normal;color:var(--amber)}
 @keyframes bannerPulse{0%,100%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 0 0 rgba(203,41,87,.35)}50%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 24px 4px rgba(203,41,87,.4)}}
 @keyframes redPulse{0%,100%{box-shadow:0 0 0 0 rgba(203,41,87,0)}50%{box-shadow:0 0 22px 3px rgba(203,41,87,.35)}}
 .metal-card.alerted{border-color:#8f1f41;animation:redPulse 1.6s infinite}
+.cur-section{margin-top:20px}
+.cur-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:12px}
+.cur-card{position:relative;background:linear-gradient(150deg,#151515,#0f0f0f);border:1px solid #282828;border-radius:16px;padding:16px 18px 13px;transition:transform .2s,border-color .22s;animation:cardIn .6s backwards}
+.cur-card:nth-child(2){animation-delay:.08s}.cur-card:nth-child(3){animation-delay:.16s}.cur-card:nth-child(4){animation-delay:.24s}
+.cur-card:hover{transform:translateY(-3px);border-color:#3b3b3b}
+.cur-head{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.cur-ico{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;font-weight:900;font-size:21px;font-family:"Samim",Tahoma,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.ico-usd{background:#eeeeee;color:#111}
+.ico-eur{background:#c9c9c9;color:#111}
+.ico-btc{background:#f7931a;color:#fff}
+.ico-eth{background:#627eea;color:#fff}
+.cur-name{font-size:15px;font-weight:800;color:#f5f5f5;line-height:1.5}
+.cur-sub{font-size:10.5px;color:#757575;line-height:1.6}
+.cur-price{font-size:24px;font-weight:900;color:#f5f5f5;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cur-price small{font-size:12px;color:#8a8a8a;font-weight:400;margin-right:5px}
+.cur-price.flashUp,.cur-price.flashDown{border-radius:8px}
+.cur-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;flex-wrap:wrap}
+.cur-toman{font-size:11.5px;color:#a4a4a4;direction:ltr;unicode-bidi:embed}
+.cur-ts{font-size:10px;color:#5f5f5f;margin-top:6px}
+@media(max-width:1100px){.cur-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.cur-grid{grid-template-columns:1fr}}
 .cert-strip{margin-top:16px;background:linear-gradient(145deg,#141414,#101010);border:1px solid #282828;border-radius:16px;padding:16px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;animation:cardIn .6s .45s cubic-bezier(.16,1,.3,1) backwards;transition:border-color .22s}
 .cert-strip:hover{border-color:#3b3b3b}
 .cs-main{min-width:230px;flex:1}
@@ -225,7 +246,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۸ — 2026-09-19 22:48</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۸ — 2026-09-19 23:29</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -258,6 +279,42 @@ h1 em{font-style:normal;color:var(--amber)}
       <div id="rows_coin"></div>
       <div class="m-note" id="note_coin"></div>
     </section>
+  </div>
+
+  <div class="cur-section" id="curSection">
+    <div class="section-heading" style="margin-top:0"><strong>دلار، یورو و رمزارزها</strong><span>قیمت لحظه‌ای TGJU — جدا از فلزات</span></div>
+    <div class="cur-grid">
+      <div class="cur-card">
+        <div class="cur-head"><span class="cur-ico ico-usd">$</span><div><div class="cur-name">دلار آمریکا</div><div class="cur-sub">بازار آزاد · TGJU</div></div></div>
+        <div class="cur-price" id="curP_usd">—</div>
+        <div class="cur-meta"><span id="curC_usd" style="font-size:11px;color:#8a8a8a">—</span><span class="cur-toman" id="curT_usd">—</span></div>
+        <div class="cur-ts" id="curTs_usd">—</div>
+      </div>
+      <div class="cur-card">
+        <div class="cur-head"><span class="cur-ico ico-eur">€</span><div><div class="cur-name">یورو</div><div class="cur-sub">بازار آزاد · TGJU</div></div></div>
+        <div class="cur-price" id="curP_eur">—</div>
+        <div class="cur-meta"><span id="curC_eur" style="font-size:11px;color:#8a8a8a">—</span><span class="cur-toman" id="curT_eur">—</span></div>
+        <div class="cur-ts" id="curTs_eur">—</div>
+      </div>
+      <div class="cur-card">
+        <div class="cur-head">
+          <span class="cur-ico ico-btc"><svg viewBox="0 0 32 32" width="26" height="26"><path fill="#fff" d="M23.2 18.6c-.3 2-1.3 3-2.9 3.4 1.6.8 2.4 2.1 2 4.2-.5 2.6-2.4 3.6-5.3 3.7l-.1 3h-1.8l-.1-3c-.5 0-1 0-1.5-.1l.1 3.1h-1.8l-.1-3.1c-1.3 0-2.7-.1-4.2-.1l1-2.3s1.1 0 1.1-.1c.5 0 .7-.4.7-.7l-.1-8.5c-.1-.4-.4-.8-1-.8 0 0-1.1.1-1.1.1l-.3-1.9c2.1 0 4.3-.1 5.5-.1V12h1.8v3.5c.5 0 1 0 1.5.1l.1-3.6h1.8l.1 3.7c2.4.2 4.4 1 4.3 3.3-.1 1.6-.8 2.6-2 3zm-8.9.4l3.6.1c1.3 0 2.6-.5 2.6-1.8 0-1.2-1-1.8-2.6-1.8l-3.6-.1v3.6zm3.9 6.3l-3.9-.1v3.9l3.9.1c1.4 0 2.8-.6 2.8-1.9.1-1.4-1.3-2-2.8-2z"/></svg></span>
+          <div><div class="cur-name">بیت‌کوین</div><div class="cur-sub">BTC · بازار ایران · TGJU</div></div>
+        </div>
+        <div class="cur-price" id="curP_btc">—</div>
+        <div class="cur-meta"><span id="curC_btc" style="font-size:11px;color:#8a8a8a">—</span><span class="cur-toman" id="curT_btc">—</span></div>
+        <div class="cur-ts" id="curTs_btc">—</div>
+      </div>
+      <div class="cur-card">
+        <div class="cur-head">
+          <span class="cur-ico ico-eth"><svg viewBox="0 0 32 32" width="24" height="24"><path fill="#fff" fill-opacity=".95" d="M16 3v10.4l8.5 3.8L16 3z"/><path fill="#fff" fill-opacity=".65" d="M16 3L7.5 17.2 16 13.4V3z"/><path fill="#fff" fill-opacity=".95" d="M16 23.4V29l8.5-11.2L16 23.4z"/><path fill="#fff" fill-opacity=".65" d="M16 29v-5.6L7.5 17.8 16 29z"/><path fill="#fff" fill-opacity=".4" d="M16 21.8l8.5-4.6L16 13.4v8.4z"/><path fill="#fff" fill-opacity=".25" d="M7.5 17.2l8.5 4.6v-8.4l-8.5 3.8z"/></svg></span>
+          <div><div class="cur-name">اتریوم</div><div class="cur-sub">ETH · بازار ایران · TGJU</div></div>
+        </div>
+        <div class="cur-price" id="curP_eth">—</div>
+        <div class="cur-meta"><span id="curC_eth" style="font-size:11px;color:#8a8a8a">—</span><span class="cur-toman" id="curT_eth">—</span></div>
+        <div class="cur-ts" id="curTs_eth">—</div>
+      </div>
+    </div>
   </div>
 
   <div class="cert-strip" id="ccStrip">
@@ -354,7 +411,8 @@ var K = {
   'ime_certificate_silver_bars':'agCert','ratio_silver':'gs',
   'ons':'auOz','geram18':'g18','geram24':'g24',
   'ime_certificate_gold_bars':'auCert','ime_indices_shemsh_tala_kham':'shemsh',
-  'sekee':'emami','ime_certificate_coin':'coinCert','price_dollar_rl':'usd'
+  'sekee':'emami','ime_certificate_coin':'coinCert','price_dollar_rl':'usd',
+  'price_eur':'eur','crypto-bitcoin-irr':'btc','crypto-ethereum-irr':'eth'
 };
 var CALLS = ['https://call2.tgju.org/ajax.json','https://call3.tgju.org/ajax.json','https://call4.tgju.org/ajax.json'];
 var DIAG = {attempts:[], keyTs:{}, lastErr:''};
@@ -669,6 +727,30 @@ function flashPill(id, txt){ // فلش پیل دلار وقتی عوض می‌ش
 }
 function v(val, unit){ return val+' <small>'+unit+'</small>'; }
 
+function curDirChip(c){
+  if(!c) return '—';
+  if(c.dt==='high') return '<span style="color:#32d38b;font-weight:700">▲ صعودی '+pct(c.dp,2)+'</span>';
+  if(c.dt==='low')  return '<span style="color:#ff6262;font-weight:700">▼ نزولی '+pct(c.dp,2)+'</span>';
+  return '<span style="color:#9a9a9a">بدون تغییر</span>';
+}
+function renderCurrencies(cur){
+  [['usd','دلار'],['eur','یورو'],['btc','بیت‌کوین'],['eth','اتریوم']].forEach(function(x){
+    var code=x[0], c=cur[code];
+    var pEl=$('curP_'+code), tEl=$('curT_'+code), cEl=$('curC_'+code), tsEl=$('curTs_'+code);
+    if(!pEl) return;
+    if(!c || !c.p){ pEl.textContent='—'; return; }
+    var prev = PREV['cur_'+code];
+    pEl.innerHTML = fa(c.p,0)+' <small>ریال</small>';
+    tEl.textContent = fa(c.p/10,0)+' تومان';
+    cEl.innerHTML = curDirChip(c);
+    tsEl.textContent = 'ساعت قیمت: '+t(c.ts);
+    if(prev !== undefined && prev !== c.p && pEl.classList){
+      pEl.classList.remove('flashUp','flashDown'); void pEl.offsetWidth;
+      pEl.classList.add(c.p>prev ? 'flashUp' : 'flashDown');
+    }
+    PREV['cur_'+code] = c.p;
+  });
+}
 function render(cur, fetchedAt){
   LAST_CUR = cur;
   var cuTon = cur.cuLb.p/LB*1000;             // مس دلار بر تن
@@ -766,6 +848,7 @@ row('کاتد بازار آزاد (خرده‌بار)', katodRialKg ? v(fa(katod
   DIAG.keyTs = {'مس جهانی':cur.cuLb.ts,'انس نقره':cur.agOz.ts,'نقره ۹۹۹':cur.ag999.ts,'انس طلا':cur.auOz.ts,'گرم ۱۸':cur.g18.ts,'سکه امامی':cur.emami.ts,'دلار':cur.usd.ts};
   renderIdeas(cur,{ag:agBub,au:auBub,coin:coinBub,cu:cuBub,agCert:agCertBub,auCert:auCertBub,coinCert:coinCertBub,certGap:coinCertGap,gs:cur.gs?cur.gs.p:null,imeRial:imeRial,cuKgRial:cuKgRial});
   /* مقادیر برای موتور هشدار */
+  renderCurrencies(cur);
   ALERT_VALS = {usd:usd, agOz:cur.agOz.p, ag999:cur.ag999.p, auOz:cur.auOz.p, g18:cur.g18.p,
                 emami:cur.emami.p, cuTon:cuTon, agBub:agBub, auBub:auBub, coinBub:coinBub, cuBub:cuBub, cuAu:cuAu};
   checkAlerts();
