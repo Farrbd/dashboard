@@ -5,10 +5,10 @@
 <title>داشبورد کامل مس</title>
 <link rel="stylesheet" href="fonts.css">
 <style>
-:root{--bg:#0c1218;--panel:#141d27;--line:#273544;--text:#f0f4f7;--muted:#95a6b7;
---cyan:#20d2ca;--amber:#f3b33c;--green:#32d38b;--red:#ff6262}
+:root{--bg:#000000;--panel:#0f0f0f;--line:#242424;--text:#eeeeee;--muted:#9c9c9c;
+--cyan:#cb2957;--amber:#cb2957;--green:#eeeeee;--red:#cb2957}
 *{box-sizing:border-box}html{background:var(--bg)}
-body{margin:0;background:radial-gradient(circle at 80% -20%,rgba(22,154,151,.11),transparent 31%),var(--bg);
+body{margin:0;background:radial-gradient(circle at 80% -20%,rgba(203,41,87,.11),transparent 31%),var(--bg);
 color:var(--text);font-family:"Samim","Vazirmatn",Tahoma,Arial,sans-serif;line-height:1.75}
 .shell{width:min(1600px,calc(100% - 48px));margin:0 auto;padding:16px 0 34px}
 .hero{position:relative;border-bottom:1px solid var(--line);padding:0 0 16px;min-height:112px}
@@ -16,121 +16,121 @@ color:var(--text);font-family:"Samim","Vazirmatn",Tahoma,Arial,sans-serif;line-h
 .brandline::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);margin-left:9px}
 h1{font-size:28px;line-height:1.45;margin:0 0 10px;font-weight:800}
 h1 em{font-style:normal;color:var(--amber)}
-.source-stamp{position:absolute;left:0;top:0;background:#2a2414;border:1px solid #66501b;color:#d9c07f;border-radius:12px;padding:8px 15px;font-size:13px;white-space:nowrap}
-.source-stamp b{color:#f3c95c}
+.source-stamp{position:absolute;left:0;top:0;background:#141414;border:1px solid #3a3a3a;color:#c9c9c9;border-radius:12px;padding:8px 15px;font-size:13px;white-space:nowrap}
+.source-stamp b{color:#eeeeee}
 .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);margin-left:7px;vertical-align:middle;animation:dotPulse 2s infinite}
 .live-dot.off{background:var(--amber);box-shadow:0 0 10px var(--amber);animation:none}
-.refresh-btn{border:1px solid #5b4919;background:#29220f;color:#f0c75b;border-radius:9px;padding:4px 11px;cursor:pointer;font:inherit;font-size:12px;margin-right:9px}
+.refresh-btn{border:1px solid #3a3a3a;background:#141414;color:#eeeeee;border-radius:9px;padding:4px 11px;cursor:pointer;font:inherit;font-size:12px;margin-right:9px}
 .meta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.pill{background:#111a24;border:1px solid #263442;border-radius:999px;padding:6px 14px;color:#b8c4ce;font-size:13px}
-.pill strong{color:#f1f4f6}
+.pill{background:#101010;border:1px solid #242424;border-radius:999px;padding:6px 14px;color:#b6b6b6;font-size:13px}
+.pill strong{color:#eeeeee}
 .pill::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);margin-left:8px}
 .pill.muted::before{display:none}
-.pill.link{text-decoration:none;color:#f0c75b;border-color:#5b4919}
-.back-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:#29220f;border:1px solid #6b5418;
-color:#f3c95c;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:700;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.back-btn:hover{background:#3a2f12;transform:translateY(-2px)}
+.pill.link{text-decoration:none;color:#eeeeee;border-color:#3a3a3a}
+.back-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:#141414;border:1px solid #3a3a3a;
+color:#eeeeee;border-radius:12px;padding:10px 22px;font-size:15px;font-weight:700;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.back-btn:hover{background:#1f1f1f;transform:translateY(-2px)}
 .back-btn::before{content:"⌂";font-size:17px}
-.section-heading{display:flex;align-items:center;gap:12px;margin:16px 0 10px;color:#95a6b7;font-size:13px}
+.section-heading{display:flex;align-items:center;gap:12px;margin:16px 0 10px;color:#9c9c9c;font-size:13px}
 .section-heading::after{content:"";height:1px;background:var(--line);flex:1}
-.section-heading strong{color:#eef3f6;font-size:14px}
+.section-heading strong{color:#eeeeee;font-size:14px}
 .question-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .question-grid+.question-grid{margin-top:16px}
-.question-card,.viz-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:16px}
+.question-card,.viz-card{background:linear-gradient(145deg,#141414,#111111);border:1px solid #282828;border-radius:16px}
 .question-card{position:relative;min-height:200px;padding:17px 18px 14px;border-left:4px solid var(--amber);animation:cardIn .6s cubic-bezier(.16,1,.3,1) backwards;transition:transform .22s,border-color .22s}
-.question-card:hover,.viz-card:hover{transform:translateY(-3px);border-color:#3a4d63}
+.question-card:hover,.viz-card:hover{transform:translateY(-3px);border-color:#3b3b3b}
 .question-grid .question-card:nth-child(1){animation-delay:.06s}
 .question-grid .question-card:nth-child(2){animation-delay:.14s}
 .question-grid .question-card:nth-child(3){animation-delay:.22s}
-.q-number{position:absolute;left:14px;top:14px;width:29px;height:29px;display:grid;place-items:center;border-radius:8px;background:#182330;border:1px solid #293848;color:#738699;font-size:12px}
+.q-number{position:absolute;left:14px;top:14px;width:29px;height:29px;display:grid;place-items:center;border-radius:8px;background:#181818;border:1px solid #282828;color:#7b7b7b;font-size:12px}
 .q-head{display:flex;align-items:center;gap:9px;padding-left:35px;margin-bottom:8px}
 .q-head h2{font-size:18px;margin:0}
 .status{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700;border:1px solid}
 .status::after{content:"";width:8px;height:8px;border-radius:50%}
-.status.good{color:#80efb8;background:#0d3527;border-color:#166944}.status.good::after{background:var(--green);box-shadow:0 0 12px var(--green)}
-.status.mid{color:#f6c657;background:#34270c;border-color:#725515}.status.mid::after{background:var(--amber);box-shadow:0 0 12px var(--amber)}
-.status.bad{color:#ff9a9a;background:#3b171b;border-color:#7a2d35}.status.bad::after{background:var(--red);box-shadow:0 0 12px var(--red)}
-.big-number{font-size:28px;font-weight:900;line-height:1.2;margin:3px 0;color:#f7fafc}
-.big-number small{font-size:13px;color:#93a4b5;font-weight:400;margin-right:7px}
-.sub-number{font-size:12px;color:#8ea0b1;margin:1px 0 0}
-.card-copy{font-size:12px;color:#a4b2bf;margin:9px 0 0}
-.card-copy b{color:#eef3f6}
-.gauge{position:relative;height:19px;background:#0c141c;border:1px solid #273746;border-radius:5px;margin:24px 0 5px;direction:ltr;overflow:visible}
-.gauge-fill{height:100%;background:linear-gradient(90deg,#0e8f8b,#26d1c9);border-radius:4px 0 0 4px}
-.gauge-fill.warm{background:linear-gradient(90deg,#b7831d,#f0b43f)}
+.status.good{color:#eeeeee;background:#1a1a1a;border-color:#3a3a3a}.status.good::after{background:var(--green);box-shadow:0 0 12px var(--green)}
+.status.mid{color:#c9c9c9;background:#161616;border-color:#383838}.status.mid::after{background:#9a9a9a;box-shadow:0 0 12px rgba(255,255,255,.18)}
+.status.bad{color:#e75c81;background:#1f0a10;border-color:#8f1f41}.status.bad::after{background:var(--red);box-shadow:0 0 12px var(--red)}
+.big-number{font-size:28px;font-weight:900;line-height:1.2;margin:3px 0;color:#f5f5f5}
+.big-number small{font-size:13px;color:#909090;font-weight:400;margin-right:7px}
+.sub-number{font-size:12px;color:#8c8c8c;margin:1px 0 0}
+.card-copy{font-size:12px;color:#a4a4a4;margin:9px 0 0}
+.card-copy b{color:#eeeeee}
+.gauge{position:relative;height:19px;background:#0a0a0a;border:1px solid #262626;border-radius:5px;margin:24px 0 5px;direction:ltr;overflow:visible}
+.gauge-fill{height:100%;background:linear-gradient(90deg,#4a4a4a,#9a9a9a);border-radius:4px 0 0 4px}
+.gauge-fill.warm{background:linear-gradient(90deg,#8f1f41,#e75c81)}
 .gauge-marker{position:absolute;top:-9px;bottom:-9px;width:2px;background:var(--amber);box-shadow:0 0 9px var(--amber)}
-.gauge-marker .marker-text{position:absolute;top:-20px;left:50%;transform:translateX(-50%);color:#e5b84f;font-size:10px;white-space:nowrap}
-.scale{display:flex;justify-content:space-between;font-size:10px;color:#75889a;direction:ltr}
+.gauge-marker .marker-text{position:absolute;top:-20px;left:50%;transform:translateX(-50%);color:#e75c81;font-size:10px;white-space:nowrap}
+.scale{display:flex;justify-content:space-between;font-size:10px;color:#8a8a8a;direction:ltr}
 .mini-bars{margin-top:12px}
-.mini-row{display:grid;grid-template-columns:96px 1fr 92px;align-items:center;gap:8px;margin:9px 0;font-size:11px;color:#a4b0bc}
-.mini-row b{font-size:11px;color:#dce5ec;white-space:nowrap}
-.track{height:18px;background:#3b4756;border-radius:3px;overflow:hidden;direction:ltr}
-.fill{height:100%;background:linear-gradient(90deg,#0b8581,#1fc9c1);border-radius:3px}
-.fill.warm{background:linear-gradient(90deg,#b7831d,#f0b43f)}
+.mini-row{display:grid;grid-template-columns:96px 1fr 92px;align-items:center;gap:8px;margin:9px 0;font-size:11px;color:#a4a4a4}
+.mini-row b{font-size:11px;color:#dedede;white-space:nowrap}
+.track{height:18px;background:#383838;border-radius:3px;overflow:hidden;direction:ltr}
+.fill{height:100%;background:linear-gradient(90deg,#8f1f41,#9a9a9a);border-radius:3px}
+.fill.warm{background:linear-gradient(90deg,#8f1f41,#e75c81)}
 .visual-grid{display:grid;grid-template-columns:2.15fr 1.18fr 1.28fr;gap:16px;margin-top:16px}
 .viz-card{min-height:245px;padding:15px 18px;animation:cardIn .6s .15s cubic-bezier(.16,1,.3,1) backwards;transition:transform .22s,border-color .22s}
 .viz-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .viz-head h3{margin:0;font-size:16px}
-.tiny-tag{font-size:10px;color:#e8b647;background:#2b230f;border:1px solid #5d4815;border-radius:999px;padding:3px 9px}
+.tiny-tag{font-size:10px;color:#e75c81;background:#141414;border:1px solid #3a3a3a;border-radius:999px;padding:3px 9px}
 .chart-wrap{height:165px;margin-top:2px}
 .chart-wrap svg{width:100%;height:100%;overflow:visible}
-.chart-label{fill:#9fb0bf;font-size:12px}
-.chart-value{fill:#e8f2f4;font-size:12px;font-weight:700}
-.chart-value2{fill:#e8b647;font-size:11px;font-weight:700}
-.note-line{border-top:1px dashed #2d3b49;margin-top:9px;padding-top:8px;font-size:11px;color:#7f91a2}
+.chart-label{fill:#9c9c9c;font-size:12px}
+.chart-value{fill:#e4e4e4;font-size:12px;font-weight:700}
+.chart-value2{fill:#e75c81;font-size:11px;font-weight:700}
+.note-line{border-top:1px dashed #2c2c2c;margin-top:9px;padding-top:8px;font-size:11px;color:#828282}
 .note-line b{color:var(--cyan)}
-.trend-legend{display:flex;gap:16px;font-size:11px;color:#8b9dae;margin-top:4px}
+.trend-legend{display:flex;gap:16px;font-size:11px;color:#898989;margin-top:4px}
 .trend-legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-left:6px;vertical-align:middle}
 .mix-body{display:flex;align-items:center;justify-content:center;gap:21px;height:157px}
 .donut{width:124px;height:124px;border-radius:50%;position:relative}
-.donut::before{content:"";position:absolute;inset:24px;background:#151f2a;border-radius:50%}
-.donut-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center;z-index:1;font-size:11px;color:#8394a5}
+.donut::before{content:"";position:absolute;inset:24px;background:#141414;border-radius:50%}
+.donut-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center;z-index:1;font-size:11px;color:#848484}
 .donut-center b{font-size:22px;color:#fff;line-height:1.1}
-.mix-legend{font-size:13px;color:#bcc6ce}
+.mix-legend{font-size:13px;color:#bababa}
 .mix-legend div{margin:9px 0}
 .mix-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-left:7px}
 .margin-list{padding-top:5px}
 .margin-row{margin:11px 0}
-.margin-label{display:flex;justify-content:space-between;font-size:12px;color:#9fb0bf;margin-bottom:5px}
-.margin-label b{color:#e8f0f4}
-.margin-track{height:20px;background:#0b131b;border:1px solid #273746;border-radius:6px;overflow:hidden;direction:ltr}
-.margin-fill{height:100%;background:linear-gradient(90deg,#0f817d,#20c9c1)}
-.margin-fill.warning{background:linear-gradient(90deg,#b7831d,#f0b43f)}
-.sources{margin-top:16px;background:#111923;border:1px solid #273544;border-radius:14px;padding:13px 17px;animation:cardIn .6s .3s backwards}
+.margin-label{display:flex;justify-content:space-between;font-size:12px;color:#9c9c9c;margin-bottom:5px}
+.margin-label b{color:#e4e4e4}
+.margin-track{height:20px;background:#050505;border:1px solid #262626;border-radius:6px;overflow:hidden;direction:ltr}
+.margin-fill{height:100%;background:linear-gradient(90deg,#4a4a4a,#9a9a9a)}
+.margin-fill.warning{background:linear-gradient(90deg,#8f1f41,#e75c81)}
+.sources{margin-top:16px;background:#0c0c0c;border:1px solid #242424;border-radius:14px;padding:13px 17px;animation:cardIn .6s .3s backwards}
 .sources h3{font-size:14px;margin:0 0 7px}
-.sources ol{margin:0;padding-right:20px;color:#8193a4;font-size:11px;columns:2;column-gap:40px}
-.sources a{color:#5fb9b4;text-decoration:none}
-.footer{text-align:center;color:#66798b;font-size:10px;margin-top:12px;line-height:1.9}
-.mini-edit{border:1px solid #5b4919;background:#29220f;color:#f0c75b;border-radius:6px;padding:1px 8px;cursor:pointer;font:inherit;font-size:12px;margin-right:7px;vertical-align:2px}
+.sources ol{margin:0;padding-right:20px;color:#828282;font-size:11px;columns:2;column-gap:40px}
+.sources a{color:#e75c81;text-decoration:none}
+.footer{text-align:center;color:#6e6e6e;font-size:10px;margin-top:12px;line-height:1.9}
+.mini-edit{border:1px solid #3a3a3a;background:#141414;color:#eeeeee;border-radius:6px;padding:1px 8px;cursor:pointer;font:inherit;font-size:12px;margin-right:7px;vertical-align:2px}
 .types-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:4px}
-.type-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:13px;padding:12px 15px;animation:cardIn .55s cubic-bezier(.16,1,.3,1) backwards;position:relative}
-.type-card.ref{border-color:#6b5418;background:linear-gradient(145deg,#1d1c12,#141a20)}
+.type-card{background:linear-gradient(145deg,#141414,#111111);border:1px solid #282828;border-radius:13px;padding:12px 15px;animation:cardIn .55s cubic-bezier(.16,1,.3,1) backwards;position:relative}
+.type-card.ref{border-color:#3a3a3a;background:linear-gradient(145deg,#1b1b1b,#121212)}
 .type-card .t-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
-.type-card h4{margin:0;font-size:14px;color:#eef3f6}
-.type-card .t-price{font-size:16px;font-weight:900;color:#f7fafc;direction:ltr}
-.type-card .t-price small{font-size:10px;color:#8ea0b1;font-weight:400;margin-left:4px}
-.type-card .t-desc{font-size:11px;color:#95a6b7;margin:5px 0 0;line-height:1.9}
-.type-card .t-time{position:absolute;left:13px;bottom:9px;font-size:9px;color:#66798b;direction:ltr}
-.type-card .t-tag{font-size:9px;color:#e8b647;background:#2b230f;border:1px solid #5d4815;border-radius:99px;padding:1px 8px;margin-right:6px;vertical-align:2px}
+.type-card h4{margin:0;font-size:14px;color:#eeeeee}
+.type-card .t-price{font-size:16px;font-weight:900;color:#f5f5f5;direction:ltr}
+.type-card .t-price small{font-size:10px;color:#8c8c8c;font-weight:400;margin-left:4px}
+.type-card .t-desc{font-size:11px;color:#9c9c9c;margin:5px 0 0;line-height:1.9}
+.type-card .t-time{position:absolute;left:13px;bottom:9px;font-size:9px;color:#6e6e6e;direction:ltr}
+.type-card .t-tag{font-size:9px;color:#e75c81;background:#141414;border:1px solid #3a3a3a;border-radius:99px;padding:1px 8px;margin-right:6px;vertical-align:2px}
 @keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
 @keyframes dotPulse{0%,100%{box-shadow:0 0 6px var(--green)}50%{box-shadow:0 0 16px 3px var(--green)}}
-@keyframes valFlash{0%{background:rgba(243,179,60,.32);border-radius:6px}100%{background:transparent}}
+@keyframes valFlash{0%{background:rgba(203,41,87,.32);border-radius:6px}100%{background:transparent}}
 .flash{animation:valFlash 3s ease-out;display:inline-block;padding:0 3px}
 .ring{position:relative;display:none;width:28px;height:28px;margin-left:8px;vertical-align:middle}
 .ring svg{width:28px;height:28px;transform:rotate(-90deg)}
 .ring circle{fill:none;stroke-width:3.4}
-.ring .rbg{stroke:#3d3320}
-.ring .arc{stroke:#f3c95c;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
-.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:9px;color:#f3c95c;font-weight:700}
+.ring .rbg{stroke:#1c1c1c}
+.ring .arc{stroke:#eeeeee;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:9px;color:#eeeeee;font-weight:700}
 .gauges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
 .gauge-card{text-align:center}
 .g-box{display:grid;place-items:center;padding-top:6px}
 .g-box svg{width:100%;max-width:250px;overflow:visible}
-.g-val{fill:#f7fafc;font-size:18px;font-weight:900}
-.g-min,.g-max{fill:#75889a;font-size:10px}
+.g-val{fill:#f5f5f5;font-size:18px;font-weight:900}
+.g-min,.g-max{fill:#8a8a8a;font-size:10px}
 .g-needle{transition:transform .9s cubic-bezier(.16,1,.3,1)}
-.g-note{font-size:11px;color:#8ea0b1;margin:8px 0 0;line-height:1.9}
-.g-note b{color:#eef3f6}
+.g-note{font-size:11px;color:#8c8c8c;margin:8px 0 0;line-height:1.9}
+.g-note b{color:#eeeeee}
 @media(max-width:1180px){.question-grid{grid-template-columns:1fr 1fr}.visual-grid{grid-template-columns:1fr 1fr}.trend-card{grid-column:1/-1}}
 @media(max-width:700px){
 .shell{width:calc(100% - 20px)}
@@ -171,7 +171,7 @@ h1{font-size:20px}
 <main class="shell">
   <header class="hero">
     <div class="source-stamp"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد کامل · نسخهٔ ۳</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد کامل · نسخهٔ ۴ (تم رز)</div>
     <h1>داشبورد کامل <em>مس</em></h1>
     <div class="meta-row" id="metaRow">
       <a class="back-btn" href="index.html">بازگشت به داشبورد چهارکادره</a>
@@ -235,7 +235,7 @@ h1{font-size:20px}
     <div class="note-line"><b>از کجا:</b> TGJU (دلار/پوند) × ۲۲۰۴٫۶</div></article>
     <article class="viz-card"><div class="viz-head"><h3>ترکیب قیمت کاتد IME</h3><span class="tiny-tag">جهانی + اختلاف</span></div>
     <div class="mix-body"><div class="donut" id="bubbleDonut"><div class="donut-center"><b id="donutValue">—</b>اختلاف</div></div>
-    <div class="mix-legend"><div><i style="background:#0b918d"></i>معادل جهانی — <span id="legIntr">—</span></div><div><i style="background:#f3b33c"></i>اختلاف — <span id="legBub">—</span></div></div></div>
+    <div class="mix-legend"><div><i style="background:#8f1f41"></i>معادل جهانی — <span id="legIntr">—</span></div><div><i style="background:#cb2957"></i>اختلاف — <span id="legBub">—</span></div></div></div>
     <div class="note-line"><b>از کجا:</b> جهانی × دلار آزاد در برابر کاتد IME</div></article>
     <article class="viz-card"><div class="viz-head"><h3>نسبت مس به نقره — ماه‌به‌ماه</h3><span class="tiny-tag">تن ÷ انس</span></div>
     <div class="margin-list" id="gapBars"></div>
@@ -256,7 +256,7 @@ h1{font-size:20px}
 
   <footer class="footer">این داشبورد آموزشی است، نه توصیهٔ خرید و فروش · دادهٔ زندهٔ TGJU.org</footer>
 </main>
-<script>window.__BOOT__ = {"fetched_at": "2026-09-18 14:39 (تهران)", "current": {"silver": {"p": 66.97, "dp": 2.65, "dt": "high", "ts": "2026-09-18 14:37:45"}, "silver_999": {"p": 5123200.0, "dp": 2.27, "dt": "high", "ts": "2026-09-18 14:11:26"}, "ime_certificate_silver_bars": {"p": 4895000.0, "dp": 0, "dt": "", "ts": "2026-09-16 00:00:00"}, "base_global_copper2": {"p": 6.5777, "dp": 0.6, "dt": "high", "ts": "2026-09-18 14:37:45"}, "price_dollar_rl": {"p": 2279000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "ons": {"p": 4380.44, "dp": 0.85, "dt": "high", "ts": "2026-09-18 14:37:45"}, "geram18": {"p": 233630000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "geram24": {"p": 311504000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "mesghal": {"p": 1011980000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "ime_certificate_gold_bars": {"p": 31039000.0, "dp": 0, "dt": "", "ts": "2026-09-16 00:00:00"}, "ime_indices_shemsh_tala_kham": {"p": 346295354.0, "dp": 0, "dt": "", "ts": "2026-09-18 14:02:22"}, "sekee": {"p": 2319850000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "sekeb": {"p": 2281050000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "retail_nim": {"p": 1194000000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "retail_rob": {"p": 633000000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "retail_gerami": {"p": 332000000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "ime_certificate_coin": {"p": 2310000000.0, "dp": 0, "dt": "", "ts": "2026-09-16 00:00:00"}, "ime_indices_sandogh_tala": {"p": 19712.0, "dp": 0, "dt": "", "ts": "2026-09-18 14:02:22"}, "ime_fund_goldis": {"p": 44151.0, "dp": 0, "dt": "", "ts": "2026-09-18 04:16:40"}, "ime_fund_rosgold": {"p": 21500.0, "dp": 0, "dt": "", "ts": "2026-09-18 04:16:42"}, "ime_fund_golda": {"p": 20369.0, "dp": 0, "dt": "", "ts": "2026-09-18 04:16:41"}, "ime_fund_jaam_tala": {"p": 20825.0, "dp": 0, "dt": "", "ts": "2026-09-18 04:16:39"}, "base_global_zinc": {"p": 3919.9, "dp": 0.8, "dt": "high", "ts": "2026-09-18 14:37:58"}, "base_global_steel": {"p": 3092.0, "dp": 0.52, "dt": "low", "ts": "2026-09-18 11:48:35"}, "ratio_silver": {"p": 65.38, "dp": 1.79, "dt": "low", "ts": "2026-09-18 14:38:54"}, "gold_740k": {"p": 230515000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "gold_mini_size": {"p": 230515180.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "gold_futures": {"p": 1006960000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "gold_melted_transfer": {"p": 1011990000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "gold_melted_wholesale": {"p": 1012540000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}, "tgju_gold_irg18": {"p": 233441000.0, "dp": 0.31, "dt": "high", "ts": "2026-09-18 14:39:21"}, "tgju_gold_irg18_buy": {"p": 231755000.0, "dp": 0.33, "dt": "high", "ts": "2026-09-18 14:39:21"}, "tether_gold_xaut": {"p": 4379.99, "dp": 0.82, "dt": "high", "ts": "2026-09-18 14:38:24"}, "gold_17": {"p": 1039726000.0, "dp": 0, "dt": "", "ts": "2026-09-17 00:00:00"}}, "history": {"ons": [{"ym": "1404/12", "v": 4656.69}, {"ym": "1405/01", "v": 4768.36}, {"ym": "1405/02", "v": 4544.17}, {"ym": "1405/03", "v": 4160.26}, {"ym": "1405/04", "v": 4008.29}, {"ym": "1405/05", "v": 4610.35}, {"ym": "1405/06", "v": 4261.47}], "geram18": [{"ym": "1404/12", "v": 175761000.0}, {"ym": "1405/01", "v": 171452000.0}, {"ym": "1405/02", "v": 192179000.0}, {"ym": "1405/03", "v": 161023000.0}, {"ym": "1405/04", "v": 184445000.0}, {"ym": "1405/05", "v": 198529000.0}, {"ym": "1405/06", "v": 234995000.0}], "sekee": [{"ym": "1404/12", "v": 1900000000.0}, {"ym": "1405/01", "v": 1739900000.0}, {"ym": "1405/02", "v": 1924900000.0}, {"ym": "1405/03", "v": 1645100000.0}, {"ym": "1405/04", "v": 1899800000.0}, {"ym": "1405/05", "v": 2060200000.0}, {"ym": "1405/06", "v": 2320100000.0}], "base_global_copper2": [{"ym": "1404/12", "v": 5.5238}, {"ym": "1405/01", "v": 6.013}, {"ym": "1405/02", "v": 6.3398}, {"ym": "1405/03", "v": 6.3833}, {"ym": "1405/04", "v": 6.2423}, {"ym": "1405/05", "v": 6.5762}, {"ym": "1405/06", "v": 6.3615}], "silver": [{"ym": "1404/12", "v": 72.652}, {"ym": "1405/01", "v": 79.237}, {"ym": "1405/02", "v": 75.881}, {"ym": "1405/03", "v": 64.925}, {"ym": "1405/04", "v": 56.777}, {"ym": "1405/05", "v": 68.952}, {"ym": "1405/06", "v": 62.941}]}, "range": {"ons": {"lo": 3313.7, "hi": 5190.08}, "geram18": {"lo": 69641000.0, "hi": 233524000.0}, "sekee": {"lo": 780050000.0, "hi": 2349800000.0}, "base_global_copper2": {"lo": 4.4835, "hi": 6.6121}, "silver": {"lo": 36.0551, "hi": 94.4252}}};</script>
+<script>window.__BOOT__ = {"fetched_at": "2026-09-19 15:33 (تهران)", "current": {"silver": {"p": 66.24, "dp": 0.29, "dt": "low", "ts": "2026-09-19 02:54:31"}, "silver_999": {"p": 5086600.0, "dp": 0.79, "dt": "high", "ts": "2026-09-19 15:20:30"}, "ime_certificate_silver_bars": {"p": 4960950.0, "dp": 1.35, "dt": "high", "ts": "2026-09-19 12:29:09"}, "base_global_copper2": {"p": 6.615, "dp": 0.37, "dt": "low", "ts": "2026-09-19 04:52:00"}, "price_dollar_rl": {"p": 2297000.0, "dp": 0.79, "dt": "high", "ts": "2026-09-19 15:33:28"}, "ons": {"p": 4383.45, "dp": 0.05, "dt": "high", "ts": "2026-09-19 00:51:21"}, "geram18": {"p": 239842000.0, "dp": 2.66, "dt": "high", "ts": "2026-09-19 15:33:32"}, "geram24": {"p": 319787000.0, "dp": 2.66, "dt": "high", "ts": "2026-09-19 15:33:33"}, "mesghal": {"p": 1039020000.0, "dp": 2.67, "dt": "high", "ts": "2026-09-19 15:33:32"}, "ime_certificate_gold_bars": {"p": 31482310.0, "dp": 1.43, "dt": "high", "ts": "2026-09-19 12:29:27"}, "ime_indices_shemsh_tala_kham": {"p": 346295354.0, "dp": 0, "dt": "", "ts": "2026-09-19 14:47:23"}, "sekee": {"p": 2380050000.0, "dp": 2.59, "dt": "high", "ts": "2026-09-19 15:33:26"}, "sekeb": {"p": 2330150000.0, "dp": 2.15, "dt": "high", "ts": "2026-09-19 15:33:32"}, "retail_nim": {"p": 1214000000.0, "dp": 1.68, "dt": "high", "ts": "2026-09-19 15:05:31"}, "retail_rob": {"p": 648000000.0, "dp": 2.37, "dt": "high", "ts": "2026-09-19 15:05:33"}, "retail_gerami": {"p": 332000000.0, "dp": 0, "dt": "", "ts": "2026-09-19 11:03:17"}, "ime_certificate_coin": {"p": 2339000100.0, "dp": 1.26, "dt": "high", "ts": "2026-09-19 12:28:46"}, "ime_indices_sandogh_tala": {"p": 20209.0, "dp": 2.52, "dt": "high", "ts": "2026-09-19 15:31:25"}, "ime_fund_goldis": {"p": 45650.0, "dp": 3.4, "dt": "high", "ts": "2026-09-19 15:26:22"}, "ime_fund_rosgold": {"p": 21913.0, "dp": 1.92, "dt": "high", "ts": "2026-09-19 15:32:26"}, "ime_fund_golda": {"p": 20995.0, "dp": 3.07, "dt": "high", "ts": "2026-09-19 15:32:26"}, "ime_fund_jaam_tala": {"p": 21400.0, "dp": 2.76, "dt": "high", "ts": "2026-09-19 15:32:26"}, "base_global_zinc": {"p": 3933.83, "dp": 0, "dt": "", "ts": "2026-09-18 00:00:00"}, "base_global_steel": {"p": 3099.0, "dp": 0, "dt": "", "ts": "2026-09-18 00:00:00"}, "ratio_silver": {"p": 66.08, "dp": 0.18, "dt": "high", "ts": "2026-09-19 00:49:46"}, "gold_740k": {"p": 236645000.0, "dp": 2.66, "dt": "high", "ts": "2026-09-19 15:33:33"}, "gold_mini_size": {"p": 236644550.0, "dp": 2.66, "dt": "high", "ts": "2026-09-19 15:33:33"}, "gold_futures": {"p": 1030550000.0, "dp": 2.34, "dt": "high", "ts": "2026-09-19 15:33:32"}, "gold_melted_transfer": {"p": 1039040000.0, "dp": 2.67, "dt": "high", "ts": "2026-09-19 15:33:32"}, "gold_melted_wholesale": {"p": 1039450000.0, "dp": 2.66, "dt": "high", "ts": "2026-09-19 15:33:32"}, "tgju_gold_irg18": {"p": 236871000.0, "dp": 1.74, "dt": "high", "ts": "2026-09-19 15:33:26"}, "tgju_gold_irg18_buy": {"p": 235185000.0, "dp": 1.81, "dt": "high", "ts": "2026-09-19 15:33:26"}, "tether_gold_xaut": {"p": 4374.76, "dp": 0.14, "dt": "low", "ts": "2026-09-19 15:33:22"}, "gold_17": {"p": 1054794000.0, "dp": 1.45, "dt": "high", "ts": "2026-09-19 15:33:33"}}, "history": {"ons": [{"ym": "1404/12", "v": 4656.69}, {"ym": "1405/01", "v": 4768.36}, {"ym": "1405/02", "v": 4544.17}, {"ym": "1405/03", "v": 4160.26}, {"ym": "1405/04", "v": 4008.29}, {"ym": "1405/05", "v": 4610.35}, {"ym": "1405/06", "v": 4341.43}], "geram18": [{"ym": "1404/12", "v": 175761000.0}, {"ym": "1405/01", "v": 171452000.0}, {"ym": "1405/02", "v": 192179000.0}, {"ym": "1405/03", "v": 161023000.0}, {"ym": "1405/04", "v": 184445000.0}, {"ym": "1405/05", "v": 198529000.0}, {"ym": "1405/06", "v": 234995000.0}], "sekee": [{"ym": "1404/12", "v": 1900000000.0}, {"ym": "1405/01", "v": 1739900000.0}, {"ym": "1405/02", "v": 1924900000.0}, {"ym": "1405/03", "v": 1645100000.0}, {"ym": "1405/04", "v": 1899800000.0}, {"ym": "1405/05", "v": 2060200000.0}, {"ym": "1405/06", "v": 2320100000.0}], "base_global_copper2": [{"ym": "1404/12", "v": 5.5238}, {"ym": "1405/01", "v": 6.013}, {"ym": "1405/02", "v": 6.3398}, {"ym": "1405/03", "v": 6.3833}, {"ym": "1405/04", "v": 6.2423}, {"ym": "1405/05", "v": 6.5762}, {"ym": "1405/06", "v": 6.5393}], "silver": [{"ym": "1404/12", "v": 72.652}, {"ym": "1405/01", "v": 79.237}, {"ym": "1405/02", "v": 75.881}, {"ym": "1405/03", "v": 64.925}, {"ym": "1405/04", "v": 56.777}, {"ym": "1405/05", "v": 68.952}, {"ym": "1405/06", "v": 65.205}]}, "range": {"ons": {"lo": 3315.46, "hi": 5190.08}, "geram18": {"lo": 69641000.0, "hi": 233524000.0}, "sekee": {"lo": 780050000.0, "hi": 2349800000.0}, "base_global_copper2": {"lo": 4.4835, "hi": 6.6121}, "silver": {"lo": 36.0996, "hi": 94.4252}}};</script>
 <script>
 (function(){
 "use strict";
@@ -291,15 +291,15 @@ function drawTrend(svgId,pts,pts2,fmt,fmt2){var svg=$(svgId);if(!svg)return;var 
 var xs=[];for(var i=0;i<n;i++)xs.push(50+i*(700/(n-1)));
 function ys(v){var mn=Math.min.apply(null,v),mx=Math.max.apply(null,v);return v.map(function(x){return 150-((x-mn)/Math.max(mx-mn,1e-9))*105;});}
 var av=pts.map(function(p){return p.v;}),ay=ys(av),h='';
-h+='<defs><linearGradient id="'+svgId+'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#20d2ca" stop-opacity=".34"/><stop offset="100%" stop-color="#20d2ca" stop-opacity="0"/></linearGradient></defs>';
+h+='<defs><linearGradient id="'+svgId+'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cb2957" stop-opacity=".34"/><stop offset="100%" stop-color="#cb2957" stop-opacity="0"/></linearGradient></defs>';
 function P(ya){return xs.map(function(x,i){return x+' '+ya[i].toFixed(1);}).join(' L');}
 h+='<path d="M'+P(ay)+' L'+xs[n-1]+' 168 L'+xs[0]+' 168 Z" fill="url(#'+svgId+'g)"/>';
-h+='<path d="M'+P(ay)+'" fill="none" stroke="#38d9d1" stroke-width="3"/>';
+h+='<path d="M'+P(ay)+'" fill="none" stroke="#e75c81" stroke-width="3"/>';
 if(pts2){var bv=pts2.map(function(p){return p.v;}),by=ys(bv);
-h+='<path d="M'+P(by)+'" fill="none" stroke="#e8b647" stroke-width="2" stroke-dasharray="6 5"/>';
-h+='<g fill="#e8b647" stroke="#0c1218" stroke-width="2">';for(var i=0;i<n;i++)h+='<circle cx="'+xs[i]+'" cy="'+by[i].toFixed(1)+'" r="3.5"/>';h+='</g>';
+h+='<path d="M'+P(by)+'" fill="none" stroke="#e75c81" stroke-width="2" stroke-dasharray="6 5"/>';
+h+='<g fill="#e75c81" stroke="#000000" stroke-width="2">';for(var i=0;i<n;i++)h+='<circle cx="'+xs[i]+'" cy="'+by[i].toFixed(1)+'" r="3.5"/>';h+='</g>';
 h+='<g class="chart-value2" text-anchor="middle">';for(var i=0;i<n;i++)h+='<text x="'+xs[i]+'" y="'+by[i].toFixed(1)+'" dy="17">'+fmt2(bv[i])+'</text>';h+='</g>';}
-h+='<g fill="#38d9d1" stroke="#0c1218" stroke-width="3">';for(var i=0;i<n;i++)h+='<circle cx="'+xs[i]+'" cy="'+ay[i].toFixed(1)+'" r="5"/>';h+='</g>';
+h+='<g fill="#e75c81" stroke="#000000" stroke-width="3">';for(var i=0;i<n;i++)h+='<circle cx="'+xs[i]+'" cy="'+ay[i].toFixed(1)+'" r="5"/>';h+='</g>';
 h+='<g class="chart-value" text-anchor="middle">';for(var i=0;i<n;i++)h+='<text x="'+xs[i]+'" y="'+ay[i].toFixed(1)+'" dy="-12">'+fmt(av[i])+'</text>';h+='</g>';
 h+='<g class="chart-label" text-anchor="middle">';for(var i=0;i<n;i++)h+='<text x="'+xs[i]+'" y="178">'+(MONTHS[pts[i].ym.slice(5,7)]||pts[i].ym)+'</text>';h+='</g>';
 svg.innerHTML=h;}
@@ -322,14 +322,14 @@ function drawGauge(id,cfg,val){
   if(el._gsig!==sig){
     var h='<svg viewBox="0 0 200 124">';
     var prev=0;
-    (cfg.zones||[{f:1,c:'#20d2ca'}]).forEach(function(z){
+    (cfg.zones||[{f:1,c:'#cb2957'}]).forEach(function(z){
       h+='<path d="'+gaugeArc(78,prev*180,z.f*180)+'" fill="none" stroke="'+z.c+'" stroke-width="13" opacity=".9"/>';
       prev=z.f;
     });
     for(var i=0;i<=4;i++){var p0=gaugePolar(66,i*45),p1=gaugePolar(72,i*45);
-      h+='<line x1="'+p0[0].toFixed(1)+'" y1="'+p0[1].toFixed(1)+'" x2="'+p1[0].toFixed(1)+'" y2="'+p1[1].toFixed(1)+'" stroke="#3a4d63" stroke-width="2"/>';}
+      h+='<line x1="'+p0[0].toFixed(1)+'" y1="'+p0[1].toFixed(1)+'" x2="'+p1[0].toFixed(1)+'" y2="'+p1[1].toFixed(1)+'" stroke="#3b3b3b" stroke-width="2"/>';}
     h+='<text x="12" y="119" class="g-min">'+(cfg.minL||'')+'</text><text x="188" y="119" class="g-max" text-anchor="end">'+(cfg.maxL||'')+'</text>';
-    h+='<g id="'+id+'N" class="g-needle"><polygon points="96.5,101 103.5,101 100,36" fill="#f3c95c"/><circle cx="100" cy="100" r="7.5" fill="#f3c95c"/><circle cx="100" cy="100" r="3" fill="#0c1218"/></g>';
+    h+='<g id="'+id+'N" class="g-needle"><polygon points="96.5,101 103.5,101 100,36" fill="#eeeeee"/><circle cx="100" cy="100" r="7.5" fill="#eeeeee"/><circle cx="100" cy="100" r="3" fill="#000000"/></g>';
     h+='<text id="'+id+'V" x="100" y="121" text-anchor="middle" class="g-val">—</text>';
     h+='</svg>';
     el.innerHTML=h; el._gsig=sig;
@@ -430,21 +430,21 @@ $('m1V').textContent=fa(cuTon,0);
 $('m1Sub').textContent=fa(cuLb,4)+' دلار/پوند · ساعت قیمت: '+t(cur.base_global_copper2.ts);
 var r1=R.copper,p1=clamp((cuLb-r1.lo)/(r1.hi-r1.lo)*100,0,100);
 $('m1F').style.width=p1+'%';$('m1M').style.left=p1+'%';$('m1Lo').textContent=fa(r1.lo/LB*1000,0)+'$';$('m1Hi').textContent=fa(r1.hi/LB*1000,0)+'$';
-$('m1C').innerHTML='مس دماسنج صنعت جهان است. مرجع رسمی: <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#5fb9b4">LME</a>.';
+$('m1C').innerHTML='مس دماسنج صنعت جهان است. مرجع رسمی: <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#e75c81">LME</a>.';
 setStatus('m2S',imeSrc.mode==='auto'?'good':(imeSrc.mode==='manual'?'mid':'mid'),imeSrc.mode==='auto'?'خودکار از بورس کالا':(imeSrc.mode==='manual'?'ثبت دستی':'پیش‌فرض'));
-$('m2V').innerHTML=fa(ime,0)+'<button id="katodEdit" class="mini-edit" title="ثبت دستی">✎</button><button id="brsKeyBtn" class="mini-edit" title="کلید دریافت خودکار" style="color:#7fd6d0;border-color:#1f5c58;background:#0d2321">⚙</button>';
+$('m2V').innerHTML=fa(ime,0)+'<button id="katodEdit" class="mini-edit" title="ثبت دستی">✎</button><button id="brsKeyBtn" class="mini-edit" title="کلید دریافت خودکار" style="color:#e75c81;border-color:#5c152c;background:#1a0a10">⚙</button>';
 $('m2Sub').textContent=(imeSrc.mode==='auto'?'🟢 معاملهٔ ':'حراج ')+imeSrc.date;
 $('m2bars').innerHTML='<div class="mini-row"><span>کاتد IME</span><span class="track"><span class="fill" style="width:'+clamp(ime/cuKgRial*100,4,100)+'%"></span></span><b>'+fa(ime,0)+'</b></div>'+
 '<div class="mini-row"><span>معادل جهانی</span><span class="track"><span class="fill warm" style="width:100%"></span></span><b>'+fa(cuKgRial,0)+'</b></div>';
 var kbtn=$('katodEdit');if(kbtn&&kbtn.addEventListener)kbtn.addEventListener('click',editKatod);
 var kk=$('brsKeyBtn');if(kk&&kk.addEventListener)kk.addEventListener('click',editBrsKey);
-$('m2C').innerHTML='منبع خودکار: <a href="https://cdn.ime.co.ir" style="color:#5fb9b4">cdn.ime.co.ir</a> از طریق BrsApi — فقط از داخل ایران وصل می‌شود. اگر نشان 🟢 «خودکار» را نمی‌بینید، عدد را با ✎ دستی ثبت کنید.';
+$('m2C').innerHTML='منبع خودکار: <a href="https://cdn.ime.co.ir" style="color:#e75c81">cdn.ime.co.ir</a> از طریق BrsApi — فقط از داخل ایران وصل می‌شود. اگر نشان 🟢 «خودکار» را نمی‌بینید، عدد را با ✎ دستی ثبت کنید.';
 setStatus('m3S',KATOD.live?'good':'mid',KATOD.live?'زنده':'ذخیره‌شده');
 $('m3V').textContent=fa(kb,0);
 $('m3Sub').textContent=fa(KATOD.toman_kg)+' تومان/کیلو · '+KATOD.date;
 $('m3bars').innerHTML='<div class="mini-row"><span>خرده‌بار</span><span class="track"><span class="fill" style="width:'+clamp(kb/cuKgRial*100,4,100)+'%"></span></span><b>'+fa(kb,0)+'</b></div>'+
 '<div class="mini-row"><span>کاتد IME</span><span class="track"><span class="fill warm" style="width:'+clamp(ime/cuKgRial*100,4,100)+'%"></span></span><b>'+fa(ime,0)+'</b></div>';
-$('m3C').innerHTML='خرده‌بار قیمت بنگاه‌های بازار آزاد است (<a href="'+KATOD_URL+'" style="color:#5fb9b4">iranzayeat</a>) و معمولاً از رینگ رسمی ارزان‌تر است.';
+$('m3C').innerHTML='خرده‌بار قیمت بنگاه‌های بازار آزاد است (<a href="'+KATOD_URL+'" style="color:#e75c81">iranzayeat</a>) و معمولاً از رینگ رسمی ارزان‌تر است.';
 setStatus('m4S','mid','شاخص نسبی');
 $('m4V').textContent=fa(ratio,1);
 $('m4Sub').textContent=fa(cuTon,0)+' ÷ '+fa(oz,2);
@@ -468,7 +468,7 @@ var p7=caLo&&caHi&&caHi>caLo?clamp((auRatio-caLo)/(caHi-caLo)*100,0,100):50;
 $('m7F').style.width=p7+'%';$('m7M').style.left=p7+'%';
 $('m7Lo').textContent=caLo?fa(caLo,2):'—';$('m7Hi').textContent=caHi?fa(caHi,2):'—';
 $('m7C').innerHTML='نسبت = «دلار بر تنِ مس» ÷ «دلار بر انسِ طلا» (همان قاعدهٔ نسبت مس/نقره). بالاتر از تعادل یعنی مس در برابر طلا گران است؛ پایین‌تر یعنی مس ارزان (یا طلا گران). <b>کف/سقف/تعادل</b> از تاریخچهٔ '+caSrc+' TGJU محاسبه می‌شود (کمینه، بیشینه، میانگین نسبت روزانه).';
-if(caLo&&caHi){drawGauge('mgD',{min:caLo,max:caHi,minL:fa(caLo,2),maxL:fa(caHi,2),zones:[{f:.33,c:'#2e7d5b'},{f:.66,c:'#7a6420'},{f:1,c:'#8a3a40'}],fmt:function(v){return fa(v,2);}},auRatio);}
+if(caLo&&caHi){drawGauge('mgD',{min:caLo,max:caHi,minL:fa(caLo,2),maxL:fa(caHi,2),zones:[{f:.33,c:'#4a4a4a'},{f:.66,c:'#8a8a8a'},{f:1,c:'#cb2957'}],fmt:function(v){return fa(v,2);}},auRatio);}
 $('mgDn').innerHTML='مس/طلا الان در <b>'+pct(p7,0)+'</b> فاصلهٔ کف تا سقف '+caSrc+' · تعادل (میانگین) = <b>'+fa(caMean,2)+'</b>';
 }else{setStatus('m7S','mid','—');}
 /* ---- ۸: کاتد ÷ سهم فملی ---- */
@@ -480,13 +480,13 @@ $('m8V').innerHTML=fa(femRatio,0)+' <small>کیلو / سهم</small><button id="
 $('m8Sub').textContent='کاتد '+fa(ime,0)+' ÷ فملی '+fa(FEMELI.price,0)+' ریال · ثبت: '+FEMELI.date;
 $('m8bars').innerHTML='<div class="mini-row"><span>کاتد IME (ریال/کیلو)</span><span class="track"><span class="fill" style="width:100%"></span></span><b>'+fa(ime,0)+'</b></div>'+
 '<div class="mini-row"><span>سهم فملی (ریال)</span><span class="track"><span class="fill warm" style="width:'+clamp(FEMELI.price/ime*100,2,100)+'%"></span></span><b>'+fa(FEMELI.price,0)+'</b></div>';
-$('m8C').innerHTML='نسبت = قیمت کاتد بورس کالا (ریال/کیلو) ÷ قیمت هر سهم «فملی» (ریال) — یعنی هر سهم فملی معادل چند کیلوگرم کاتد است. قیمت سهم را از <a href="https://www.tsetmc.com" style="color:#5fb9b4">TSETMC</a> یا اپ کارگزاری ببینید و با ✎ ثبت کنید؛ در همین مرورگر ذخیره می‌ماند.';
+$('m8C').innerHTML='نسبت = قیمت کاتد بورس کالا (ریال/کیلو) ÷ قیمت هر سهم «فملی» (ریال) — یعنی هر سهم فملی معادل چند کیلوگرم کاتد است. قیمت سهم را از <a href="https://www.tsetmc.com" style="color:#e75c81">TSETMC</a> یا اپ کارگزاری ببینید و با ✎ ثبت کنید؛ در همین مرورگر ذخیره می‌ماند.';
 }else{
 setStatus('m8S','mid','ثبت نشده');
 $('m8V').innerHTML='—<button id="femeliEdit" class="mini-edit" title="قیمت سهم فملی (ریال)">✎ ثبت</button>';
 $('m8Sub').textContent='قیمت سهم فملی را یک بار با ✎ ثبت کنید';
 $('m8bars').innerHTML='';
-$('m8C').innerHTML='برای قیمت لحظه‌ای «فملی» منبع خودکارِ قابل اعتمادی در TGJU نیست؛ پس یک بار دستی ثبت می‌شود: قیمت سهم (ریال) از <a href="https://www.tsetmc.com" style="color:#5fb9b4">TSETMC</a> یا اپ کارگزاری را با ✎ وارد کنید. نسبت = کاتد بورس کالا ÷ قیمت سهم.';
+$('m8C').innerHTML='برای قیمت لحظه‌ای «فملی» منبع خودکارِ قابل اعتمادی در TGJU نیست؛ پس یک بار دستی ثبت می‌شود: قیمت سهم (ریال) از <a href="https://www.tsetmc.com" style="color:#e75c81">TSETMC</a> یا اپ کارگزاری را با ✎ وارد کنید. نسبت = کاتد بورس کالا ÷ قیمت سهم.';
 }
 feBtn();
 setStatus('m5S',s5.cls,s5.text);
@@ -503,15 +503,15 @@ $('m6bars').innerHTML=[['مس',cuTon],['روی',zinc],['فولاد',steel]].map(
 $('m6C').innerHTML='هم‌جهتیِ مس با روی و فولاد یعنی حرکت واقعی صنعت جهانی؛ واگرایی یعنی داستان مس جداست.';
 drawTrend('trendSvg',H.copper.map(function(p){return{ym:p.ym,v:p.v/LB*1000};}),null,function(v){return fa(v,0);});
 /* ---- گیج‌ها ---- */
-var ZP=[{f:.33,c:'#2e7d5b'},{f:.66,c:'#7a6420'},{f:1,c:'#8a3a40'}];
+var ZP=[{f:.33,c:'#4a4a4a'},{f:.66,c:'#8a8a8a'},{f:1,c:'#cb2957'}];
 drawGauge('mgA',{min:0,max:100,minL:'کف سال',maxL:'سقف سال',zones:ZP,fmt:function(v){return pct(v,0);}},p1);
 $('mgAn').innerHTML='مس جهانی در <b>'+pct(p1,0)+'</b> فاصلهٔ کف تا سقف یک سال اخیر';
-drawGauge('mgB',{min:-30,max:10,minL:'-۳۰٪',maxL:'+۱۰٪',zones:[{f:.75,c:'#2e7d5b'},{f:.95,c:'#7a6420'},{f:1,c:'#8a3a40'}],fmt:function(v){return sgn(v)+pct(Math.abs(v),1);}},bub);
+drawGauge('mgB',{min:-30,max:10,minL:'-۳۰٪',maxL:'+۱۰٪',zones:[{f:.75,c:'#4a4a4a'},{f:.95,c:'#8a8a8a'},{f:1,c:'#cb2957'}],fmt:function(v){return sgn(v)+pct(Math.abs(v),1);}},bub);
 $('mgBn').innerHTML='کاتد IME نسبت به «جهانی×دلار» — منفی یعنی تخفیف رینگ داخلی';
-drawGauge('mgC',{min:100,max:300,minL:'۱۰۰',maxL:'۳۰۰',zones:[{f:1,c:'#1e5a56'}],fmt:function(v){return fa(v,0);}},ratio);
+drawGauge('mgC',{min:100,max:300,minL:'۱۰۰',maxL:'۳۰۰',zones:[{f:1,c:'#262626'}],fmt:function(v){return fa(v,0);}},ratio);
 $('mgCn').innerHTML='تن مس ÷ انس نقره = <b>'+fa(ratio,1)+'</b> — بالاتر یعنی نقره از مس جا مانده';
 var share=clamp(Math.abs(bub)/(100+Math.max(bub,0))*100,0,100);
-var d=$('bubbleDonut');if(d&&d.style)d.style.background='conic-gradient(#f3b33c 0 '+share+'%, #0b918d '+share+'% 100%)';
+var d=$('bubbleDonut');if(d&&d.style)d.style.background='conic-gradient(#cb2957 0 '+share+'%, #8f1f41 '+share+'% 100%)';
 $('donutValue').textContent=sgn(bub)+pct(Math.abs(bub),1);
 $('legIntr').textContent=fa(cuKgRial,0)+' ریال';$('legBub').textContent=sgn(bub)+fa(Math.abs(ime-cuKgRial),0)+' ریال';
 var sil={};H.silver.forEach(function(p){sil[p.ym]=p.v;});

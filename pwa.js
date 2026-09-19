@@ -9,17 +9,17 @@
   /* ---- استایل دکمه و راهنما (تزریق خودکار، بدون دست زدن به CSS هر صفحه) ---- */
   var st = document.createElement('style');
   st.textContent =
-    '.install-btn{display:inline-block;background:linear-gradient(135deg,#f3b33c,#e8834a);border:0;color:#241505;' +
+    '.install-btn{display:inline-block;background:linear-gradient(135deg,#cb2957,#cb2957);border:0;color:#241505;' +
     'font:inherit;font-size:12.5px;font-weight:800;border-radius:999px;padding:7px 15px;cursor:pointer;' +
-    'box-shadow:0 3px 12px rgba(243,179,60,.35);transition:transform .15s,box-shadow .2s}';
-  st.textContent += '.install-btn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(243,179,60,.5)}';
+    'box-shadow:0 3px 12px rgba(203,41,87,.35);transition:transform .15s,box-shadow .2s}';
+  st.textContent += '.install-btn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(203,41,87,.5)}';
   st.textContent += '.install-help{position:fixed;inset:0;background:rgba(4,9,14,.74);display:none;align-items:center;justify-content:center;z-index:999;padding:18px}';
   st.textContent += '.install-help.open{display:flex}';
-  st.textContent += '.install-help .box{background:#141d27;border:1px solid #2e4051;border-radius:18px;max-width:440px;width:100%;padding:22px;color:#eaf2f7;line-height:2.1;box-shadow:0 24px 70px rgba(0,0,0,.55)}';
-  st.textContent += '.install-help h3{margin:0 0 10px;color:#f3c95c;font-size:17px}';
+  st.textContent += '.install-help .box{background:#0f0f0f;border:1px solid #2e4051;border-radius:18px;max-width:440px;width:100%;padding:22px;color:#eaf2f7;line-height:2.1;box-shadow:0 24px 70px rgba(0,0,0,.55)}';
+  st.textContent += '.install-help h3{margin:0 0 10px;color:#eeeeee;font-size:17px}';
   st.textContent += '.install-help .k{display:inline-block;background:#0d141d;border:1px solid #2e4051;border-radius:7px;padding:0 9px;margin:0 2px;color:#bfe8e5;font-size:12.5px}';
-  st.textContent += '.install-help .close{margin-top:12px;background:#0b918d;border:0;color:#04110f;font:inherit;font-weight:800;border-radius:9px;padding:8px 22px;cursor:pointer;width:100%}';
-  st.textContent += '.pwa-toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#14251f;border:1px solid #2e7d5b;color:#a9f0d0;padding:10px 18px;border-radius:12px;font-size:13px;z-index:1000;box-shadow:0 8px 30px rgba(0,0,0,.5);transition:opacity .4s}';
+  st.textContent += '.install-help .close{margin-top:12px;background:#8f1f41;border:0;color:#04110f;font:inherit;font-weight:800;border-radius:9px;padding:8px 22px;cursor:pointer;width:100%}';
+  st.textContent += '.pwa-toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#14251f;border:1px solid #4a4a4a;color:#a9f0d0;padding:10px 18px;border-radius:12px;font-size:13px;z-index:1000;box-shadow:0 8px 30px rgba(0,0,0,.5);transition:opacity .4s}';
   document.head.appendChild(st);
 
   function isStandalone() {
@@ -46,7 +46,7 @@
         '<span class="k">افزودن به صفحهٔ اصلی</span> یا <span class="k">نصب برنامه</span> را بزنید.<br>' +
         '<b>آیفون (سافاری):</b> دکمهٔ اشتراک <span class="k">⬆</span> را بزنید و ' +
         '<span class="k">Add to Home Screen</span> را انتخاب کنید.<br>' +
-        '<span style="color:#95a6b7;font-size:12.5px">بعد از نصب، آیکونِ داشبورد روی صفحهٔ گوشی است؛ ' +
+        '<span style="color:#9c9c9c;font-size:12.5px">بعد از نصب، آیکونِ داشبورد روی صفحهٔ گوشی است؛ ' +
         'مثل یک اپ واقعی تمام‌صفحه باز می‌شود و حتی بدون اینترنت هم آخرین قیمت‌ها را نشان می‌دهد.</span><br>' +
         '<button class="close" type="button">فهمیدم، بستن</button></div>';
       document.body.appendChild(m);

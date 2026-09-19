@@ -7,15 +7,15 @@
 <link rel="stylesheet" href="fonts.css">
 <style>
 :root{
-  --bg:#0c1218;--panel:#141d27;--line:#273544;--text:#f0f4f7;--muted:#95a6b7;
-  --cyan:#20d2ca;--amber:#f3b33c;--green:#32d38b;--red:#ff6262;
-  --cu:#e8834a;--ag:#c9d6e2;--au:#f3b33c;--coin:#ffd76a;
+  --bg:#000000;--panel:#0f0f0f;--line:#242424;--text:#eeeeee;--muted:#9c9c9c;
+  --cyan:#cb2957;--amber:#cb2957;--green:#eeeeee;--red:#cb2957;
+  --cu:#cb2957;--ag:#dddddd;--au:#cb2957;--coin:#e75c81;
 }
 *{box-sizing:border-box}
 html{background:var(--bg)}
 body{margin:0;background:
- radial-gradient(circle at 80% -20%,rgba(22,154,151,.11),transparent 31%),
- radial-gradient(circle at 12% 4%,rgba(243,179,60,.05),transparent 26%),
+ radial-gradient(circle at 80% -20%,rgba(203,41,87,.11),transparent 31%),
+ radial-gradient(circle at 12% 4%,rgba(203,41,87,.05),transparent 26%),
  var(--bg);color:var(--text);font-family:"Samim","Vazirmatn",Tahoma,Arial,sans-serif;line-height:1.75}
 .shell{width:min(1500px,calc(100% - 48px));margin:0 auto;padding:16px 0 34px}
 .hero{position:relative;border-bottom:1px solid var(--line);padding:0 0 16px;min-height:110px}
@@ -23,24 +23,24 @@ body{margin:0;background:
 .brandline::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);margin-left:9px}
 h1{font-size:29px;line-height:1.45;margin:0 0 10px;font-weight:800}
 h1 em{font-style:normal;color:var(--amber)}
-.source-stamp{position:absolute;left:0;top:0;background:#2a2414;border:1px solid #66501b;color:#d9c07f;border-radius:12px;padding:8px 15px;font-size:13px;white-space:nowrap;cursor:pointer}
-.source-stamp b{color:#f3c95c}
+.source-stamp{position:absolute;left:0;top:0;background:#141414;border:1px solid #3a3a3a;color:#c9c9c9;border-radius:12px;padding:8px 15px;font-size:13px;white-space:nowrap;cursor:pointer}
+.source-stamp b{color:#eeeeee}
 .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);margin-left:7px;vertical-align:middle}
 .live-dot.off{background:var(--amber);box-shadow:0 0 10px var(--amber)}
-.refresh-btn{border:1px solid #5b4919;background:#29220f;color:#f0c75b;border-radius:9px;padding:4px 11px;cursor:pointer;font:inherit;font-size:12px;margin-right:9px}
+.refresh-btn{border:1px solid #3a3a3a;background:#141414;color:#eeeeee;border-radius:9px;padding:4px 11px;cursor:pointer;font:inherit;font-size:12px;margin-right:9px}
 .meta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.pill{background:#111a24;border:1px solid #263442;border-radius:999px;padding:6px 14px;color:#b8c4ce;font-size:13px}
-.pill strong{color:#f1f4f6}
+.pill{background:#101010;border:1px solid #242424;border-radius:999px;padding:6px 14px;color:#b6b6b6;font-size:13px}
+.pill strong{color:#eeeeee}
 .pill.big{font-size:15px;border-color:#3a5166}
 .pill.big strong{color:#ffe9b0;font-size:17px}
 .pill::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);margin-left:8px}
 .pill.muted::before{display:none}
 
 .metal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
-.metal-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:16px;padding:0 0 6px;overflow:hidden;cursor:pointer}
-.full-link{font-size:11px;color:#5fb9b4;text-decoration:none;border:1px solid #1f5c58;border-radius:999px;padding:3px 11px;margin-left:8px;white-space:nowrap;transition:background .2s}
+.metal-card{background:linear-gradient(145deg,#141414,#111111);border:1px solid #282828;border-radius:16px;padding:0 0 6px;overflow:hidden;cursor:pointer}
+.full-link{font-size:11px;color:#e75c81;text-decoration:none;border:1px solid #5c152c;border-radius:999px;padding:3px 11px;margin-left:8px;white-space:nowrap;transition:background .2s}
 .full-link:hover{background:#0d3330}
-.metal-head{display:flex;align-items:center;gap:11px;padding:13px 17px;border-bottom:1px solid #223140;background:rgba(255,255,255,.015)}
+.metal-head{display:flex;align-items:center;gap:11px;padding:13px 17px;border-bottom:1px solid #1e1e1e;background:rgba(255,255,255,.015)}
 .metal-head i{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
 .metal-card.cu .metal-head i{background:var(--cu);box-shadow:0 0 12px var(--cu)}
 .metal-card.ag .metal-head i{background:var(--ag);box-shadow:0 0 12px var(--ag)}
@@ -53,29 +53,29 @@ h1 em{font-style:normal;color:var(--amber)}
 .metal-head h2{font-size:19px;margin:0;flex:1}
 .chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 11px;font-size:12px;font-weight:700;border:1px solid;white-space:nowrap}
 .chip::after{content:"";width:7px;height:7px;border-radius:50%}
-.chip.good{color:#80efb8;background:#0d3527;border-color:#166944}.chip.good::after{background:var(--green);box-shadow:0 0 10px var(--green)}
-.chip.mid{color:#f6c657;background:#34270c;border-color:#725515}.chip.mid::after{background:var(--amber);box-shadow:0 0 10px var(--amber)}
-.chip.bad{color:#ff9a9a;background:#3b171b;border-color:#7a2d35}.chip.bad::after{background:var(--red);box-shadow:0 0 10px var(--red)}
-.chip.na{color:#8fa1b2;background:#16202b;border-color:#33455a}.chip.na::after{background:#5b7085}
-.mini-edit{border:1px solid #5b4919;background:#29220f;color:#f0c75b;border-radius:6px;padding:1px 8px;cursor:pointer;font:inherit;font-size:12px;margin-right:7px;vertical-align:2px}
+.chip.good{color:#eeeeee;background:#1a1a1a;border-color:#3a3a3a}.chip.good::after{background:var(--green);box-shadow:0 0 10px var(--green)}
+.chip.mid{color:#c9c9c9;background:#161616;border-color:#383838}.chip.mid::after{background:#9a9a9a;box-shadow:0 0 10px rgba(255,255,255,.18)}
+.chip.bad{color:#e75c81;background:#1f0a10;border-color:#8f1f41}.chip.bad::after{background:var(--red);box-shadow:0 0 10px var(--red)}
+.chip.na{color:#8c8c8c;background:#161616;border-color:#323232}.chip.na::after{background:#666666}
+.mini-edit{border:1px solid #3a3a3a;background:#141414;color:#eeeeee;border-radius:6px;padding:1px 8px;cursor:pointer;font:inherit;font-size:12px;margin-right:7px;vertical-align:2px}
 
-.m-row{display:grid;grid-template-columns:minmax(150px,auto) 1fr auto;align-items:center;gap:10px;padding:9px 17px;border-bottom:1px dashed #223140;font-size:13px}
+.m-row{display:grid;grid-template-columns:minmax(150px,auto) 1fr auto;align-items:center;gap:10px;padding:9px 17px;border-bottom:1px dashed #1e1e1e;font-size:13px}
 .m-row:last-child{border-bottom:0}
-.m-l{color:#9fb0bf}
-.m-v{color:#f4f8fa;font-weight:800;font-size:16px;text-align:left;direction:ltr}
-.m-v small{color:#8ea0b1;font-weight:400;font-size:11px;margin-left:5px}
+.m-l{color:#9c9c9c}
+.m-v{color:#eeeeee;font-weight:800;font-size:16px;text-align:left;direction:ltr}
+.m-v small{color:#8c8c8c;font-weight:400;font-size:11px;margin-left:5px}
 .m-v .chip{font-size:11px;margin-left:8px;direction:rtl}
-.m-t{color:#66798b;font-size:10px;direction:ltr;min-width:38px;text-align:left}
-.m-note{padding:8px 17px 4px;font-size:11px;color:#7f91a2;border-top:1px dashed #2d3b49;margin-top:4px}
+.m-t{color:#6e6e6e;font-size:10px;direction:ltr;min-width:38px;text-align:left}
+.m-note{padding:8px 17px 4px;font-size:11px;color:#828282;border-top:1px dashed #2c2c2c;margin-top:4px}
 .m-note b{color:var(--cyan)}
 
-.sources{margin-top:18px;background:#111923;border:1px solid #273544;border-radius:14px;padding:13px 17px}
+.sources{margin-top:18px;background:#0c0c0c;border:1px solid #242424;border-radius:14px;padding:13px 17px}
 .sources h3{font-size:14px;margin:0 0 7px}
-.sources ol{margin:0;padding-right:20px;color:#8193a4;font-size:11px;columns:2;column-gap:40px}
-.sources a{color:#5fb9b4;text-decoration:none}
-.footer{text-align:center;color:#66798b;font-size:10px;margin-top:12px;line-height:1.9}
-.diag-panel{display:none;position:absolute;left:0;top:46px;z-index:50;background:#0e161f;border:1px solid #66501b;border-radius:12px;padding:12px 15px;font-size:11px;line-height:2;color:#b8c4ce;max-width:440px;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:default;white-space:normal}
-.diag-panel b{color:#f3c95c}
+.sources ol{margin:0;padding-right:20px;color:#828282;font-size:11px;columns:2;column-gap:40px}
+.sources a{color:#e75c81;text-decoration:none}
+.footer{text-align:center;color:#6e6e6e;font-size:10px;margin-top:12px;line-height:1.9}
+.diag-panel{display:none;position:absolute;left:0;top:46px;z-index:50;background:#0a0a0a;border:1px solid #3a3a3a;border-radius:12px;padding:12px 15px;font-size:11px;line-height:2;color:#b6b6b6;max-width:440px;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:default;white-space:normal}
+.diag-panel b{color:#eeeeee}
 
 /* ===== انیمیشن‌ها ===== */
 @keyframes cardIn{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
@@ -86,19 +86,19 @@ h1 em{font-style:normal;color:var(--amber)}
 .metal-grid .metal-card:nth-child(3){animation-delay:.28s}
 .metal-grid .metal-card:nth-child(4){animation-delay:.38s}
 .sources{animation:cardIn .6s .5s cubic-bezier(.16,1,.3,1) backwards}
-.metal-card:hover{transform:translateY(-4px);border-color:#3a4d63;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.metal-card:hover{transform:translateY(-4px);border-color:#3b3b3b;box-shadow:0 14px 34px rgba(0,0,0,.35)}
 /* پالس هنگام هر بروزرسانی موفق */
-@keyframes glowPulse{0%{box-shadow:0 0 0 0 rgba(32,210,202,0)}35%{box-shadow:0 0 24px 2px rgba(32,210,202,.28)}100%{box-shadow:0 0 0 0 rgba(32,210,202,0)}}
+@keyframes glowPulse{0%{box-shadow:0 0 0 0 rgba(203,41,87,0)}35%{box-shadow:0 0 24px 2px rgba(203,41,87,.28)}100%{box-shadow:0 0 0 0 rgba(203,41,87,0)}}
 .metal-card.updated{animation:glowPulse 1.3s ease}
 /* فلش قیمتِ تغییرکرده — چند ثانیه سبز یا قرمز */
-@keyframes flashUp{0%{background:rgba(50,211,139,.26)}55%{background:rgba(50,211,139,.12)}100%{background:transparent}}
-@keyframes flashDown{0%{background:rgba(255,98,98,.26)}55%{background:rgba(255,98,98,.12)}100%{background:transparent}}
+@keyframes flashUp{0%{background:rgba(238,238,238,.26)}55%{background:rgba(238,238,238,.12)}100%{background:transparent}}
+@keyframes flashDown{0%{background:rgba(203,41,87,.26)}55%{background:rgba(203,41,87,.12)}100%{background:transparent}}
 .m-row.up{animation:flashUp 3.5s ease-out}
 .m-row.down{animation:flashDown 3.5s ease-out}
 .tick-arrow{font-size:11px;margin-left:5px;vertical-align:1px}
 .tick-arrow.u{color:var(--green)}
 .tick-arrow.d{color:var(--red)}
-@keyframes valFlash{0%{background:rgba(243,179,60,.3);border-radius:6px}100%{background:transparent}}
+@keyframes valFlash{0%{background:rgba(203,41,87,.3);border-radius:6px}100%{background:transparent}}
 .pill strong.flash{animation:valFlash 3s ease-out;display:inline-block;padding:0 4px}
 /* نقطهٔ زندهٔ تپنده */
 @keyframes dotPulse{0%,100%{box-shadow:0 0 6px var(--green)}50%{box-shadow:0 0 16px 3px var(--green)}}
@@ -108,63 +108,63 @@ h1 em{font-style:normal;color:var(--amber)}
 .ring{position:relative;display:none;width:30px;height:30px;margin-left:9px;vertical-align:middle}
 .ring svg{width:30px;height:30px;transform:rotate(-90deg)}
 .ring circle{fill:none;stroke-width:3.4}
-.ring .rbg{stroke:#3d3320}
-.ring .arc{stroke:#f3c95c;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
-.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:10px;color:#f3c95c;font-weight:700}
+.ring .rbg{stroke:#1c1c1c}
+.ring .arc{stroke:#eeeeee;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:10px;color:#eeeeee;font-weight:700}
 /* ===== بخش‌های تحلیلی زیر کادرها ===== */
 .ideas-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;margin-top:16px}
-.idea-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:16px;padding:15px 18px;animation:cardIn .6s .45s cubic-bezier(.16,1,.3,1) backwards}
+.idea-card{background:linear-gradient(145deg,#141414,#111111);border:1px solid #282828;border-radius:16px;padding:15px 18px;animation:cardIn .6s .45s cubic-bezier(.16,1,.3,1) backwards}
 .idea-card h3{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:9px}
 .idea-card h3::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
-.rank-row{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px dashed #223140;font-size:13px}
+.rank-row{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px dashed #1e1e1e;font-size:13px}
 .rank-row:last-child{border-bottom:0}
-.rank-row .rk{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:#182330;border:1px solid #293848;color:#9fb0bf;font-size:12px;flex:0 0 auto}
-.rank-row:first-of-type .rk{background:#2b2515;border-color:#745a18;color:#f3c95c}
-.rank-row .rname{flex:1;color:#e3e8ec}
-.rank-row .rwhy{font-size:10px;color:#75889a;display:block}
-.i-note{font-size:10px;color:#7f91a2;border-top:1px dashed #2d3b49;margin:10px 0 0;padding-top:8px}
+.rank-row .rk{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:#181818;border:1px solid #282828;color:#9c9c9c;font-size:12px;flex:0 0 auto}
+.rank-row:first-of-type .rk{background:#141414;border-color:#3a3a3a;color:#eeeeee}
+.rank-row .rname{flex:1;color:#e4e4e4}
+.rank-row .rwhy{font-size:10px;color:#8a8a8a;display:block}
+.i-note{font-size:10px;color:#828282;border-top:1px dashed #2c2c2c;margin:10px 0 0;padding-top:8px}
 .calc-row{display:flex;gap:8px;margin-bottom:10px}
-.calc-row input{flex:1;background:#0c141c;border:1px solid #273746;border-radius:9px;color:#f0f4f7;font:inherit;font-size:14px;padding:9px 13px;direction:ltr;text-align:left}
-.calc-row input:focus{outline:1px solid #66501b}
-.calc-out-row{display:flex;justify-content:space-between;align-items:center;padding:7px 4px;border-bottom:1px dashed #223140;font-size:13px;color:#a4b0bc}
+.calc-row input{flex:1;background:#0a0a0a;border:1px solid #262626;border-radius:9px;color:#eeeeee;font:inherit;font-size:14px;padding:9px 13px;direction:ltr;text-align:left}
+.calc-row input:focus{outline:1px solid #3a3a3a}
+.calc-out-row{display:flex;justify-content:space-between;align-items:center;padding:7px 4px;border-bottom:1px dashed #1e1e1e;font-size:13px;color:#a4a4a4}
 .calc-out-row:last-child{border-bottom:0}
-.calc-out-row b{color:#f4f8fa;font-size:15px;direction:ltr}
+.calc-out-row b{color:#eeeeee;font-size:15px;direction:ltr}
 .invest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
-.invest-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:14px;padding:13px 16px;animation:cardIn .6s .55s cubic-bezier(.16,1,.3,1) backwards}
+.invest-card{background:linear-gradient(145deg,#141414,#111111);border:1px solid #282828;border-radius:14px;padding:13px 16px;animation:cardIn .6s .55s cubic-bezier(.16,1,.3,1) backwards}
 .invest-card h4{margin:0 0 8px;font-size:14px;display:flex;align-items:center;gap:8px}
 .invest-card h4 i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
 .invest-card ul{margin:0;padding-right:16px;font-size:11px;color:#9eafbd;line-height:2}
-.invest-card ul b{color:#dce5ec}
-.invest-card .best{color:#80efb8}
-.perf-card{background:linear-gradient(145deg,#151f2a,#121a23);border:1px solid #293746;border-radius:16px;padding:15px 18px;margin-top:16px;animation:cardIn .6s .65s cubic-bezier(.16,1,.3,1) backwards}
+.invest-card ul b{color:#dedede}
+.invest-card .best{color:#eeeeee}
+.perf-card{background:linear-gradient(145deg,#141414,#111111);border:1px solid #282828;border-radius:16px;padding:15px 18px;margin-top:16px;animation:cardIn .6s .65s cubic-bezier(.16,1,.3,1) backwards}
 .perf-card h3{margin:0 0 4px;font-size:16px}
-.perf-card .p-sub{font-size:11px;color:#7f91a2;margin:0 0 10px}
+.perf-card .p-sub{font-size:11px;color:#828282;margin:0 0 10px}
 .perf-row{margin:10px 0}
-.perf-label{display:flex;justify-content:space-between;font-size:12px;color:#9fb0bf;margin-bottom:5px}
-.perf-label b{color:#e8f0f4}
-.perf-track{height:20px;background:#0b131b;border:1px solid #273746;border-radius:6px;overflow:hidden;direction:ltr}
-.perf-fill{height:100%;background:linear-gradient(90deg,#0f817d,#20c9c1);transition:width .8s cubic-bezier(.16,1,.3,1)}
-.perf-fill.gold{background:linear-gradient(90deg,#b7831d,#f0b43f)}
-.perf-fill.neg{background:linear-gradient(90deg,#8a2f35,#ff6262)}
+.perf-label{display:flex;justify-content:space-between;font-size:12px;color:#9c9c9c;margin-bottom:5px}
+.perf-label b{color:#e4e4e4}
+.perf-track{height:20px;background:#050505;border:1px solid #262626;border-radius:6px;overflow:hidden;direction:ltr}
+.perf-fill{height:100%;background:linear-gradient(90deg,#3d3d3d,#9a9a9a);transition:width .8s cubic-bezier(.16,1,.3,1)}
+.perf-fill.gold{background:linear-gradient(90deg,#8f1f41,#e75c81)}
+.perf-fill.neg{background:linear-gradient(90deg,#8a2f35,#cb2957)}
 @media(max-width:1000px){.ideas-grid{grid-template-columns:1fr}.invest-grid{grid-template-columns:1fr 1fr}}
 /* ===== هشدارها ===== */
 .alert-card{margin-top:16px}
 .alert-form{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.alert-form select,.alert-form input{background:#0c141c;border:1px solid #273746;border-radius:9px;color:#f0f4f7;font:inherit;font-size:13px;padding:8px 12px}
-.alert-form select:focus,.alert-form input:focus{outline:1px solid #66501b}
+.alert-form select,.alert-form input{background:#0a0a0a;border:1px solid #262626;border-radius:9px;color:#eeeeee;font:inherit;font-size:13px;padding:8px 12px}
+.alert-form select:focus,.alert-form input:focus{outline:1px solid #3a3a3a}
 .alert-form input{width:150px;direction:ltr;text-align:left}
-.al-row{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px dashed #223140;font-size:13px;color:#c3ced8;flex-wrap:wrap}
+.al-row{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px dashed #1e1e1e;font-size:13px;color:#c3ced8;flex-wrap:wrap}
 .al-row:last-child{border-bottom:0}
-.al-row .al-cur{font-size:11px;color:#75889a}
-.al-row .al-del{border:1px solid #7a2d35;background:#2b1215;color:#ff9a9a;border-radius:7px;padding:2px 10px;cursor:pointer;font:inherit;font-size:11px;margin-right:auto}
-.al-row.fired{background:rgba(255,98,98,.08);border-radius:9px}
-.al-row.fired .al-state{color:#ff9a9a;font-weight:700}
-.al-row .al-state{font-size:11px;color:#75889a}
+.al-row .al-cur{font-size:11px;color:#8a8a8a}
+.al-row .al-del{border:1px solid #8f1f41;background:#2b1215;color:#e75c81;border-radius:7px;padding:2px 10px;cursor:pointer;font:inherit;font-size:11px;margin-right:auto}
+.al-row.fired{background:rgba(203,41,87,.08);border-radius:9px}
+.al-row.fired .al-state{color:#e75c81;font-weight:700}
+.al-row .al-state{font-size:11px;color:#8a8a8a}
 .alert-banner{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:99;background:linear-gradient(90deg,#5a1a20,#3b1216);border:1px solid #a03a44;color:#ffc9c9;border-radius:14px;padding:12px 22px;font-size:14px;font-weight:700;box-shadow:0 12px 40px rgba(0,0,0,.6);max-width:min(640px,calc(100% - 30px));text-align:center;animation:bannerPulse 1.6s infinite}
 .alert-banner small{display:block;font-weight:400;font-size:11px;color:#e8a0a0;margin-top:3px}
-@keyframes bannerPulse{0%,100%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 0 0 rgba(255,98,98,.35)}50%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 24px 4px rgba(255,98,98,.4)}}
-@keyframes redPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,98,98,0)}50%{box-shadow:0 0 22px 3px rgba(255,98,98,.35)}}
-.metal-card.alerted{border-color:#7a2d35;animation:redPulse 1.6s infinite}
+@keyframes bannerPulse{0%,100%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 0 0 rgba(203,41,87,.35)}50%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 24px 4px rgba(203,41,87,.4)}}
+@keyframes redPulse{0%,100%{box-shadow:0 0 0 0 rgba(203,41,87,0)}50%{box-shadow:0 0 22px 3px rgba(203,41,87,.35)}}
+.metal-card.alerted{border-color:#8f1f41;animation:redPulse 1.6s infinite}
 @media(max-width:1000px){.metal-grid{grid-template-columns:1fr}h1{font-size:22px}.sources ol{columns:1}}
 @media(max-width:700px){
   .shell{width:calc(100% - 20px)}
@@ -188,7 +188,7 @@ h1 em{font-style:normal;color:var(--amber)}
 </style>
 
 <!-- PWA: اپلیکیشن قابل نصب روی گوشی -->
-<meta name="theme-color" content="#0c1218">
+<meta name="theme-color" content="#000000">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -207,7 +207,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۶</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۷ (تم رز)</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -263,9 +263,9 @@ h1 em{font-style:normal;color:var(--amber)}
       <select id="alOp"><option value="gt">بالاتر از</option><option value="lt">پایین‌تر از</option></select>
       <input id="alVal" type="text" inputmode="decimal" placeholder="مقدار — مثلاً 5.5 یا 2,100,000">
       <button id="alAdd" class="refresh-btn">➕ افزودن هشدار</button>
-      <button id="alNotif" class="refresh-btn" style="border-color:#33455a;background:#16202b;color:#93a5b6">🔔 اعلان مرورگر</button>
+      <button id="alNotif" class="refresh-btn" style="border-color:#323232;background:#161616;color:#93a5b6">🔔 اعلان مرورگر</button>
     </div>
-    <div id="alList"><div class="al-row"><span style="color:#75889a">هنوز هشداری تعریف نکرده‌اید — مثلاً: «حباب سکه (٪) بالاتر از 5»</span></div></div>
+    <div id="alList"><div class="al-row"><span style="color:#8a8a8a">هنوز هشداری تعریف نکرده‌اید — مثلاً: «حباب سکه (٪) بالاتر از 5»</span></div></div>
     <p class="i-note">هشدارها فقط روی همین دستگاه ذخیره می‌شوند و تا وقتی این صفحه باز باشد (حتی در تب پس‌زمینه) هر ۶۰ ثانیه بررسی می‌شوند. با فعال‌کردن اعلان مرورگر، پیام هشدار حتی وقتی در تب دیگری هستید نمایش داده می‌شود. درصدها را بدون علامت ٪ وارد کنید؛ قیمت‌های ریالی را به ریال.</p>
   </section>
 
@@ -557,8 +557,8 @@ function render(cur, fetchedAt){
   }
   $('cuChip').outerHTML = gapChip(cuBub).replace('class="chip', 'id="cuChip" class="chip');
   $('rows_cu').innerHTML =
-    row('قیمت جهانی مس <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#5fb9b4;text-decoration:none;font-size:10px">(LME)</a>', v(fa(cuTon,0),'دلار / تن'), cur.cuLb.ts, 'cu_w', cuTon, 0) +
-    row('کاتد بورس کالا (IME)', v(fa(imeRial,0),'ریال / کیلو')+'<button id="katodEdit" class="mini-edit" title="ثبت دستی قیمت حراج">✎</button><button id="brsKeyBtn" class="mini-edit" title="کلید دریافت خودکار از بورس کالا" style="color:#7fd6d0;border-color:#1f5c58;background:#0d2321">⚙</button>', '', 'cu_ime', imeRial, 0) +
+    row('قیمت جهانی مس <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#e75c81;text-decoration:none;font-size:10px">(LME)</a>', v(fa(cuTon,0),'دلار / تن'), cur.cuLb.ts, 'cu_w', cuTon, 0) +
+    row('کاتد بورس کالا (IME)', v(fa(imeRial,0),'ریال / کیلو')+'<button id="katodEdit" class="mini-edit" title="ثبت دستی قیمت حراج">✎</button><button id="brsKeyBtn" class="mini-edit" title="کلید دریافت خودکار از بورس کالا" style="color:#e75c81;border-color:#5c152c;background:#1a0a10">⚙</button>', '', 'cu_ime', imeRial, 0) +
     row('کاتد بازار آزاد (خرده‌بار)', katodRialKg ? v(fa(katodRialKg,0),'ریال / کیلو') : '—', '', 'cu_kb', katodRialKg, 0) +
     row('نسبت مس به نقره', v(fa(cuAg,1),'تن مس ÷ انس نقره'), '', 'cu_r', cuAg, 1) +
     row('نسبت مس به طلا', v(fa(cuAu,2),'تن مس ÷ انس طلا')+(cuAuLine?'<small style="display:block;color:#8fa1b5;font-size:10px;white-space:normal;line-height:1.9">'+cuAuLine+'</small>':''), '', 'cu_au', cuAu, 2) +
@@ -567,7 +567,7 @@ function render(cur, fetchedAt){
   var kb = $('katodEdit'); if (kb && kb.addEventListener) kb.addEventListener('click', editKatod);
   var kk = $('brsKeyBtn'); if (kk && kk.addEventListener) kk.addEventListener('click', editBrsKey);
   var feB = $('femeliEdit'); if (feB && feB.addEventListener) feB.addEventListener('click', editFemeli);
-  $('note_cu').innerHTML = '<b>کاتد بورس کالا:</b> '+fa(imeRial,0)+' ریال/کیلو · '+imeTag+' — منبع خودکار: <a href="https://cdn.ime.co.ir" style="color:#5fb9b4;text-decoration:none">cdn.ime.co.ir</a> از طریق BrsApi (فقط از داخل ایران وصل می‌شود؛ اگر 🟢 ندیدید با ✎ دستی ثبت کنید) · <b>خرده‌بار:</b> <a href="'+KATOD_URL+'" style="color:#5fb9b4;text-decoration:none">iranzayeat.com</a> ('+KATOD.date+(KATOD.live?' زنده':' ذخیره‌شده')+') · معادل جهانی محاسباتی: '+fa(cuKgRial,0)+' ریال/کیلو · نسبت = '+fa(cuTon,0)+' دلار/تن ÷ '+fa(cur.agOz.p,2)+' دلار/انس · <b>مس/طلا:</b> دلار/تن ÷ دلار/انس طلا (کف/سقف/تعادل = کمینه/بیشینه/میانگین تاریخچهٔ یک‌سالهٔ TGJU) · <b>فملی:</b> کاتد ÷ قیمت سهم فملی (ریال) — ثبت دستی با ✎ از TSETMC یا کارگزاری.';
+  $('note_cu').innerHTML = '<b>کاتد بورس کالا:</b> '+fa(imeRial,0)+' ریال/کیلو · '+imeTag+' — منبع خودکار: <a href="https://cdn.ime.co.ir" style="color:#e75c81;text-decoration:none">cdn.ime.co.ir</a> از طریق BrsApi (فقط از داخل ایران وصل می‌شود؛ اگر 🟢 ندیدید با ✎ دستی ثبت کنید) · <b>خرده‌بار:</b> <a href="'+KATOD_URL+'" style="color:#e75c81;text-decoration:none">iranzayeat.com</a> ('+KATOD.date+(KATOD.live?' زنده':' ذخیره‌شده')+') · معادل جهانی محاسباتی: '+fa(cuKgRial,0)+' ریال/کیلو · نسبت = '+fa(cuTon,0)+' دلار/تن ÷ '+fa(cur.agOz.p,2)+' دلار/انس · <b>مس/طلا:</b> دلار/تن ÷ دلار/انس طلا (کف/سقف/تعادل = کمینه/بیشینه/میانگین تاریخچهٔ یک‌سالهٔ TGJU) · <b>فملی:</b> کاتد ÷ قیمت سهم فملی (ریال) — ثبت دستی با ✎ از TSETMC یا کارگزاری.';
 
   /* ---- کادر نقره ---- */
   $('agChip').outerHTML = bubbleChip(agBub).replace('class="chip','id="agChip" class="chip');
@@ -680,12 +680,12 @@ function notify(text){
 }
 function renderAlertList(){
   var box=$('alList'); if(!box) return;
-  if(!ALERTS.length){ box.innerHTML='<div class="al-row"><span style="color:#75889a">هنوز هشداری تعریف نکرده‌اید — مثلاً: «حباب سکه (٪) بالاتر از 5»</span></div>'; return; }
+  if(!ALERTS.length){ box.innerHTML='<div class="al-row"><span style="color:#8a8a8a">هنوز هشداری تعریف نکرده‌اید — مثلاً: «حباب سکه (٪) بالاتر از 5»</span></div>'; return; }
   box.innerHTML=ALERTS.map(function(r){
     var m=METRICS[r.metric]||{label:r.metric,dec:0};
     var cv = ALERT_VALS && ALERT_VALS[r.metric]!==undefined ? fa(ALERT_VALS[r.metric], m.dec) : '—';
     return '<div class="al-row'+(r.fired?' fired':'')+'" data-id="'+r.id+'">'+
-      '<span>'+m.label+' '+(r.op==='gt'?'بالاتر از':'پایین‌تر از')+' <b style="color:#f3c95c">'+fa(r.val,m.dec)+'</b></span>'+
+      '<span>'+m.label+' '+(r.op==='gt'?'بالاتر از':'پایین‌تر از')+' <b style="color:#eeeeee">'+fa(r.val,m.dec)+'</b></span>'+
       '<span class="al-cur">الان: '+cv+'</span>'+
       '<span class="al-state">'+(r.fired?'🔴 فعال شده!':'در انتظار')+'</span>'+
       '<button class="al-del" data-del="'+r.id+'">حذف</button></div>';
@@ -756,22 +756,22 @@ function renderIdeas(cur,B){
   function best(cond,txt){return cond?'<b class="best">'+txt+' ✓</b>':txt;}
   var gsNote = B.gs!==null ? (B.gs>80?'نسبت طلا/نقره '+fa(B.gs,0)+' — تاریخی یعنی نقره نسبت به طلا ارزان مانده.':'نسبت طلا/نقره: '+fa(B.gs,0)) : '';
   $('investGrid').innerHTML=
-   '<article class="invest-card"><h4><i style="background:#c9d6e2;box-shadow:0 0 10px #c9d6e2"></i>نقره</h4><ul>'+
+   '<article class="invest-card"><h4><i style="background:#dddddd;box-shadow:0 0 10px #dddddd"></i>نقره</h4><ul>'+
    '<li>'+best(B.agCert!==null&&B.agCert<B.ag,'گواهی سپردهٔ نقره — حباب '+(B.agCert===null?'—':sgn(B.agCert)+pct(Math.abs(B.agCert),1)))+' (کد بورسی، بدون اجرت)</li>'+
    '<li>صندوق کالایی نقره (خرید مثل سهام)</li>'+
    '<li>نقرهٔ فیزیکی ۹۹۹ — حباب '+sgn(B.ag)+pct(Math.abs(B.ag),1)+'</li>'+
    '<li>آپشن شمش نقره (اهرم‌دار — فقط حرفه‌ای‌ها)</li>'+
-   '<li style="color:#75889a">'+gsNote+'</li></ul></article>'+
-   '<article class="invest-card"><h4><i style="background:#f3b33c;box-shadow:0 0 10px #f3b33c"></i>طلا</h4><ul>'+
+   '<li style="color:#8a8a8a">'+gsNote+'</li></ul></article>'+
+   '<article class="invest-card"><h4><i style="background:#cb2957;box-shadow:0 0 10px #cb2957"></i>طلا</h4><ul>'+
    '<li>'+best(B.auCert!==null&&B.auCert<0,'گواهی سپردهٔ شمش — حباب '+(B.auCert===null?'—':sgn(B.auCert)+pct(Math.abs(B.auCert),1)))+'</li>'+
    '<li>صندوق‌های طلا (گلدیس، رزگلد، …)</li>'+
    '<li>طلای آب‌شده — بدون اجرت ساخت</li>'+
    '<li>زیورآلات ۱۸ — اجرت‌دار؛ برای سرمایه‌گذاری مناسب نیست</li></ul></article>'+
-   '<article class="invest-card"><h4><i style="background:#ffd76a;box-shadow:0 0 10px #ffd76a"></i>سکه</h4><ul>'+
+   '<article class="invest-card"><h4><i style="background:#e75c81;box-shadow:0 0 10px #e75c81"></i>سکه</h4><ul>'+
    '<li>'+best(B.certGap!==null&&B.certGap<0,'گواهی سپردهٔ سکه — '+(B.certGap===null?'—':pct(Math.abs(B.certGap),1)+(B.certGap<0?' ارزان‌تر از بازار':' گران‌تر از بازار')))+'</li>'+
    '<li>سکهٔ فیزیکی امامی — حباب '+sgn(B.coin)+pct(Math.abs(B.coin),1)+'</li>'+
    '<li>نیم و ربع — نقدشونده ولی حباب بیشتر</li></ul></article>'+
-   '<article class="invest-card"><h4><i style="background:#e8834a;box-shadow:0 0 10px #e8834a"></i>مس</h4><ul>'+
+   '<article class="invest-card"><h4><i style="background:#cb2957;box-shadow:0 0 10px #cb2957"></i>مس</h4><ul>'+
    '<li>خرید خردِ مستقیم برای عموم ممکن نیست</li>'+
    '<li>غیرمستقیم: سهام شرکت‌های مس (فملی، فباهنر، …)</li>'+
    '<li>کاتد رینگ بورس کالا — عمده'+(B.cu!==null?' — الان '+pct(Math.abs(B.cu),1)+(B.cu<0?' زیر':' بالای')+' معادل جهانی':'')+'</li></ul></article>';
