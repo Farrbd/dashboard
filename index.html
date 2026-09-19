@@ -165,7 +165,25 @@ h1 em{font-style:normal;color:var(--amber)}
 @keyframes bannerPulse{0%,100%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 0 0 rgba(203,41,87,.35)}50%{box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 24px 4px rgba(203,41,87,.4)}}
 @keyframes redPulse{0%,100%{box-shadow:0 0 0 0 rgba(203,41,87,0)}50%{box-shadow:0 0 22px 3px rgba(203,41,87,.35)}}
 .metal-card.alerted{border-color:#8f1f41;animation:redPulse 1.6s infinite}
-@media(max-width:1000px){.metal-grid{grid-template-columns:1fr}h1{font-size:22px}.sources ol{columns:1}}
+.cert-strip{margin-top:16px;background:linear-gradient(145deg,#141414,#101010);border:1px solid #282828;border-radius:16px;padding:16px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;animation:cardIn .6s .45s cubic-bezier(.16,1,.3,1) backwards;transition:border-color .22s}
+.cert-strip:hover{border-color:#3b3b3b}
+.cs-main{min-width:230px;flex:1}
+.cs-title{font-size:16px;font-weight:800;color:#f5f5f5}
+.cs-title a{color:#e75c81;text-decoration:none;font-size:11px;font-weight:400}
+.cs-note{display:block;color:#8a8a8a;font-size:11.5px;line-height:1.9;margin-top:2px}
+.cs-price{font-size:24px;font-weight:900;color:#f5f5f5;white-space:nowrap}
+.cs-price small{font-size:12px;color:#8a8a8a;font-weight:400;margin-right:6px}
+.cs-date{display:block;font-size:10.5px;color:#757575;text-align:left;margin-top:2px}
+.ret-chips{display:flex;gap:7px;flex-wrap:wrap}
+.ret-chip{background:#101010;border:1px solid #262626;border-radius:10px;padding:5px 12px;text-align:center;min-width:74px}
+.ret-chip small{display:block;font-size:9.5px;color:#8a8a8a;line-height:1.6}
+.ret-chip b{font-size:13px;font-weight:800;direction:ltr;unicode-bidi:embed}
+.ret-chip b.u{color:#32d38b}.ret-chip b.d{color:#ff6262}.ret-chip b.n{color:#c9c9c9}
+.cs-chart{width:100%;display:none;margin-top:14px}
+.cs-chart iframe{width:100%;height:480px;border:0;border-radius:12px;background:#0d0d0d}
+.cs-chartbtn{border:1px solid #3a3a3a;background:#141414;color:#e75c81;border-radius:9px;padding:6px 14px;cursor:pointer;font:inherit;font-size:12px;font-weight:700;transition:background .2s,transform .15s;flex:none}
+.cs-chartbtn:hover{background:#1f1f1f;transform:translateY(-1px)}
+@media(max-width:1000px){.metal-grid{grid-template-columns:1fr}h1{font-size:22px}.sources ol{columns:1}.cs-chart iframe{height:380px}}
 @media(max-width:700px){
   .shell{width:calc(100% - 20px)}
   .hero{min-height:0;padding-top:4px}
@@ -207,7 +225,7 @@ h1 em{font-style:normal;color:var(--amber)}
   <header class="hero">
     <div class="source-stamp" id="stampBox" title="برای عیب‌یابی کلیک کنید"><span class="ring" id="ringWrap"><svg viewBox="0 0 36 36"><circle class="rbg" cx="18" cy="18" r="15.5"/><circle class="arc" id="ringArc" cx="18" cy="18" r="15.5"/></svg><b id="ringNum">۶۰</b></span><span class="live-dot" id="liveDot"></span> <b>مهر داده</b> — <span id="stampText">در حال بارگذاری…</span><button class="refresh-btn" id="refreshBtn">بروزرسانی</button></div>
     <div id="diagPanel" class="diag-panel"></div>
-    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۷ (تم رز)</div>
+    <div class="brandline">مجموعه «هوش مصنوعی برای بازار» · داشبورد چهارکادره · نسخهٔ ۱۸ — 2026-09-19 17:44</div>
     <h1>داشبورد فلزات — <em>مس · نقره · طلا · سکهٔ امامی</em></h1>
     <div class="meta-row">
       <span class="pill big">دلار آزاد <strong id="pillDollar">—</strong></span>
@@ -240,6 +258,29 @@ h1 em{font-style:normal;color:var(--amber)}
       <div id="rows_coin"></div>
       <div class="m-note" id="note_coin"></div>
     </section>
+  </div>
+
+  <div class="cert-strip" id="ccStrip">
+    <div class="cs-main">
+      <span class="cs-title"><span class="live-dot"></span> گواهی سپردهٔ مس کاتد <a href="https://chartix.ir/market/bourse_kala/COPPERCTHD">(chartix · زنده)</a></span>
+      <span class="cs-note">بازار معاملاتی بورس کالا — معمولاً بالاتر از رینگ حراج فیزیکی معامله می‌شود</span>
+    </div>
+    <div class="cs-price" id="ccPrice">…</div>
+    <div class="ret-chips" id="ccRets" style="flex:2"></div>
+    <button class="cs-chartbtn" id="chartbtn_cc">📊 نمودار</button>
+    <div class="cs-chart" id="chart_cc"></div>
+  </div>
+
+  <div class="cert-strip" id="t9Strip">
+    <div class="cs-main">
+      <span class="cs-title"><span class="live-dot"></span> گواهی سپردهٔ وانت T9 <a href="https://chartix.ir/market/bourse_kala/KMCT9">(chartix · زنده)</a></span>
+      <span class="cs-note">کرمان‌موتور — بازار معاملاتی بورس کالا · هر دستگاه = ۱۰٬۰۰۰ گواهی (این کالا ارتباطی با مس ندارد؛ جدا نگه داشته شد)</span>
+    </div>
+    <div class="cs-price" id="t9Price">…</div>
+    <div class="ret-chips" id="t9Rets" style="flex:2"></div>
+    <button class="cs-chartbtn" id="chartbtn_t9">📊 نمودار</button>
+    <div class="cs-chart" id="chart_t9"></div>
+  </div>
   </div>
 
   <section class="ideas-grid">
@@ -391,7 +432,14 @@ function parseChartix(tx){
   if(!pm) return null;
   var price = parseInt(String(pm[1]).replace(/,/g,''), 10);
   if(!(price > 1000000)) return null;
-  return {price:price, date:dm?dm[1]:''};
+  var ret = {};
+  [['d1','یک روزه'],['w1','یک هفته'],['m1','یک ماهه'],['m3','سه ماهه'],['m6','شش ماهه']].forEach(function(p){
+    var m = tx.match(new RegExp(p[1] + '(\\s-?[\\d.]+)%'));
+    if(m) ret[p[0]] = parseFloat(m[1]);
+  });
+  var md = tx.match(/با تغییرات (-?[\d.]+)%/); if(md) ret.d1 = parseFloat(md[1]);
+  var mw = tx.match(/با بازدهی (-?[\d.]+)%/); if(mw) ret.w1 = parseFloat(mw[1]);
+  return {price:price, date:dm?dm[1]:'', ret:ret};
 }
 function fetchChartixOne(sym, storeKey, apply){
   var url = 'https://r.jina.ai/https://chartix.ir/market/bourse_kala/' + sym + '?r=' + Date.now();
@@ -526,6 +574,40 @@ function row(label, valHtml, ts, key, numval, dec){
   if (key !== undefined) PREV[key] = numval;
   return '<div class="m-row'+cls+'"><span class="m-l">'+label+'</span><span class="m-v">'+valHtml+arrow+'</span><span class="m-t">'+(ts?t(ts):'')+'</span></div>';
 }
+function retChipsHtml(ret){
+  if(!ret) return '';
+  var L=[['d1','یک روزه'],['w1','یک هفته'],['m1','یک ماهه'],['m3','سه ماهه'],['m6','شش ماهه']], h='';
+  L.forEach(function(p){ var v=ret[p[0]]; if(v===undefined||isNaN(v)) return;
+    var cls=v>0?'u':(v<0?'d':'n');
+    h+='<span class="ret-chip"><small>'+p[1]+'</small><b class="'+cls+'">'+(v>0?'+':'')+fa(v,2)+'٪</b></span>';
+  });
+  return h?'<div class="ret-chips">'+h+'</div>':'';
+}
+function fillStrip(prefix, cert){
+  var pr=$(prefix+'Price'), rt=$(prefix+'Rets');
+  if(!pr) return;
+  if (cert && cert.price){
+    pr.innerHTML = fa(cert.price,0)+' <small>ریال</small><span class="cs-date">'+(cert.date||'')+'</span>';
+    rt.innerHTML = retChipsHtml(cert.ret);
+  } else { pr.textContent='در حال دریافت…'; rt.innerHTML=''; }
+}
+function renderCertStrip(){ fillStrip('t9',CERT_T9); fillStrip('cc',CERT_CU); }
+function toggleCertChart(id){
+  var box=$('chart_'+id);
+  if(!box) return;
+  if(!box.dataset.loaded){
+    var sym = id==='t9' ? 'KMCT9' : 'COPPERCTHD';
+    box.innerHTML = '<iframe loading="lazy" referrerpolicy="no-referrer" src="https://max.chartix.ir/dashboard?chart='+sym+'&type=watch-list"></iframe>';
+    box.dataset.loaded = '1';
+  }
+  box.style.display = box.style.display==='block' ? 'none' : 'block';
+  var btn=$('chartbtn_'+id);
+  if(btn) btn.textContent = box.style.display==='block' ? '▲ بستن نمودار' : '📊 نمودار';
+}
+['t9','cc'].forEach(function(id){
+  var b=$('chartbtn_'+id);
+  if(b&&b.addEventListener) b.addEventListener('click',function(){toggleCertChart(id);});
+});
 var PREV = {};
 function pulseCards(){ // پالس ملایم روی هر چهار کادر بعد از بروزرسانی موفق
   ['cu','ag','au','coin'].forEach(function(k){
@@ -592,12 +674,12 @@ function render(cur, fetchedAt){
     row('قیمت جهانی مس <a href="https://www.lme.com/metals/non-ferrous/lme-copper" style="color:#e75c81;text-decoration:none;font-size:10px">(LME)</a>', v(fa(cuTon,0),'دلار / تن'), cur.cuLb.ts, 'cu_w', cuTon, 0) +
     row('کاتد بورس کالا (IME)', v(fa(imeRial,0),'ریال / کیلو')+'<button id="katodEdit" class="mini-edit" title="ثبت دستی قیمت حراج">✎</button><button id="brsKeyBtn" class="mini-edit" title="کلید دریافت خودکار از بورس کالا" style="color:#e75c81;border-color:#5c152c;background:#1a0a10">⚙</button>', '', 'cu_ime', imeRial, 0) +
     row('گواهی سپردهٔ مس کاتد <a href="https://chartix.ir/market/bourse_kala/COPPERCTHD" style="color:#e75c81;text-decoration:none;font-size:10px">(chartix · زنده)</a>', CERT_CU ? v(fa(CERT_CU.price,0),'ریال')+'<small style="display:block;color:#8a8a8a;font-size:10px;white-space:normal;line-height:1.9">بازار معاملاتی گواهی'+(CERT_CU.date?' · '+CERT_CU.date:'')+'</small>' : 'در حال دریافت…', '', 'cu_cert', CERT_CU?CERT_CU.price:null, 0) +
-    row('گواهی سپردهٔ وانت T9 <a href="https://chartix.ir/market/bourse_kala/KMCT9" style="color:#e75c81;text-decoration:none;font-size:10px">(chartix · زنده)</a>', CERT_T9 ? v(fa(CERT_T9.price,0),'ریال')+'<small style="display:block;color:#8a8a8a;font-size:10px;white-space:normal;line-height:1.9">هر دستگاه = ۱۰٬۰۰۰ گواهی · بازار معاملاتی'+(CERT_T9.date?' · '+CERT_T9.date:'')+'</small>' : 'در حال دریافت…', '', 'cu_t9', CERT_T9?CERT_T9.price:null, 0) +
-    row('کاتد بازار آزاد (خرده‌بار)', katodRialKg ? v(fa(katodRialKg,0),'ریال / کیلو') : '—', '', 'cu_kb', katodRialKg, 0) +
+row('کاتد بازار آزاد (خرده‌بار)', katodRialKg ? v(fa(katodRialKg,0),'ریال / کیلو') : '—', '', 'cu_kb', katodRialKg, 0) +
     row('نسبت مس به نقره', v(fa(cuAg,1),'تن مس ÷ انس نقره'), '', 'cu_r', cuAg, 1) +
     row('نسبت مس به طلا', v(fa(cuAu,2),'تن مس ÷ انس طلا')+(cuAuLine?'<small style="display:block;color:#8fa1b5;font-size:10px;white-space:normal;line-height:1.9">'+cuAuLine+'</small>':''), '', 'cu_au', cuAu, 2) +
     row('کاتد ÷ سهم فملی', femeliVal, '', 'cu_fe', femRatio, 1) +
     row('حباب مس (کاتد IME به معادل جهانی)', gapChip(cuBub), '');
+  renderCertStrip();
   var kb = $('katodEdit'); if (kb && kb.addEventListener) kb.addEventListener('click', editKatod);
   var kk = $('brsKeyBtn'); if (kk && kk.addEventListener) kk.addEventListener('click', editBrsKey);
   var feB = $('femeliEdit'); if (feB && feB.addEventListener) feB.addEventListener('click', editFemeli);
