@@ -3,7 +3,7 @@
    - صفحه‌ها (navigate): اول شبکه، اگر نبود آخرین نسخهٔ کش‌شده (آفلاین هم باز می‌شود)
    - فایل‌های ثابت (css/js/icons): اول کش، بعد آپدیت در پس‌زمینه
    - درخواست‌های بیرونی مثل TGJU اصلاً دست نمی‌خورند */
-var CACHE = 'flz-2026092000';
+var CACHE = 'flz-2026101100';
 var CORE = [
   './',
   './index.html',
@@ -15,6 +15,7 @@ var CORE = [
   './metals-bootstrap.js',
   './manifest.json',
   './pwa.js',
+  './telegram-app.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png'
