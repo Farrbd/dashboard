@@ -2,6 +2,8 @@
 (function () {
   'use strict';
   var deferred = null;
+  /* داخل تلگرام، «نصب اپ» معنی ندارد — دکمه و راهنما نمایش داده نمی‌شوند */
+  var tgApp = !!window.__IN_TELEGRAM;
 
   function $(s) { return document.querySelector(s); }
   function $$(s) { return Array.prototype.slice.call(document.querySelectorAll(s)); }
@@ -82,6 +84,7 @@
 
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
+    if (tgApp) return;
     deferred = e;
     makeBtn(); showBtn();
   });
@@ -98,7 +101,7 @@
   }
 
   /* همیشه دکمه را نشان بده (حتی اگر هنوز installable نباشد) — کلیکش راهنما را باز می‌کند */
-  if (isStandalone()) { hideBtn(); } else { makeBtn(); }
+  if (isStandalone() || tgApp) { hideBtn(); } else { makeBtn(); }
 
   /* ---- ثبت Service Worker ---- */
   if ('serviceWorker' in navigator) {
